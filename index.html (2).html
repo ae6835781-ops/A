@@ -1,0 +1,1304 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#667eea">
+    <title>برنامج المهام اليومية الاحترافي</title>
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjoiYnJubmFtZyBhbG1oYXTigqkgYWx5d21pYSIsInNob3J0X25hbWUiOiJhbG1oYXTigqkgYWx5d21pYSIsInN0YXJ0X3VybCI6Ii8iLCJkaXNwbGF5Ijoic3RhbmRhbG9uZSIsImJhY2tncm91bmRfY29sb3IiOiIjNjY3ZWVhIiwidGhlbWVfY29sb3IiOiIjNjY3ZWVhIiwib3JpZW50YXRpb24iOiJwb3J0cmFpdCJ9">
+    
+    <style>
+        body {
+            font-family: 'Segoe UI', 'Tahoma', 'Arial', 'Noto Sans Arabic', sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+            background: var(--bg-primary);
+            position: relative;
+            transition: background 0.5s ease;
+            color: var(--text-primary);
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+            padding-top: env(safe-area-inset-top, 40px);
+        }
+        
+        :root {
+            --bg-gradient-start: #667eea;
+            --bg-gradient-end: #764ba2;
+            --bg-primary: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --card-bg-alt: rgba(255, 255, 255, 0.85);
+            --text-primary: #333;
+            --text-secondary: #666;
+            --text-muted: #999;
+            --text-white: #fff;
+            --input-bg: #fff;
+            --input-border: #e0e0e0;
+            --task-bg: #f8f9fa;
+            --task-bg-correct: #d4edda;
+            --task-bg-wrong: #f8d7da;
+            --progress-bg: #e0e0e0;
+            --shadow-color: rgba(0,0,0,0.3);
+            --shadow-light: rgba(0,0,0,0.1);
+            --btn-secondary-bg: #f0f0f0;
+            --btn-secondary-bg-hover: #e0e0e0;
+            --delete-btn-bg: #ff4757;
+            --delete-btn-bg-hover: #ff3344;
+            --correct-btn-bg: #28a745;
+            --correct-btn-bg-hover: #218838;
+            --wrong-btn-bg: #dc3545;
+            --wrong-btn-bg-hover: #c82333;
+            --edit-btn-bg: #17a2b8;
+            --edit-btn-bg-hover: #138496;
+            --undo-btn-bg: #6c757d;
+            --undo-btn-bg-hover: #5a6268;
+            --snackbar-bg: #333;
+            --routine-border: #667eea;
+            --task-border: #764ba2;
+            --empty-state-opacity: 0.5;
+            --drag-handle-color: #aaa;
+            --neon-glow: rgba(102, 126, 234, 0.6);
+            --progress-text-color: #667eea;
+            --report-excellent: #28a745;
+            --report-good: #17a2b8;
+            --report-average: #ffc107;
+            --report-weak: #dc3545;
+            --pct-excellent: #28a745;
+            --pct-good: #17a2b8;
+            --pct-average: #ffc107;
+            --pct-weak: #dc3545;
+        }
+
+        [data-theme="dark"] {
+            --bg-gradient-start: #1a1a2e;
+            --bg-gradient-end: #16213e;
+            --card-bg: rgba(30, 30, 50, 0.95);
+            --card-bg-alt: rgba(40, 40, 70, 0.9);
+            --text-primary: #f0f0f0;
+            --text-secondary: #ccc;
+            --text-muted: #aaa;
+            --text-white: #fff;
+            --input-bg: #2a2a4a;
+            --input-border: #444;
+            --task-bg: #252545;
+            --task-bg-correct: #1e5631;
+            --task-bg-wrong: #5c1e2a;
+            --progress-bg: #3a3a5a;
+            --shadow-color: rgba(0,0,0,0.5);
+            --shadow-light: rgba(0,0,0,0.2);
+            --btn-secondary-bg: #3a3a5a;
+            --btn-secondary-bg-hover: #4a4a6a;
+            --delete-btn-bg: #dc3545;
+            --delete-btn-bg-hover: #c82333;
+            --correct-btn-bg: #2ecc71;
+            --correct-btn-bg-hover: #27ae60;
+            --wrong-btn-bg: #e74c3c;
+            --wrong-btn-bg-hover: #c0392b;
+            --edit-btn-bg: #20c997;
+            --edit-btn-bg-hover: #1ea67d;
+            --undo-btn-bg: #6c757d;
+            --undo-btn-bg-hover: #5a6268;
+            --snackbar-bg: #444;
+            --routine-border: #8892ff;
+            --task-border: #a894ff;
+            --empty-state-opacity: 0.3;
+            --drag-handle-color: #666;
+            --neon-glow: rgba(136, 146, 255, 0.7);
+            --progress-text-color: #8892ff;
+            --report-excellent: #2ecc71;
+            --report-good: #20c997;
+            --report-average: #f39c12;
+            --report-weak: #e74c3c;
+            --pct-excellent: #2ecc71;
+            --pct-good: #20c997;
+            --pct-average: #f39c12;
+            --pct-weak: #e74c3c;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        .bg-animation { position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+        .floating-icon { position: absolute; font-size: 3rem; opacity: 0.1; animation: float 15s infinite ease-in-out; filter: drop-shadow(0 0 10px rgba(255,255,255,0.3)); transition: opacity 0.4s ease; user-select: none; }
+        [data-theme="dark"] .floating-icon { opacity: 0.05; }
+        .physics-1 { top: 10%; left: 10%; animation-delay: 0s; }
+        .physics-2 { top: 60%; left: 15%; animation-delay: 3s; }
+        .chemistry-1 { top: 20%; right: 10%; animation-delay: 2s; }
+        .chemistry-2 { top: 70%; right: 20%; animation-delay: 5s; }
+        .biology-1 { top: 40%; left: 5%; animation-delay: 4s; }
+        .biology-2 { top: 80%; left: 25%; animation-delay: 6s; }
+        .arabic-1 { top: 15%; right: 30%; animation-delay: 1s; }
+        .arabic-2 { top: 55%; right: 5%; animation-delay: 7s; }
+        .english-1 { top: 30%; left: 20%; animation-delay: 2.5s; }
+        .english-2 { top: 75%; right: 35%; animation-delay: 4.5s; }
+        .french-1 { top: 50%; right: 15%; animation-delay: 3.5s; }
+        .french-2 { top: 85%; left: 35%; animation-delay: 5.5s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg) scale(1); }
+            25% { transform: translateY(-30px) rotate(5deg) scale(1.1); }
+            50% { transform: translateY(0) rotate(0deg) scale(1); }
+            75% { transform: translateY(30px) rotate(-5deg) scale(0.9); }
+        }
+
+        /* ✅ الموجة المتحركة - تعمل بدون إنترنت */
+        .waves { position: fixed; bottom: 0; left: 0; width: 100%; height: 150px; z-index: 1; opacity: 0.2; pointer-events: none; overflow: hidden; }
+        [data-theme="dark"] .waves { opacity: 0.15; }
+        .wave { position: absolute; bottom: 0; left: 0; width: 200%; height: 100%; background-repeat: repeat-x; background-size: 50% 100%; animation: waveMove 10s linear infinite; }
+        .wave:nth-child(1) { 
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%23ffffff' fill-opacity='0.4' d='M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,112C672,96,768,96,864,112C960,128,1056,160,1152,165.3C1248,171,1344,149,1392,138.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'%3E%3C/path%3E%3C/svg%3E"); 
+        }
+        .wave:nth-child(2) { 
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%23ffffff' fill-opacity='0.2' d='M0,224L48,213.3C96,203,192,181,288,181.3C384,181,480,203,576,224C672,245,768,267,864,250.7C960,235,1056,181,1152,165.3C1248,149,1344,171,1392,181.3L1440,192L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'%3E%3C/path%3E%3C/svg%3E"); 
+            animation-delay: -5s; opacity: 0.6; 
+        }
+        @keyframes waveMove { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+        .container { 
+            position: relative; 
+            z-index: 10; 
+            max-width: 900px; 
+            margin: 0 auto; 
+            padding: 15px; 
+            padding-bottom: 80px;
+            padding-top: max(40px, env(safe-area-inset-top, 40px));
+        }
+
+        .header { text-align: center; margin-bottom: 25px; animation: fadeInDown 1s ease; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; }
+        .header h1 { color: var(--text-white); font-size: 1.8rem; font-weight: 900; text-shadow: 0 4px 15px rgba(0,0,0,0.3); margin: 0; }
+        .header p { color: rgba(255,255,255,0.9); font-size: 0.9rem; margin: 5px 0 0 0; }
+
+        .theme-toggle, .report-btn { background: rgba(255,255,255,0.2); border: 2px solid rgba(255,255,255,0.4); border-radius: 50px; padding: 6px 15px; cursor: pointer; display: flex; align-items: center; gap: 8px; color: var(--text-white); font-weight: 600; font-family: inherit; transition: all 0.3s ease; backdrop-filter: blur(5px); }
+        .theme-toggle:hover, .report-btn:hover { background: rgba(255,255,255,0.3); transform: translateY(-2px); }
+        .theme-toggle .icon, .report-btn .icon { font-size: 1.2rem; }
+        .header-actions { display: flex; gap: 10px; align-items: center; }
+
+        .timer-section { background: var(--card-bg); border-radius: 15px; padding: 20px; margin-bottom: 20px; box-shadow: 0 10px 40px var(--shadow-color); backdrop-filter: blur(10px); animation: fadeInUp 1s ease; transition: background 0.4s ease, box-shadow 0.4s ease; }
+        .timer-display { text-align: center; margin-bottom: 15px; }
+        .timer { font-size: 3rem; font-weight: 900; color: var(--bg-gradient-start); text-shadow: 0 2px 10px rgba(102, 126, 234, 0.3); font-family: 'Courier New', monospace; letter-spacing: 3px; transition: color 0.4s ease; }
+        [data-theme="dark"] .timer { color: #8892ff; text-shadow: 0 2px 10px rgba(136, 146, 255, 0.3); }
+        .timer-label { font-size: 1rem; color: var(--text-secondary); margin-top: 5px; }
+        .timer-controls { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+
+        .btn { padding: 10px 20px; border: none; border-radius: 50px; font-size: 0.9rem; font-weight: 700; cursor: pointer; transition: all 0.3s ease; font-family: inherit; }
+        .btn-primary { background: var(--bg-primary); color: white; box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4); }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6); }
+        .btn-secondary { background: var(--btn-secondary-bg); color: var(--bg-gradient-start); transition: all 0.3s ease; }
+        [data-theme="dark"] .btn-secondary { color: #8892ff; }
+        .btn-secondary:hover { background: var(--btn-secondary-bg-hover); transform: translateY(-2px); }
+
+        .mode-selector { display: flex; justify-content: center; gap: 8px; margin-bottom: 15px; flex-wrap: wrap; }
+        .mode-btn { padding: 6px 15px; border: 2px solid var(--bg-gradient-start); background: transparent; color: var(--bg-gradient-start); border-radius: 20px; cursor: pointer; transition: all 0.3s ease; font-family: inherit; font-weight: 600; font-size: 0.85rem; }
+        [data-theme="dark"] .mode-btn { border-color: #8892ff; color: #8892ff; }
+        .mode-btn.active { background: var(--bg-gradient-start); color: white; }
+        .mode-btn:hover { transform: translateY(-2px); }
+
+        .quote-section { background: var(--card-bg-alt); border-radius: 15px; padding: 20px; margin-bottom: 20px; text-align: center; box-shadow: 0 8px 30px var(--shadow-color); animation: fadeInUp 1s ease 0.2s both; position: relative; overflow: hidden; transition: background 0.4s ease, box-shadow 0.4s ease; }
+        .quote-section::before { content: '"'; position: absolute; top: -20px; right: 20px; font-size: 150px; color: rgba(102, 126, 234, 0.1); font-family: serif; pointer-events: none; }
+        [data-theme="dark"] .quote-section::before { color: rgba(136, 146, 255, 0.1); }
+        .quote-text { font-size: 1.2rem; color: var(--text-primary); font-weight: 700; line-height: 1.6; margin-bottom: 10px; }
+        .quote-author { color: var(--bg-gradient-start); font-weight: 600; }
+        [data-theme="dark"] .quote-author { color: #8892ff; }
+        .new-quote-btn { margin-top: 10px; padding: 6px 20px; background: transparent; border: 2px solid var(--bg-gradient-start); color: var(--bg-gradient-start); border-radius: 20px; cursor: pointer; transition: all 0.3s ease; font-family: inherit; font-weight: 600; font-size: 0.85rem; }
+        [data-theme="dark"] .new-quote-btn { border-color: #8892ff; color: #8892ff; }
+        .new-quote-btn:hover { background: var(--bg-gradient-start); color: white; }
+
+        .tasks-section { background: var(--card-bg); border-radius: 15px; padding: 20px; box-shadow: 0 10px 40px var(--shadow-color); animation: fadeInUp 1s ease 0.4s both; transition: background 0.4s ease, box-shadow 0.4s ease; margin-bottom: 20px; }
+        .tasks-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap: wrap; gap: 10px; }
+        .tasks-header h2 { color: var(--text-primary); font-size: 1.3rem; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+        .task-counter { background: var(--bg-primary); color: white; padding: 6px 15px; border-radius: 15px; font-weight: 700; font-size: 0.85rem; }
+
+        .add-task-form { display: flex; gap: 8px; margin-bottom: 15px; flex-wrap: wrap; align-items: center; }
+        .task-input { flex: 1; min-width: 150px; padding: 6px 12px; border: 2px solid var(--input-border); border-radius: 8px; font-size: 0.85rem; font-family: inherit; transition: all 0.3s ease; background: var(--input-bg); color: var(--text-primary); height: 36px; line-height: 1; }
+        .task-input:focus { outline: none; border-color: var(--bg-gradient-start); box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1); }
+        [data-theme="dark"] .task-input:focus { border-color: #8892ff; box-shadow: 0 0 0 3px rgba(136, 146, 255, 0.1); }
+
+        .category-toggle { display: flex; background: var(--btn-secondary-bg); border-radius: 8px; padding: 3px; gap: 3px; }
+        .category-btn { padding: 6px 12px; border: none; border-radius: 6px; background: transparent; color: var(--text-secondary); font-size: 0.8rem; font-weight: 600; cursor: pointer; transition: all 0.2s ease; font-family: inherit; }
+        .category-btn.active { background: var(--bg-gradient-start); color: white; }
+        [data-theme="dark"] .category-btn { color: #ccc; }
+        [data-theme="dark"] .category-btn.active { background: #8892ff; color: #1a1a2e; }
+
+        .tasks-list { list-style: none; min-height: 60px; }
+        .task-item { display: flex; align-items: flex-start; padding: 10px 12px; background: var(--task-bg); border-radius: 10px; margin-bottom: 8px; transition: all 0.3s ease; animation: slideIn 0.3s ease; border-right: 4px solid var(--routine-border); cursor: grab; user-select: none; position: relative; }
+        .task-item.task-type { border-right-color: var(--task-border); }
+        .task-item:active { cursor: grabbing; }
+        .task-item.dragging { opacity: 0.5; background: var(--card-bg); box-shadow: 0 8px 25px var(--shadow-color); z-index: 100; }
+        .task-item.drag-over { border-top: 3px dashed var(--bg-gradient-start); }
+        [data-theme="dark"] .task-item { border-right-color: #8892ff; }
+        [data-theme="dark"] .task-item.task-type { border-right-color: #a894ff; }
+        .task-item:hover { transform: translateX(-5px); box-shadow: 0 4px 15px var(--shadow-light); }
+        .task-item.active .task-actions { opacity: 1; transform: translateX(0); pointer-events: all; }
+        .task-item.active { box-shadow: 0 4px 15px var(--shadow-light); }
+        .task-item.correct { border-right-color: var(--correct-btn-bg); background: var(--task-bg-correct); }
+        .task-item.wrong { border-right-color: var(--wrong-btn-bg); background: var(--task-bg-wrong); }
+        .task-item.correct .task-text, .task-item.wrong .task-text { text-decoration: line-through; color: var(--text-muted); }
+        .task-item.editing { background: var(--input-bg); border-color: var(--bg-gradient-start); }
+
+        .task-content { flex: 1; margin-right: 8px; overflow: hidden; }
+        .task-text { font-size: 0.85rem; color: var(--text-primary); font-weight: 600; white-space: pre-wrap; word-break: break-word; line-height: 1.4; max-width: 100%; cursor: pointer; padding: 4px 0; }
+        .task-text:hover { color: var(--bg-gradient-start); }
+        [data-theme="dark"] .task-text:hover { color: #8892ff; }
+        .task-edit-input { flex: 1; padding: 6px 10px; border: 2px solid var(--bg-gradient-start); border-radius: 6px; font-size: 0.85rem; font-family: inherit; background: var(--input-bg); color: var(--text-primary); margin-right: 8px; outline: none; min-height: 32px; resize: none; width: 100%; }
+        [data-theme="dark"] .task-edit-input { border-color: #8892ff; }
+
+        .task-actions { display: flex; flex-direction: row; gap: 4px; align-items: flex-start; margin-right: 8px; padding-right: 8px; border-right: 1px solid var(--input-border); opacity: 0; transform: translateX(20px); transition: all 0.3s ease; pointer-events: none; flex-shrink: 0; padding-top: 2px; }
+        [data-theme="dark"] .task-actions { border-right-color: #444; }
+        .task-item:hover .task-actions { opacity: 1; transform: translateX(0); pointer-events: all; }
+        .task-item.editing .task-actions { opacity: 1; transform: translateX(0); pointer-events: all; }
+
+        .action-btn { width: 26px; height: 26px; border: none; border-radius: 6px; cursor: pointer; font-weight: 700; font-size: 0.8rem; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; padding: 0; line-height: 1; flex-shrink: 0; }
+        .correct-btn { background: var(--correct-btn-bg); color: white; } .correct-btn:hover { background: var(--correct-btn-bg-hover); transform: scale(1.15); }
+        .wrong-btn { background: var(--wrong-btn-bg); color: white; } .wrong-btn:hover { background: var(--wrong-btn-bg-hover); transform: scale(1.15); }
+        .delete-btn { background: var(--delete-btn-bg); color: white; } .delete-btn:hover { background: var(--delete-btn-bg-hover); transform: scale(1.15); }
+        .cancel-btn { background: var(--wrong-btn-bg); color: white; } .cancel-btn:hover { background: var(--wrong-btn-bg-hover); transform: scale(1.15); }
+
+        .drag-handle { cursor: grab; padding: 3px 6px; color: var(--drag-handle-color); font-size: 1.2rem; margin-left: 4px; transition: color 0.3s ease; flex-shrink: 0; touch-action: none; user-select: none; margin-top: 2px; }
+        .drag-handle:active { cursor: grabbing; } .drag-handle:hover { color: var(--bg-gradient-start); }
+        [data-theme="dark"] .drag-handle:hover { color: #8892ff; }
+
+        .empty-state { text-align: center; padding: 25px 15px; color: var(--text-muted); }
+        .empty-state-icon { font-size: 2.5rem; margin-bottom: 8px; opacity: var(--empty-state-opacity); }
+
+        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideIn { from { opacity: 0; transform: translateX(-20px); } to { opacity: 1; transform: translateX(0); } }
+
+        @media (max-width: 768px) {
+            .header { flex-direction: column; text-align: center; } .header h1 { font-size: 1.5rem; }
+            .timer { font-size: 2.5rem; } .quote-text { font-size: 1rem; } .floating-icon { font-size: 2rem; }
+            .add-task-form { flex-direction: column; } .tasks-header { flex-direction: column; text-align: center; }
+            .task-item { flex-wrap: nowrap; } .task-actions { margin-top: 0; margin-right: 0; padding-right: 0; border-right: none; width: auto; justify-content: center; }
+            .header-actions { width: 100%; justify-content: center; }
+        }
+
+        .progress-container { margin-top: 12px; background: var(--progress-bg); border-radius: 8px; height: 8px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); }
+        .progress-bar { height: 100%; background: var(--bg-primary); transition: width 0.5s ease; border-radius: 8px; box-shadow: 0 0 10px var(--neon-glow); position: relative; }
+        [data-theme="dark"] .progress-bar { background: linear-gradient(90deg, #8892ff, #a8b4ff); box-shadow: 0 0 15px rgba(136, 146, 255, 0.7); }
+
+        .snackbar { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(100px); background: var(--snackbar-bg); color: white; padding: 12px 20px; border-radius: 50px; font-weight: 600; font-size: 0.9rem; display: flex; align-items: center; gap: 10px; box-shadow: 0 10px 40px rgba(0,0,0,0.3); z-index: 1000; transition: transform 0.3s ease; }
+        .snackbar.show { transform: translateX(-50%) translateY(0); }
+        .snackbar button { background: var(--undo-btn-bg); color: white; border: none; padding: 6px 16px; border-radius: 20px; cursor: pointer; font-weight: 600; font-family: inherit; }
+        .snackbar button:hover { background: var(--undo-btn-bg-hover); }
+
+        .section-divider { height: 2px; background: linear-gradient(90deg, transparent, var(--bg-gradient-start), transparent); margin: 25px 0; opacity: 0.5; }
+        [data-theme="dark"] .section-divider { background: linear-gradient(90deg, transparent, #8892ff, transparent); }
+
+        .footer-credit { text-align: center; padding: 20px; color: rgba(255,255,255,0.95); font-size: 1rem; font-weight: 700; animation: fadeInUp 1s ease 0.6s both; background: rgba(0,0,0,0.1); border-top: 1px solid rgba(255,255,255,0.2); border-radius: 10px; margin-top: 20px; }
+        .footer-credit a { color: #fff; text-decoration: none; border-bottom: 2px solid rgba(255,255,255,0.8); transition: all 0.3s ease; padding-bottom: 2px; }
+        .footer-credit a:hover { border-bottom-color: #fff; text-shadow: 0 0 10px rgba(255,255,255,0.8); }
+
+        .brain-section { background: var(--card-bg); border-radius: 15px; padding: 20px; margin-bottom: 20px; box-shadow: 0 10px 40px var(--shadow-color); animation: fadeInUp 1s ease 0.5s both; transition: background 0.4s ease, box-shadow 0.4s ease; }
+        .brain-header { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+        .brain-title { font-size: 1.2rem; font-weight: 700; color: var(--text-primary); }
+        .brain-textarea { width: 100%; min-height: 120px; padding: 12px; border: 2px solid var(--input-border); border-radius: 10px; font-size: 0.95rem; font-family: inherit; background: var(--input-bg); color: var(--text-primary); resize: vertical; line-height: 1.6; }
+        .brain-textarea:focus { outline: none; border-color: var(--bg-gradient-start); box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1); }
+        [data-theme="dark"] .brain-textarea:focus { border-color: #8892ff; box-shadow: 0 0 0 3px rgba(136, 146, 255, 0.1); }
+        .brain-status { text-align: left; font-size: 0.75rem; color: var(--text-muted); margin-top: 8px; display: flex; align-items: center; gap: 5px; }
+        .brain-status.saved { color: var(--correct-btn-bg); }
+
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: none; justify-content: center; align-items: center; z-index: 2000; padding: 20px; animation: fadeIn 0.3s ease; }
+        .modal-overlay.show { display: flex; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .modal { background: var(--card-bg); border-radius: 20px; padding: 25px; max-width: 650px; width: 100%; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 60px var(--shadow-color); animation: slideUp 0.4s ease; transition: background 0.4s ease; }
+        @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 2px solid var(--routine-border); }
+        .modal-header h3 { color: var(--text-primary); font-size: 1.4rem; font-weight: 700; }
+        .modal-close { background: var(--delete-btn-bg); color: white; border: none; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-size: 1.2rem; display: flex; align-items: center; justify-content: center; transition: transform 0.2s ease; }
+        .modal-close:hover { transform: scale(1.1); }
+
+        .report-section { margin-bottom: 20px; padding: 15px; background: var(--card-bg-alt); border-radius: 12px; transition: background 0.4s ease; }
+        .report-section h4 { color: var(--text-primary); margin-bottom: 10px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+        .report-stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 15px; }
+        .stat-card { background: var(--input-bg); padding: 12px; border-radius: 10px; text-align: center; border-right: 3px solid var(--bg-gradient-start); }
+        [data-theme="dark"] .stat-card { border-right-color: #8892ff; }
+        .stat-value { font-size: 1.5rem; font-weight: 900; }
+        .stat-label { font-size: 0.8rem; color: var(--text-secondary); }
+        .grade-badge { display: inline-block; padding: 8px 20px; border-radius: 25px; font-weight: 700; font-size: 1.1rem; margin: 10px 0; }
+        .grade-excellent { background: var(--report-excellent); color: white; }
+        .grade-good { background: var(--report-good); color: white; }
+        .grade-average { background: var(--report-average); color: #333; }
+        .grade-weak { background: var(--report-weak); color: white; }
+        .improvement-list { list-style: none; padding-right: 0; }
+        .improvement-list li { padding: 8px 0; padding-right: 25px; position: relative; color: var(--text-secondary); font-size: 0.9rem; }
+        .improvement-list li::before { content: "💡"; position: absolute; right: 0; top: 8px; }
+        .incomplete-list li::before { content: "⏳"; }
+        .report-date { text-align: center; color: var(--text-muted); font-size: 0.85rem; margin-top: 15px; padding-top: 15px; border-top: 1px dashed var(--input-border); }
+        .export-btn { width: 100%; padding: 12px; background: var(--bg-primary); color: white; border: none; border-radius: 10px; font-weight: 700; cursor: pointer; margin-top: 10px; transition: transform 0.2s ease, box-shadow 0.2s ease; display: flex; align-items: center; justify-content: center; gap: 8px; }
+        .export-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5); }
+
+        .report-history-section { margin-bottom: 20px; padding: 15px; background: var(--card-bg-alt); border-radius: 12px; transition: background 0.4s ease; }
+        .report-history-section h4 { color: var(--text-primary); margin-bottom: 10px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+        .report-history-list { max-height: 250px; overflow-y: auto; }
+        .report-history-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 12px; background: var(--task-bg); border-radius: 8px; margin-bottom: 6px; transition: all 0.3s ease; cursor: pointer; }
+        .report-history-item:hover { background: var(--card-bg); box-shadow: 0 2px 8px var(--shadow-light); }
+        .report-history-info { flex: 1; }
+        .report-history-date { font-size: 0.8rem; color: var(--text-secondary); font-weight: 600; }
+        .report-history-grade { font-size: 0.75rem; padding: 2px 8px; border-radius: 10px; color: white; font-weight: 700; }
+        .report-history-details { font-size: 0.7rem; color: var(--text-muted); margin-top: 3px; }
+        .report-history-delete { background: var(--delete-btn-bg); color: white; border: none; width: 24px; height: 24px; border-radius: 50%; cursor: pointer; font-size: 0.7rem; display: flex; align-items: center; justify-content: center; margin-right: 10px; transition: all 0.2s ease; }
+        .report-history-delete:hover { transform: scale(1.15); }
+        .report-history-empty { text-align: center; color: var(--text-muted); padding: 20px; font-size: 0.85rem; }
+        .clear-all-history { background: var(--delete-btn-bg); color: white; border: none; padding: 8px 20px; border-radius: 20px; cursor: pointer; font-weight: 600; font-size: 0.8rem; font-family: inherit; margin-top: 10px; transition: all 0.3s ease; }
+        .clear-all-history:hover { transform: translateY(-2px); }
+
+        .report-detail-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: none; justify-content: center; align-items: center; z-index: 2500; padding: 20px; }
+        .report-detail-overlay.show { display: flex; }
+        .report-detail-box { background: var(--card-bg); border-radius: 20px; padding: 25px; max-width: 550px; width: 100%; max-height: 85vh; overflow-y: auto; box-shadow: 0 20px 60px var(--shadow-color); animation: slideUp 0.3s ease; }
+        .report-detail-box h3 { color: var(--text-primary); margin-bottom: 15px; text-align: center; font-size: 1.2rem; }
+        .detail-stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 15px; }
+        .detail-stat-card { background: var(--task-bg); padding: 12px; border-radius: 10px; text-align: center; }
+        .detail-stat-value { font-size: 1.3rem; font-weight: 900; }
+        .detail-stat-label { font-size: 0.75rem; color: var(--text-secondary); }
+        .detail-section { margin-bottom: 12px; }
+        .detail-section h5 { color: var(--text-primary); font-size: 0.9rem; margin-bottom: 6px; display: flex; align-items: center; gap: 5px; }
+        .detail-task-list { list-style: none; padding-right: 0; }
+        .detail-task-list li { padding: 4px 0; padding-right: 20px; position: relative; font-size: 0.85rem; color: var(--text-secondary); }
+        .detail-task-list li.correct::before { content: "✅"; position: absolute; right: 0; }
+        .detail-task-list li.incomplete::before { content: "⏳"; position: absolute; right: 0; }
+        .detail-back-btn { width: 100%; padding: 10px; background: var(--btn-secondary-bg); color: var(--bg-gradient-start); border: none; border-radius: 10px; font-weight: 700; cursor: pointer; font-family: inherit; margin-top: 10px; transition: all 0.3s ease; }
+        .detail-back-btn:hover { transform: translateY(-2px); }
+
+        .combined-section { margin: 25px 0; text-align: center; padding: 20px; background: var(--card-bg-alt); border-radius: 15px; }
+        .combined-title { font-size: 1.1rem; font-weight: 700; color: var(--text-primary); margin-bottom: 15px; }
+        .combined-visual { display: flex; justify-content: center; align-items: center; gap: 20px; flex-wrap: wrap; margin-bottom: 15px; }
+        .circular-progress { position: relative; width: 120px; height: 120px; }
+        .circular-progress svg { transform: rotate(-90deg); width: 120px; height: 120px; }
+        .circular-progress .bg-circle { fill: none; stroke: var(--progress-bg); stroke-width: 8; }
+        .circular-progress .progress-circle { fill: none; stroke-width: 8; stroke-linecap: round; transition: stroke-dashoffset 1s ease; }
+        .circular-progress .progress-value { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 1.5rem; font-weight: 900; }
+        .combined-bars { flex: 1; min-width: 250px; text-align: right; }
+        .combined-bar-item { margin-bottom: 12px; }
+        .combined-bar-label { display: flex; justify-content: space-between; font-size: 0.85rem; font-weight: 700; margin-bottom: 4px; color: var(--text-primary); }
+        .combined-bar-track { width: 100%; height: 10px; background: var(--progress-bg); border-radius: 5px; overflow: hidden; }
+        .combined-bar-fill { height: 100%; border-radius: 5px; transition: width 1s ease, background-color 0.5s ease; }
+        .combined-bar-fill.routine { background: var(--routine-border); }
+        .combined-bar-fill.tasks { background: var(--task-border); }
+        .combined-total { display: inline-flex; align-items: center; gap: 8px; padding: 8px 20px; background: var(--input-bg); border-radius: 25px; margin-top: 10px; font-weight: 700; font-size: 1rem; color: var(--text-primary); box-shadow: 0 2px 10px var(--shadow-light); }
+        .combined-total .total-icon { font-size: 1.2rem; }
+        .combined-total .total-pct { font-size: 1.3rem; font-weight: 900; }
+
+        .routine-task-split { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
+        .split-card { background: var(--input-bg); border-radius: 12px; padding: 15px; border-right: 4px solid; transition: background 0.4s ease; }
+        .split-card.routine-card { border-right-color: var(--routine-border); }
+        .split-card.task-card { border-right-color: var(--task-border); }
+        .split-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .split-title { font-weight: 700; color: var(--text-primary); font-size: 0.95rem; }
+        .split-percent { font-weight: 900; font-size: 1.2rem; }
+        .split-list { list-style: none; padding: 0; max-height: 150px; overflow-y: auto; }
+        .split-list li { padding: 3px 15px 3px 0; position: relative; font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 2px; }
+        .split-list li::before { position: absolute; right: 0; }
+        .split-list li.done::before { content: "✅"; }
+        .split-list li.undone::before { content: "⏳"; }
+
+        @media (max-width: 600px) {
+            .routine-task-split { grid-template-columns: 1fr; }
+            .combined-visual { flex-direction: column; }
+            .combined-bars { min-width: auto; width: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation">
+        <div class="floating-icon physics-1">⚛️</div><div class="floating-icon physics-2">🔭</div>
+        <div class="floating-icon chemistry-1">⚗️</div><div class="floating-icon chemistry-2">🧪</div>
+        <div class="floating-icon biology-1">🧬</div><div class="floating-icon biology-2">🔬</div>
+        <div class="floating-icon arabic-1">📖</div><div class="floating-icon arabic-2">✒️</div>
+        <div class="floating-icon english-1">🔤</div><div class="floating-icon english-2">📚</div>
+        <div class="floating-icon french-1">🇫</div><div class="floating-icon french-2">🥐</div>
+    </div>
+
+    <!-- ✅ الموجة المتحركة - تعمل بدون إنترنت -->
+    <div class="waves">
+        <div class="wave"></div>
+        <div class="wave"></div>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <div>
+                <h1>📋 برنامج المهام اليومية</h1>
+                <p>نظّم وقتك وحقق أهدافك</p>
+            </div>
+            <div class="header-actions">
+                <button class="report-btn" id="reportBtn" onclick="showReport()">
+                    <span class="icon">📊</span>
+                    <span>التقرير</span>
+                </button>
+                <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">
+                    <span class="icon" id="themeIcon">🌙</span>
+                    <span id="themeText">الوضع الداكن</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="timer-section">
+            <div class="mode-selector">
+                <button class="mode-btn active" data-mode="pomodoro">بومودورو (25 دقيقة)</button>
+                <button class="mode-btn" data-mode="shortBreak">راحة قصيرة (5 دقائق)</button>
+                <button class="mode-btn" data-mode="longBreak">راحة طويلة (15 دقيقة)</button>
+            </div>
+            <div class="timer-display">
+                <div class="timer" id="timer">25:00</div>
+                <div class="timer-label">⏱️ الوقت المتبقي</div>
+            </div>
+            <div class="timer-controls">
+                <button class="btn btn-primary" id="startBtn">▶️ ابدأ</button>
+                <button class="btn btn-secondary" id="pauseBtn">⏸️ إيقاف</button>
+                <button class="btn btn-secondary" id="resetBtn">🔄 إعادة</button>
+            </div>
+        </div>
+
+        <div class="quote-section">
+            <div class="quote-text" id="quoteText">النجاح ليس صدفة، بل هو نتيجة المثابرة والتفاني</div>
+            <div class="quote-author" id="quoteAuthor">- مثل عربي</div>
+            <button class="new-quote-btn" onclick="newQuote()">💫 اقتباس جديد</button>
+        </div>
+
+        <div class="tasks-section" id="routineSection">
+            <div class="tasks-header">
+                <h2>🔄 روتينك اليومي</h2>
+                <div class="task-counter"><span id="routineCompleted">0</span> / <span id="routineTotal">0</span> منجزة</div>
+            </div>
+            <ul class="tasks-list" id="routineList">
+                <div class="empty-state"><div class="empty-state-icon">🔄</div><p>لا توجد روتينيات بعد. أضف روتينك الأول!</p></div>
+            </ul>
+            <div style="margin-top: 10px; display: flex; justify-content: space-between; align-items: center;">
+                <span style="font-size: 0.75rem; color: var(--text-secondary);">نسبة إنجاز الروتين</span>
+                <span id="routineProgressPercent" style="font-weight: 700; font-size: 0.9rem;">0%</span>
+            </div>
+            <div class="progress-container"><div class="progress-bar" id="routineProgressBar" style="width: 0%"></div></div>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <div class="tasks-section" id="taskSection">
+            <div class="tasks-header">
+                <h2>📋 المهام اليومية</h2>
+                <div class="task-counter"><span id="taskCompleted">0</span> / <span id="taskTotal">0</span> منجزة</div>
+            </div>
+            <div class="add-task-form">
+                <input type="text" class="task-input" id="taskInput" placeholder="أضف مهمة جديدة...">
+                <div class="category-toggle">
+                    <button class="category-btn active" id="btnRoutine" onclick="setCategory('routine')">🔄 روتين</button>
+                    <button class="category-btn" id="btnTask" onclick="setCategory('task')">📋 مهمة</button>
+                </div>
+                <button class="btn btn-primary" onclick="addTask()">➕ إضافة</button>
+            </div>
+            <ul class="tasks-list" id="taskList">
+                <div class="empty-state"><div class="empty-state-icon">📝</div><p>لا توجد مهام بعد. أضف مهمتك الأولى!</p></div>
+            </ul>
+            <div style="margin-top: 10px; display: flex; justify-content: space-between; align-items: center;">
+                <span style="font-size: 0.75rem; color: var(--text-secondary);">نسبة إنجاز المهام</span>
+                <span id="taskProgressPercent" style="font-weight: 700; font-size: 0.9rem;">0%</span>
+            </div>
+            <div class="progress-container"><div class="progress-bar" id="taskProgressBar" style="width: 0%"></div></div>
+        </div>
+
+        <div class="brain-section">
+            <div class="brain-header">
+                <span class="brain-title">💭 في دماغي...</span>
+            </div>
+            <textarea class="brain-textarea" id="brainDump" placeholder="اكتب أي فكرة أو حاجة في دماغك عاوز تعملها أو تفكر فيها..."></textarea>
+            <div class="brain-status" id="brainStatus">💾 يُحفظ تلقائياً</div>
+        </div>
+
+        <div class="footer-credit">
+            Made by <a href="#" onclick="return false;">Ahmed Emad Farhoud</a> 💻✨
+        </div>
+    </div>
+
+    <div class="snackbar" id="undoSnackbar">
+        <span>🗑️ تم الحذف</span>
+        <button onclick="undoDelete()">↩️ تراجع</button>
+    </div>
+
+    <div class="report-detail-overlay" id="reportDetailModal">
+        <div class="report-detail-box" id="reportDetailContent"></div>
+    </div>
+
+    <div class="modal-overlay" id="reportModal">
+        <div class="modal" id="reportContent">
+            <div class="modal-header">
+                <h3>📊 تقرير الأداء اليومي</h3>
+                <button class="modal-close" onclick="hideReport()">✕</button>
+            </div>
+
+            <div class="routine-task-split" id="reportSplit"></div>
+            <div class="combined-section" id="reportCombined"></div>
+
+            <div class="report-section"><h4>🎯 مجالات للتحسين</h4><ul class="improvement-list" id="reportImprovements"><li>جاري تحليل البيانات...</li></ul></div>
+            <div class="report-section"><h4>💡 نصائح للتطوير</h4><ul class="improvement-list" id="reportTips"><li>استمر في المثابرة، كل خطوة تحسب لك!</li></ul></div>
+
+            <div class="report-history-section">
+                <h4>📚 سجل التقارير <span style="font-size:0.75rem;color:var(--text-muted);font-weight:400;">(اضغط للتفاصيل)</span></h4>
+                <div class="report-history-list" id="reportHistoryList">
+                    <div class="report-history-empty">لا توجد تقارير محفوظة بعد</div>
+                </div>
+                <button class="clear-all-history" id="clearAllHistoryBtn" onclick="clearAllHistory()" style="display:none;">🗑️ حذف كل السجل</button>
+            </div>
+
+            <button class="export-btn" id="exportBtn" onclick="exportReport()">📋 نسخ التقرير وبدء يوم جديد</button>
+            <div class="report-date" id="reportDate"></div>
+        </div>
+    </div>
+
+    <script>
+        // ==================== SERVICE WORKER REGISTRATION ====================
+        if ('serviceWorker' in navigator) {
+            const swCode = `
+                const CACHE_NAME = 'tasks-app-v1';
+                const urlsToCache = ['/'];
+                
+                self.addEventListener('install', event => {
+                    event.waitUntil(
+                        caches.open(CACHE_NAME)
+                            .then(cache => cache.addAll(urlsToCache))
+                    );
+                    self.skipWaiting();
+                });
+                
+                self.addEventListener('fetch', event => {
+                    event.respondWith(
+                        caches.match(event.request)
+                            .then(response => {
+                                if (response) return response;
+                                return fetch(event.request).catch(() => caches.match('/'));
+                            })
+                    );
+                });
+                
+                self.addEventListener('activate', event => {
+                    const cacheWhitelist = [CACHE_NAME];
+                    event.waitUntil(
+                        caches.keys().then(cacheNames => {
+                            return Promise.all(
+                                cacheNames.map(cacheName => {
+                                    if (cacheWhitelist.indexOf(cacheName) === -1) {
+                                        return caches.delete(cacheName);
+                                    }
+                                })
+                            );
+                        })
+                    );
+                    self.clients.claim();
+                });
+            `;
+            
+            const blob = new Blob([swCode], { type: 'application/javascript' });
+            const swUrl = URL.createObjectURL(blob);
+            
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register(swUrl)
+                    .then(reg => console.log('✅ Service Worker registered'))
+                    .catch(err => console.log('❌ Service Worker registration failed'));
+            });
+        }
+
+        // ==================== DARK MODE ====================
+        function toggleTheme() {
+            const html = document.documentElement;
+            const themeIcon = document.getElementById('themeIcon');
+            const themeText = document.getElementById('themeText');
+            if (html.getAttribute('data-theme') === 'dark') {
+                html.removeAttribute('data-theme');
+                themeIcon.textContent = '🌙';
+                themeText.textContent = 'الوضع الداكن';
+                localStorage.setItem('theme', 'light');
+            } else {
+                html.setAttribute('data-theme', 'dark');
+                themeIcon.textContent = '☀️';
+                themeText.textContent = 'الوضع الفاتح';
+                localStorage.setItem('theme', 'dark');
+            }
+            updateAllProgressColors();
+        }
+
+        // ==================== TIMER WITH SOUND (Offline) ====================
+        let timerInterval, timeLeft = 25 * 60, isRunning = false, currentMode = 'pomodoro';
+        const modes = { pomodoro: 25*60, shortBreak: 5*60, longBreak: 15*60 };
+
+        function playAlarmSound() {
+            try {
+                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                const beepCount = 5, beepDuration = 0.15, beepInterval = 0.3;
+                for (let i = 0; i < beepCount; i++) {
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    osc.connect(gain); gain.connect(audioCtx.destination);
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(880, audioCtx.currentTime + i * beepInterval);
+                    gain.gain.setValueAtTime(0.5, audioCtx.currentTime + i * beepInterval);
+                    gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + i * beepInterval + beepDuration);
+                    osc.start(audioCtx.currentTime + i * beepInterval);
+                    osc.stop(audioCtx.currentTime + i * beepInterval + beepDuration);
+                }
+                const fOsc = audioCtx.createOscillator();
+                const fGain = audioCtx.createGain();
+                fOsc.connect(fGain); fGain.connect(audioCtx.destination);
+                fOsc.type = 'sine';
+                fOsc.frequency.setValueAtTime(1200, audioCtx.currentTime + beepCount * beepInterval);
+                fGain.gain.setValueAtTime(0.4, audioCtx.currentTime + beepCount * beepInterval);
+                fGain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + beepCount * beepInterval + 0.5);
+                fOsc.start(audioCtx.currentTime + beepCount * beepInterval);
+                fOsc.stop(audioCtx.currentTime + beepCount * beepInterval + 0.5);
+            } catch(e) {}
+        }
+
+        // ==================== TASKS (Offline Storage) ====================
+        let tasks = JSON.parse(localStorage.getItem('userTasks')) || [];
+        let editingTaskId = null;
+        let currentCategory = 'routine';
+        let undoStack = JSON.parse(localStorage.getItem('undoStack')) || [];
+        let undoTimeout = null;
+        let brainDumpText = localStorage.getItem('brainDump') || '';
+        let reportHistory = JSON.parse(localStorage.getItem('reportHistory')) || [];
+
+        function saveToStorage() { 
+            try { localStorage.setItem('userTasks', JSON.stringify(tasks)); } catch(e) {}
+        }
+        function saveUndoStack() { 
+            try { localStorage.setItem('undoStack', JSON.stringify(undoStack)); } catch(e) {}
+        }
+        function saveBrainDump() { 
+            try {
+                localStorage.setItem('brainDump', document.getElementById('brainDump').value);
+                const st = document.getElementById('brainStatus');
+                st.textContent = '✅ تم الحفظ'; st.classList.add('saved');
+                setTimeout(() => { st.textContent = '💾 يُحفظ تلقائياً'; st.classList.remove('saved'); }, 2000);
+            } catch(e) {}
+        }
+        function saveReportHistory() { 
+            try { localStorage.setItem('reportHistory', JSON.stringify(reportHistory)); } catch(e) {}
+        }
+
+        function setCategory(cat) {
+            currentCategory = cat;
+            document.getElementById('btnRoutine').classList.toggle('active', cat === 'routine');
+            document.getElementById('btnTask').classList.toggle('active', cat === 'task');
+        }
+
+        function addTask() {
+            const inp = document.getElementById('taskInput');
+            const txt = inp.value.trim();
+            if (txt === '') return;
+            tasks.push({ id: Date.now(), text: txt, status: null, category: currentCategory, order: tasks.filter(t => t.category === currentCategory).length });
+            inp.value = '';
+            saveToStorage(); renderAllTasks();
+        }
+
+        function setTaskStatus(id, status, event) {
+            if(event) event.stopPropagation();
+            const task = tasks.find(t => t.id === id);
+            if (task) { task.status = (task.status === status) ? null : status; saveToStorage(); renderAllTasks(); }
+        }
+
+        function deleteTask(id, event) {
+            if(event) event.stopPropagation();
+            const idx = tasks.findIndex(t => t.id === id);
+            if (idx === -1) return;
+            const del = tasks.splice(idx, 1)[0];
+            undoStack.push({ task: del, index: idx, timestamp: Date.now() });
+            if (undoStack.length > 10) undoStack.shift();
+            saveToStorage(); saveUndoStack(); renderAllTasks(); showUndoSnackbar();
+        }
+
+        function undoDelete() {
+            if (undoStack.length === 0) return;
+            const last = undoStack.pop();
+            tasks.splice(last.index, 0, last.task);
+            ['routine', 'task'].forEach(cat => { tasks.filter(t => t.category === cat).forEach((t, i) => t.order = i); });
+            saveToStorage(); saveUndoStack(); renderAllTasks(); hideUndoSnackbar();
+        }
+
+        function showUndoSnackbar() {
+            const s = document.getElementById('undoSnackbar');
+            s.classList.add('show');
+            if (undoTimeout) clearTimeout(undoTimeout);
+            undoTimeout = setTimeout(() => { hideUndoSnackbar(); undoStack.pop(); saveUndoStack(); }, 5000);
+        }
+        function hideUndoSnackbar() {
+            document.getElementById('undoSnackbar').classList.remove('show');
+            if (undoTimeout) clearTimeout(undoTimeout);
+        }
+
+        function startEdit(id, event) {
+            if(event) event.stopPropagation();
+            if (event && event.target.closest('.action-btn')) return;
+            if (editingTaskId === id) return;
+            if (!tasks.find(t => t.id === id)) return;
+            editingTaskId = id;
+            renderAllTasks();
+            setTimeout(() => {
+                const el = document.querySelector(`[data-edit-id="${id}"]`);
+                if (el) { el.focus(); const r = document.createRange(); r.selectNodeContents(el); const s = window.getSelection(); s.removeAllRanges(); s.addRange(r); }
+            }, 50);
+        }
+        function saveEdit(id, event) {
+            if(event) event.stopPropagation();
+            const inp = document.querySelector(`[data-edit-id="${id}"]`);
+            if (!inp) return;
+            const txt = inp.value.trim();
+            if (txt === '') { cancelEdit(id); return; }
+            const t = tasks.find(t => t.id === id);
+            if (t) { t.text = txt; saveToStorage(); editingTaskId = null; renderAllTasks(); }
+        }
+        function cancelEdit(id, event) { if(event) event.stopPropagation(); editingTaskId = null; renderAllTasks(); }
+        function handleEditKeydown(e, id) {
+            if (e.key === 'Enter') { e.preventDefault(); saveEdit(id, e); }
+            else if (e.key === 'Escape') cancelEdit(id, e);
+        }
+
+        function initBrainDump() {
+            const ta = document.getElementById('brainDump');
+            ta.value = brainDumpText;
+            ta.addEventListener('input', saveBrainDump);
+        }
+
+        // ✅ RESET DAY: Routine refreshes (keeps items), Tasks correct are deleted, wrong/pending refresh
+        function resetDayAfterReport() {
+            tasks = tasks.map(t => {
+                if (t.category === 'routine') {
+                    return { ...t, status: null };
+                }
+                if (t.status === 'correct') return null;
+                return { ...t, status: null };
+            }).filter(t => t !== null);
+            
+            ['routine', 'task'].forEach(cat => {
+                tasks.filter(t => t.category === cat).forEach((t, i) => t.order = i);
+            });
+            saveToStorage();
+            renderAllTasks();
+        }
+
+        // ==================== PERCENTAGE COLOR HELPERS ====================
+        function getPctColor(pct) {
+            if (pct >= 80) return 'var(--pct-excellent)';
+            if (pct >= 60) return 'var(--pct-good)';
+            if (pct >= 40) return 'var(--pct-average)';
+            return 'var(--pct-weak)';
+        }
+
+        function getGrade(pct) {
+            if (pct >= 90) return { grade: 'ممتاز 🌟', class: 'grade-excellent', color: '#28a745', tips: ['أنت نموذج يُحتذى به!', 'استمر في هذا المستوى الرائع', 'شارك خبراتك مع الآخرين'] };
+            if (pct >= 75) return { grade: 'جيد جداً 👍', class: 'grade-good', color: '#17a2b8', tips: ['أداؤك رائع، حاول الوصول للممتاز', 'ركز على المهام المتبقية', 'حافظ على هذا الزخم'] };
+            if (pct >= 50) return { grade: 'جيد 👌', class: 'grade-average', color: '#ffc107', tips: ['أنت على الطريق الصحيح', 'حاول زيادة تركيزك على الروتين', 'حدد أولوياتك بشكل أفضل'] };
+            return { grade: 'يحتاج تحسين 💪', class: 'grade-weak', color: '#dc3545', tips: ['لا تيأس، كل بداية صعبة', 'ابدأ بمهام صغيرة وسهلة', 'خصص وقتاً محدداً لكل مهمة'] };
+        }
+
+        // ==================== REPORT HISTORY ====================
+        function renderReportHistory() {
+            const list = document.getElementById('reportHistoryList');
+            const clearBtn = document.getElementById('clearAllHistoryBtn');
+            
+            if (reportHistory.length === 0) {
+                list.innerHTML = '<div class="report-history-empty">لا توجد تقارير محفوظة بعد</div>';
+                clearBtn.style.display = 'none';
+                return;
+            }
+            
+            clearBtn.style.display = 'block';
+            const sorted = [...reportHistory].reverse();
+            
+            list.innerHTML = sorted.map((report, idx) => {
+                const realIdx = reportHistory.length - 1 - idx;
+                const gi = getGrade(report.totalPercent);
+                return `<div class="report-history-item" onclick="showReportDetail(${realIdx})">
+                    <div class="report-history-info">
+                        <div class="report-history-date">📅 ${report.date}</div>
+                        <div class="report-history-details">روتين: ${report.routinePercent}% · مهام: ${report.taskPercent}% · كلي: ${report.totalPercent}%</div>
+                    </div>
+                    <span class="report-history-grade" style="background: ${gi.color};">${report.totalPercent}%</span>
+                    <button class="report-history-delete" onclick="event.stopPropagation(); deleteReportHistory(${realIdx})">✕</button>
+                </div>`;
+            }).join('');
+        }
+
+        function showReportDetail(index) {
+            const r = reportHistory[index];
+            if (!r) return;
+            const gi = getGrade(r.totalPercent);
+            
+            let rComp = r.routineCompletedList && r.routineCompletedList.length > 0 
+                ? r.routineCompletedList.map(t => `<li class="correct">${t}</li>`).join('') 
+                : '<li style="color:var(--text-muted);">لا توجد بيانات</li>';
+            let rInc = r.routineIncompleteList && r.routineIncompleteList.length > 0 
+                ? r.routineIncompleteList.map(t => `<li class="incomplete">${t}</li>`).join('') 
+                : '<li style="color:var(--text-muted);">لا توجد بيانات</li>';
+            let tComp = r.taskCompletedList && r.taskCompletedList.length > 0 
+                ? r.taskCompletedList.map(t => `<li class="correct">${t}</li>`).join('') 
+                : '<li style="color:var(--text-muted);">لا توجد بيانات</li>';
+            let tInc = r.taskIncompleteList && r.taskIncompleteList.length > 0 
+                ? r.taskIncompleteList.map(t => `<li class="incomplete">${t}</li>`).join('') 
+                : '<li style="color:var(--text-muted);">لا توجد بيانات</li>';
+            
+            document.getElementById('reportDetailContent').innerHTML = `
+                <h3>📊 تفاصيل التقرير</h3>
+                <div style="text-align:center;margin-bottom:15px;">
+                    <span class="grade-badge" style="background:${gi.color};color:white;">${r.date}</span>
+                </div>
+                <div class="detail-stats">
+                    <div class="detail-stat-card"><div class="detail-stat-value">${r.totalPercent}%</div><div class="detail-stat-label">النسبة الكلية</div></div>
+                    <div class="detail-stat-card"><div class="detail-stat-value" style="color:var(--routine-border);">${r.routinePercent}%</div><div class="detail-stat-label">🔄 الروتين</div></div>
+                    <div class="detail-stat-card"><div class="detail-stat-value" style="color:var(--task-border);">${r.taskPercent}%</div><div class="detail-stat-label">📋 المهام</div></div>
+                    <div class="detail-stat-card"><div class="detail-stat-value">${r.totalTasks}</div><div class="detail-stat-label">إجمالي المهام</div></div>
+                </div>
+                <div class="detail-section"><h5>🔄 روتينك - الي اتعمل (${r.routineCompleted})</h5><ul class="detail-task-list">${rComp}</ul></div>
+                <div class="detail-section"><h5>🔄 روتينك - الي متعملش (${r.routineIncomplete})</h5><ul class="detail-task-list">${rInc}</ul></div>
+                <div class="detail-section"><h5>📋 مهامك - الي اتعمل (${r.taskCompleted})</h5><ul class="detail-task-list">${tComp}</ul></div>
+                <div class="detail-section"><h5>📋 مهامك - الي متعملش (${r.taskIncomplete})</h5><ul class="detail-task-list">${tInc}</ul></div>
+                <button class="detail-back-btn" onclick="closeReportDetail()">↩️ رجوع</button>
+            `;
+            document.getElementById('reportDetailModal').classList.add('show');
+        }
+
+        function closeReportDetail() { document.getElementById('reportDetailModal').classList.remove('show'); }
+        function deleteReportHistory(i) { reportHistory.splice(i, 1); saveReportHistory(); renderReportHistory(); }
+        function clearAllHistory() {
+            if (confirm('هل أنت متأكد من حذف كل سجل التقارير؟')) {
+                reportHistory = []; saveReportHistory(); renderReportHistory();
+            }
+        }
+
+        // ==================== REPORT ====================
+        function generateReport() {
+            const rt = tasks.filter(t => t.category === 'routine');
+            const rg = tasks.filter(t => t.category === 'task');
+            const rc = rt.filter(t => t.status === 'correct').length;
+            const rn = rt.filter(t => t.status !== 'correct').length;
+            const rtT = rt.length;
+            const rp = rtT === 0 ? 0 : Math.round((rc / rtT) * 100);
+            const gc = rg.filter(t => t.status === 'correct').length;
+            const gn = rg.filter(t => t.status !== 'correct').length;
+            const rgT = rg.length;
+            const gp = rgT === 0 ? 0 : Math.round((gc / rgT) * 100);
+            const tc = rc + gc;
+            const tn = rn + gn;
+            const tt = rtT + rgT;
+            const tp = tt === 0 ? 0 : Math.round(((rp * 0.6) + (gp * 0.4)));
+            const simpleAvg = tt === 0 ? 0 : Math.round((tc / tt) * 100);
+
+            const gi = getGrade(simpleAvg);
+
+            // ✅ ROUTINE & TASK SPLIT DISPLAY
+            const splitHTML = `
+                <div class="split-card routine-card">
+                    <div class="split-header">
+                        <span class="split-title">🔄 الروتين اليومي</span>
+                        <span class="split-percent" style="color: var(--routine-border);">${rp}%</span>
+                    </div>
+                    <ul class="split-list">
+                        ${rc > 0 ? rt.filter(t => t.status === 'correct').map(t => `<li class="done">${t.text}</li>`).join('') : '<li style="color:var(--text-muted);">لم يُنجز شيء</li>'}
+                        ${rn > 0 ? rt.filter(t => t.status !== 'correct').map(t => `<li class="undone">${t.text}</li>`).join('') : ''}
+                    </ul>
+                    <div style="margin-top:8px;font-size:0.75rem;color:var(--text-muted);">
+                        ✅ ${rc} منجزة · ⏳ ${rn} غير منجزة
+                    </div>
+                </div>
+                <div class="split-card task-card">
+                    <div class="split-header">
+                        <span class="split-title">📋 المهام اليومية</span>
+                        <span class="split-percent" style="color: var(--task-border);">${gp}%</span>
+                    </div>
+                    <ul class="split-list">
+                        ${gc > 0 ? rg.filter(t => t.status === 'correct').map(t => `<li class="done">${t.text}</li>`).join('') : '<li style="color:var(--text-muted);">لم يُنجز شيء</li>'}
+                        ${gn > 0 ? rg.filter(t => t.status !== 'correct').map(t => `<li class="undone">${t.text}</li>`).join('') : ''}
+                    </ul>
+                    <div style="margin-top:8px;font-size:0.75rem;color:var(--text-muted);">
+                        ✅ ${gc} منجزة · ⏳ ${gn} غير منجزة
+                    </div>
+                </div>
+            `;
+            document.getElementById('reportSplit').innerHTML = splitHTML;
+
+            // ✅ ADVANCED COMBINED PERCENTAGE
+            const circumference = 2 * Math.PI * 50;
+            const offset = circumference - (simpleAvg / 100) * circumference;
+            const pctColor = getPctColor(simpleAvg);
+
+            const combinedHTML = `
+                <div class="combined-title">📊 الأداء الكلي المتكامل</div>
+                <div class="combined-visual">
+                    <div class="circular-progress">
+                        <svg viewBox="0 0 120 120">
+                            <circle class="bg-circle" cx="60" cy="60" r="50"></circle>
+                            <circle class="progress-circle" cx="60" cy="60" r="50" 
+                                stroke="${pctColor}" 
+                                stroke-dasharray="${circumference}" 
+                                stroke-dashoffset="${offset}"></circle>
+                        </svg>
+                        <div class="progress-value" style="color: ${pctColor};">${simpleAvg}%</div>
+                    </div>
+                    <div class="combined-bars">
+                        <div class="combined-bar-item">
+                            <div class="combined-bar-label">
+                                <span>🔄 الروتين</span>
+                                <span style="color: var(--routine-border);">${rp}%</span>
+                            </div>
+                            <div class="combined-bar-track">
+                                <div class="combined-bar-fill routine" style="width: ${rp}%; background-color: var(--routine-border);"></div>
+                            </div>
+                        </div>
+                        <div class="combined-bar-item">
+                            <div class="combined-bar-label">
+                                <span>📋 المهام</span>
+                                <span style="color: var(--task-border);">${gp}%</span>
+                            </div>
+                            <div class="combined-bar-track">
+                                <div class="combined-bar-fill tasks" style="width: ${gp}%; background-color: var(--task-border);"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="combined-total">
+                    <span class="total-icon">⚡</span>
+                    <span>متوسط مرجح:</span>
+                    <span class="total-pct" style="color: ${pctColor};">${tp}%</span>
+                </div>
+            `;
+            document.getElementById('reportCombined').innerHTML = combinedHTML;
+
+            // ✅ IMPROVEMENTS & TIPS
+            const imp = [];
+            if (rn > 0) imp.push(`📌 لديك ${rn} عنصر روتين لم تُنجز بعد`);
+            if (gn > 0) imp.push(`📌 لديك ${gn} مهمة يومية لم تُنجز`);
+            if (tt > 0 && simpleAvg < 50) imp.push('💡 ابدأ بمهام صغيرة لبناء الزخم');
+            if (imp.length === 0 && tt > 0) imp.push('✨ حافظ على هذا المستوى الرائع!');
+            if (tt === 0) imp.push('🚀 أضف مهامك الأولى وابدأ رحلة الإنجاز');
+            document.getElementById('reportImprovements').innerHTML = imp.map(i => `<li>${i}</li>`).join('');
+            document.getElementById('reportTips').innerHTML = gi.tips.map(t => `<li>${t}</li>`).join('');
+
+            const now = new Date();
+            document.getElementById('reportDate').textContent = `تم إنشاء التقرير: ${now.toLocaleDateString('ar-EG', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' })}`;
+
+            renderReportHistory();
+        }
+
+        function showReport() { generateReport(); document.getElementById('reportModal').classList.add('show'); document.body.style.overflow = 'hidden'; }
+        function hideReport() { document.getElementById('reportModal').classList.remove('show'); document.body.style.overflow = ''; }
+
+        function exportReport() {
+            const rt = tasks.filter(t => t.category === 'routine');
+            const rg = tasks.filter(t => t.category === 'task');
+            const rc = rt.filter(t => t.status === 'correct').length;
+            const rn = rt.filter(t => t.status !== 'correct').length;
+            const rtT = rt.length;
+            const rp = rtT === 0 ? 0 : Math.round((rc / rtT) * 100);
+            const gc = rg.filter(t => t.status === 'correct').length;
+            const gn = rg.filter(t => t.status !== 'correct').length;
+            const rgT = rg.length;
+            const gp = rgT === 0 ? 0 : Math.round((gc / rgT) * 100);
+            const tc = rc + gc;
+            const tt = rtT + rgT;
+            const tp = tt === 0 ? 0 : Math.round(((rp * 0.6) + (gp * 0.4)));
+            const simpleAvg = tt === 0 ? 0 : Math.round((tc / tt) * 100);
+            const gi = getGrade(simpleAvg);
+
+            const now = new Date();
+            const y = now.getFullYear();
+            const m = String(now.getMonth() + 1).padStart(2, '0');
+            const d = String(now.getDate()).padStart(2, '0');
+            const h = String(now.getHours()).padStart(2, '0');
+            const mi = String(now.getMinutes()).padStart(2, '0');
+            const nd = `${y}/${m}/${d} - ${h}:${mi}`;
+
+            // Save to history
+            reportHistory.push({
+                date: nd,
+                routinePercent: rp,
+                taskPercent: gp,
+                totalPercent: simpleAvg,
+                weightedPercent: tp,
+                grade: gi.grade,
+                totalTasks: tt,
+                routineTotal: rtT,
+                taskTotal: rgT,
+                routineCompleted: rc,
+                routineIncomplete: rn,
+                taskCompleted: gc,
+                taskIncomplete: gn,
+                routineCompletedList: rt.filter(t => t.status === 'correct').map(t => t.text),
+                routineIncompleteList: rt.filter(t => t.status !== 'correct').map(t => t.text),
+                taskCompletedList: rg.filter(t => t.status === 'correct').map(t => t.text),
+                taskIncompleteList: rg.filter(t => t.status !== 'correct').map(t => t.text)
+            });
+            saveReportHistory();
+
+            const rDoneList = rt.filter(t => t.status === 'correct').map(t => `  ✅ ${t.text}`).join('\n');
+            const rUndoneList = rt.filter(t => t.status !== 'correct').map(t => `  ⏳ ${t.text}`).join('\n');
+            const tDoneList = rg.filter(t => t.status === 'correct').map(t => `  ✅ ${t.text}`).join('\n');
+            const tUndoneList = rg.filter(t => t.status !== 'correct').map(t => `  ⏳ ${t.text}`).join('\n');
+
+            const text = `📊 تقرير المهام اليومية
+📅 التاريخ: ${nd}
+
+═══════════════════════
+🔄 الروتين اليومي (${rp}%)
+═══════════════════════
+✅ الي اتعمل:
+${rDoneList || '  لا يوجد'}
+
+⏳ الي متعملش:
+${rUndoneList || '  لا يوجد'}
+
+═══════════════════════
+📋 المهام اليومية (${gp}%)
+═══════════════════════
+✅ الي اتعمل:
+${tDoneList || '  لا يوجد'}
+
+⏳ الي متعملش:
+${tUndoneList || '  لا يوجد'}
+
+═══════════════════════
+📊 الأداء الكلي
+═══════════════════════
+🔵 المتوسط الحسابي: ${simpleAvg}%
+⚡ المتوسط المرجح (روتين 60% + مهام 40%): ${tp}%
+🏆 التقييم: ${gi.grade}
+
+💡 نصائح:
+${gi.tips.map(t => `  ${t}`).join('\n')}
+
+═══════════════════════
+✅ تم حفظ هذا التقرير تلقائياً
+✅ الروتين ثابت (بيبدأ يوم جديد من غير حذف)
+✅ المهام الصحيحة اتحذفت، والباقي بصفحة نظيفة
+
+Made by Ahmed Emad Farhoud 💻✨`;
+
+            const doReset = () => { 
+                resetDayAfterReport(); 
+                hideReport(); 
+                alert('✅ تم نسخ التقرير بنجاح!\n✅ تم حفظ التقرير في السجل 📚\n✅ الروتين ثابت ومبدأش من جديد 🔄\n✅ المهام الصحيحة اتحذفت، والباقي بصفحة نظيفة ✨'); 
+            };
+            
+            navigator.clipboard.writeText(text).then(doReset).catch(() => {
+                const ta = document.createElement('textarea');
+                ta.value = text; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+                doReset();
+            });
+        }
+
+        document.getElementById('reportModal').addEventListener('click', function(e) { if (e.target === this) hideReport(); });
+        document.getElementById('reportDetailModal').addEventListener('click', function(e) { if (e.target === this) closeReportDetail(); });
+        document.addEventListener('keydown', function(e) { if (e.key === 'Escape') { hideReport(); closeReportDetail(); } });
+
+        // ==================== RENDERING ====================
+        function renderTasksByCategory(cat, lid, cid, tid, pid, pctid, em, ei) {
+            const list = document.getElementById(lid);
+            const ct = tasks.filter(t => t.category === cat).sort((a,b) => a.order - b.order);
+            if (ct.length === 0) {
+                list.innerHTML = `<div class="empty-state"><div class="empty-state-icon">${ei}</div><p>${em}</p></div>`;
+            } else {
+                list.innerHTML = ct.map(task => {
+                    if (editingTaskId === task.id) {
+                        return `<li class="task-item ${task.category==='task'?'task-type':''} editing" data-id="${task.id}">
+                            <span class="drag-handle">⋮</span>
+                            <div class="task-content"><textarea class="task-edit-input" data-edit-id="${task.id}" onkeydown="handleEditKeydown(event, ${task.id})">${task.text}</textarea></div>
+                            <div class="task-actions"><button class="action-btn cancel-btn" onclick="cancelEdit(${task.id}, event)">✕</button></div>
+                        </li>`;
+                    }
+                    return `<li class="task-item ${task.status==='correct'?'correct':''} ${task.status==='wrong'?'wrong':''} ${task.category==='task'?'task-type':''}" 
+                        data-id="${task.id}" title="${task.text}" ondblclick="startEdit(${task.id}, event)">
+                        <span class="drag-handle">⋮</span>
+                        <div class="task-content"><div class="task-text">${task.text}</div></div>
+                        <div class="task-actions">
+                            <button class="action-btn correct-btn" onclick="setTaskStatus(${task.id}, 'correct', event)" title="صحيح">✓</button>
+                            <button class="action-btn wrong-btn" onclick="setTaskStatus(${task.id}, 'wrong', event)" title="خطأ">✗</button>
+                            <button class="action-btn delete-btn" onclick="deleteTask(${task.id}, event)" title="حذف">🗑️</button>
+                        </div>
+                    </li>`;
+                }).join('');
+            }
+            const c = ct.filter(t => t.status === 'correct').length;
+            const t = ct.length;
+            const p = t === 0 ? 0 : Math.round((c/t)*100);
+            document.getElementById(cid).textContent = c;
+            document.getElementById(tid).textContent = t;
+            document.getElementById(pid).style.width = p + '%';
+            document.getElementById(pctid).textContent = p + '%';
+        }
+
+        function renderAllTasks() {
+            renderTasksByCategory('routine', 'routineList', 'routineCompleted', 'routineTotal', 'routineProgressBar', 'routineProgressPercent', 'لا توجد روتينيات بعد. أضف روتينك الأول!', '🔄');
+            renderTasksByCategory('task', 'taskList', 'taskCompleted', 'taskTotal', 'taskProgressBar', 'taskProgressPercent', 'لا توجد مهام بعد. أضف مهمتك الأولى!', '📝');
+            initMobileTap(); initTouchDrag(); updateAllProgressColors();
+        }
+
+        function updateAllProgressColors() {
+            const dk = document.documentElement.getAttribute('data-theme') === 'dark';
+            ['routineProgressPercent', 'taskProgressPercent'].forEach(id => {
+                const el = document.getElementById(id);
+                el.style.color = dk ? '#8892ff' : '#667eea';
+                el.style.textShadow = dk ? '0 0 15px rgba(136,146,255,0.7)' : '0 0 10px rgba(102,126,234,0.6)';
+            });
+        }
+
+        function initMobileTap() {
+            document.querySelectorAll('.task-item').forEach(item => {
+                if (item.classList.contains('editing')) return;
+                item.addEventListener('click', function(e) {
+                    if (e.target.closest('.action-btn') || e.target.closest('.drag-handle') || e.target.closest('.task-edit-input')) return;
+                    document.querySelectorAll('.task-item').forEach(i => { if(i!==this) i.classList.remove('active'); });
+                    this.classList.toggle('active');
+                });
+            });
+            document.addEventListener('click', e => { if (!e.target.closest('.task-item')) document.querySelectorAll('.task-item').forEach(i => i.classList.remove('active')); });
+        }
+
+        function initTouchDrag() {
+            document.querySelectorAll('.task-item').forEach(item => {
+                if (item.classList.contains('editing')) return;
+                const handle = item.querySelector('.drag-handle');
+                if (!handle) return;
+                const cat = item.classList.contains('task-type') ? 'task' : 'routine';
+                let di = null, sy = 0, cy = 0;
+                handle.addEventListener('touchstart', e => { e.preventDefault(); di = item; sy = e.touches[0].clientY; item.classList.add('dragging'); }, { passive: false });
+                handle.addEventListener('touchmove', e => {
+                    if (!di) return; e.preventDefault(); cy = e.touches[0].clientY;
+                    di.style.transform = `translateY(${cy - sy}px)`; di.style.display = 'none';
+                    let eb = document.elementFromPoint(e.touches[0].clientX, e.touches[0].clientY); di.style.display = 'flex';
+                    let ib = eb?.closest('.task-item');
+                    document.querySelectorAll('.task-item').forEach(i => { i.classList.remove('drag-over'); if (i !== di) i.style.transform = ''; });
+                    if (ib && ib !== di && !ib.classList.contains('editing')) {
+                        const bc = ib.classList.contains('task-type') ? 'task' : 'routine';
+                        if (bc !== cat) return;
+                        const r = ib.getBoundingClientRect(); const m = r.top + r.height/2;
+                        ib.style.transform = cy < m ? 'translateY(40px)' : 'translateY(-40px)'; ib.classList.add('drag-over');
+                    }
+                }, { passive: false });
+                handle.addEventListener('touchend', e => {
+                    if (!di) return; di.style.transform = ''; di.classList.remove('dragging');
+                    let eb = document.elementFromPoint(e.changedTouches[0].clientX, e.changedTouches[0].clientY);
+                    let ib = eb?.closest('.task-item');
+                    if (ib && ib !== di && !ib.classList.contains('editing')) {
+                        const did = +di.dataset.id, tid2 = +ib.dataset.id;
+                        const didx = tasks.findIndex(t => t.id === did), tidx = tasks.findIndex(t => t.id === tid2);
+                        const [dt] = tasks.splice(didx, 1); tasks.splice(tidx, 0, dt);
+                        tasks.filter(t => t.category === dt.category).forEach((t, i) => t.order = i);
+                        saveToStorage(); renderAllTasks();
+                    }
+                    document.querySelectorAll('.task-item').forEach(i => { i.classList.remove('drag-over'); i.style.transform = ''; }); di = null;
+                });
+            });
+        }
+
+        // ==================== TIMER & QUOTE ====================
+        function updateTimerDisplay() {
+            const m = Math.floor(timeLeft/60), s = timeLeft%60;
+            document.getElementById('timer').textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+        }
+        function startTimer() {
+            if (!isRunning) { isRunning = true; document.getElementById('startBtn').textContent = '▶️ جاري...';
+                timerInterval = setInterval(() => {
+                    if (timeLeft > 0) { timeLeft--; updateTimerDisplay(); }
+                    else { clearInterval(timerInterval); isRunning = false; document.getElementById('startBtn').textContent = '▶️ ابدأ'; playAlarmSound(); alert('⏰ انتهى الوقت!'); }
+                }, 1000); }
+        }
+        function pauseTimer() { clearInterval(timerInterval); isRunning = false; document.getElementById('startBtn').textContent = '▶️ استئناف'; }
+        function resetTimer() { clearInterval(timerInterval); isRunning = false; timeLeft = modes[currentMode]; updateTimerDisplay(); document.getElementById('startBtn').textContent = '▶️ ابدأ'; }
+        function newQuote() { const q = quotes[Math.floor(Math.random()*quotes.length)]; document.getElementById('quoteText').textContent = q.text; document.getElementById('quoteAuthor').textContent = `- ${q.author}`; }
+
+        const quotes = [
+            { text: "النجاح ليس صدفة، بل هو نتيجة المثابرة والتفاني", author: "مثل عربي" },
+            { text: "من جد وجد ومن زرع حصد", author: "حكمة عربية" },
+            { text: "العلم نور والجهل ظلام", author: "مثل عربي" },
+            { text: "التعليم هو السلاح الأقوى لتغيير العالم", author: "نيلسون مانديلا" },
+            { text: "لا تؤجل عمل اليوم إلى الغد", author: "مثل عربي" },
+            { text: "الصبر مفتاح الفرج", author: "مثل عربي" },
+            { text: "من صبر ظفر", author: "مثل عربي" },
+            { text: "الوقت كالسيف إن لم تقطعه قطعك", author: "مثل عربي" },
+            { text: "في الاتحاد قوة", author: "مثل عربي" },
+            { text: "من طلب العلا سهر الليالي", author: "أبو الطيب المتنبي" },
+            { text: "لا تحقرن من المعروف شيئاً", author: "حديث شريف" },
+            { text: "اليد العليا خير من اليد السفلى", author: "حديث شريف" },
+            { text: "النجاح ليس نهاية المطاف، والفشل ليس قاتلاً", author: "حكمة عربية" },
+            { text: "الإصرار هو مفتاح تحقيق الأحلام", author: "حكمة عربية" },
+            { text: "النجاح يبدأ بخطوة صغيرة", author: "حكمة عربية" },
+            { text: "لا تنتظر الفرصة، بل اصنعها", author: "حكمة عربية" },
+            { text: "النجاح هو مجموع جهود صغيرة تتكرر يوماً بعد يوم", author: "حكمة عربية" },
+            { text: "الإيمان بقدرتك هو نصف الطريق للنجاح", author: "حكمة عربية" },
+            { text: "كل تحدٍ هو فرصة للنمو", author: "حكمة عربية" },
+            { text: "لا تيأس من المحاولة، فكل محاولة تقربك من النجاح", author: "حكمة عربية" },
+            { text: "من عرف نفسه فقد عرف ربه", author: "حكمة عربية" },
+            { text: "الهمة العالية سر النجاح", author: "حكمة عربية" },
+            { text: "لا يضيع حق وراءه مطالب", author: "مثل عربي" },
+            { text: "من طلب شيئاً وجده", author: "مثل عربي" },
+            { text: "العمل الصالح يرفع صاحبه", author: "حكمة عربية" },
+            { text: "من صبر نال", author: "مثل عربي" },
+            { text: "العلم في الصغر كالنقش في الحجر", author: "مثل عربي" },
+            { text: "من سار على الدرب وصل", author: "مثل عربي" },
+            { text: "لا راحة لمن لا هم له", author: "حكمة عربية" },
+            { text: "من جد في الطلب وصل", author: "مثل عربي" },
+            { text: "العقل السليم في الجسم السليم", author: "مثل لاتيني" },
+            { text: "من حاسب نفسه ربح", author: "مثل عربي" },
+            { text: "الوقت من ذهب", author: "مثل عربي" },
+            { text: "من طلب الكمال عاش ناقصاً", author: "مثل عربي" },
+            { text: "لا يلدغ المؤمن من جحر مرتين", author: "حديث شريف" },
+            { text: "من أطاع هواه أضاع رشاده", author: "مثل عربي" },
+            { text: "من لم يشكر الناس لم يشكر الله", author: "حديث شريف" },
+            { text: "اللسان حصانك إن صنته صانك", author: "مثل عربي" },
+            { text: "من طمع في كل شيء خسر كل شيء", author: "مثل عربي" },
+            { text: "من شب على شيء شاب عليه", author: "مثل عربي" },
+            { text: "في البدء كانت الكلمة", author: "الكتاب المقدس" },
+            { text: "اطلبوا العلم من المهد إلى اللحد", author: "حديث شريف" },
+            { text: "رب ضارة نافعة", author: "مثل عربي" },
+            { text: "إذا أردت أن تطاع فأمر بما يستطاع", author: "علي بن أبي طالب" },
+            { text: "لا تكن حلواً فتؤكل، ولا مراً فترمى", author: "مثل عربي" },
+            { text: "من حفر حفرة لأخيه وقع فيها", author: "مثل عربي" },
+            { text: "العلم يبني بيوتاً لا عماد لها", author: "أحمد شوقي" },
+            { text: "من عاشر قوماً أربعين يوماً صار منهم", author: "مثل عربي" },
+            { text: "العلم خير من المال", author: "مثل عربي" },
+            { text: "من سكت نجا", author: "مثل عربي" },
+            { text: "اللي يسمع الكلام ما يندم", author: "مثل عربي" },
+            { text: "من طلب العلى سهر الليالي", author: "مثل عربي" },
+            { text: "لا تحلم بالنجاح، بل اعمل من أجله", author: "حكمة عربية" },
+            { text: "النجاح ليس ما تحققه لنفسك، بل ما تلهم الآخرين لتحقيقه", author: "حكمة عربية" },
+            { text: "كل يوم هو صفحة جديدة، اكتب فيها قصة نجاحك", author: "حكمة عربية" },
+            { text: "لا تنتظر الفرصة المثالية، بل اغتنم الفرصة المتاحة", author: "حكمة عربية" },
+            { text: "النجاح يبدأ عندما تتوقف عن الانتظار وتبدأ في العمل", author: "حكمة عربية" },
+            { text: "الإيمان بقدرتك على التغيير هو أول خطوة نحو التغيير", author: "حكمة عربية" },
+            { text: "لا تخف من الأحلام الكبيرة، فالعالم يحتاج إلى أحلام كبيرة", author: "حكمة عربية" },
+            { text: "النجاح هو أن تجعل من كل يوم خطوة نحو هدفك", author: "حكمة عربية" },
+            { text: "كل تحدٍ هو فرصة لإظهار قوتك الداخلية", author: "حكمة عربية" },
+            { text: "لا تيأس، فالنجاح يأتي بعد المحاولات العديدة", author: "حكمة عربية" },
+            { text: "النجاح ليس وجهة، بل هو أسلوب حياة", author: "حكمة عربية" },
+            { text: "الإصرار هو الجسر الذي يربط بين الهدف والإنجاز", author: "حكمة عربية" },
+            { text: "لا تنتظر الظروف المثالية، بل ابدأ بما تملك الآن", author: "حكمة عربية" },
+            { text: "كل إنجاز عظيم بدأ بفكرة بسيطة", author: "حكمة عربية" },
+            { text: "النجاح هو أن تستمر في التقدم رغم كل العقبات", author: "حكمة عربية" },
+            { text: "الوقت الذي تستثمره في تطوير نفسك هو أفضل استثمار", author: "حكمة عربية" },
+            { text: "النجاح يبدأ من العقل، ثم يتحول إلى فعل، ثم إلى عادة", author: "حكمة عربية" },
+            { text: "لا تدع الخوف من الفشل يمنعك من تحقيق أحلامك", author: "حكمة عربية" }
+        ];
+
+        // ==================== INIT ====================
+        document.addEventListener('DOMContentLoaded', () => {
+            if (localStorage.getItem('theme') === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                document.getElementById('themeIcon').textContent = '☀️';
+                document.getElementById('themeText').textContent = 'الوضع الفاتح';
+            }
+            renderAllTasks(); updateTimerDisplay(); newQuote(); updateAllProgressColors(); initBrainDump();
+        });
+
+        document.getElementById('startBtn').addEventListener('click', startTimer);
+        document.getElementById('pauseBtn').addEventListener('click', pauseTimer);
+        document.getElementById('resetBtn').addEventListener('click', resetTimer);
+        document.getElementById('taskInput').addEventListener('keypress', e => { if(e.key==='Enter') addTask(); });
+        document.querySelectorAll('.mode-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                currentMode = this.dataset.mode;
+                timeLeft = modes[currentMode];
+                updateTimerDisplay(); resetTimer();
+            });
+        });
+    </script>
+</body>
+</html>
