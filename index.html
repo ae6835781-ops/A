@@ -73,73 +73,59 @@ padding-top: env(safe-area-inset-top, 40px);
 --expense-bg: #28a745;
 }
 
+/* ✅ الوضع الداكن المحسن والمتناسق */
 [data-theme="dark"] {
-    --bg-gradient-start: #1a1a2e;
-    --bg-gradient-end: #16213e;
-    --card-bg: rgba(30, 30, 50, 0.95);
-    --card-bg-alt: rgba(40, 40, 70, 0.9);
-    --text-primary: #f0f0f0;
-    --text-secondary: #ccc;
-    --text-muted: #aaa;
-    --text-white: #fff;
-    --input-bg: #2a2a4a;
-    --input-border: #444;
-    --task-bg: #252545;
-    --task-bg-correct: #1e5631;
-    --task-bg-wrong: #5c1e2a;
-    --progress-bg: #3a3a5a;
-    --shadow-color: rgba(0,0,0,0.5);
-    --shadow-light: rgba(0,0,0,0.2);
-    --btn-secondary-bg: #3a3a5a;
-    --btn-secondary-bg-hover: #4a4a6a;
-    --delete-btn-bg: #dc3545;
-    --delete-btn-bg-hover: #c82333;
-    --correct-btn-bg: #2ecc71;
-    --correct-btn-bg-hover: #27ae60;
-    --wrong-btn-bg: #e74c3c;
-    --wrong-btn-bg-hover: #c0392b;
-    --edit-btn-bg: #20c997;
-    --edit-btn-bg-hover: #1ea67d;
-    --undo-btn-bg: #6c757d;
-    --undo-btn-bg-hover: #5a6268;
-    --snackbar-bg: #444;
-    --routine-border: #8892ff;
-    --task-border: #a894ff;
-    --empty-state-opacity: 0.3;
-    --drag-handle-color: #666;
-    --neon-glow: rgba(136, 146, 255, 0.7);
-    --progress-text-color: #8892ff;
-    --report-excellent: #2ecc71;
-    --report-good: #20c997;
-    --report-average: #f39c12;
-    --report-weak: #e74c3c;
-    --pct-excellent: #2ecc71;
-    --pct-good: #20c997;
-    --pct-average: #f39c12;
-    --pct-weak: #e74c3c;
+--bg-gradient-start: #0f172a;
+--bg-gradient-end: #1e293b;
+--bg-primary: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+--card-bg: rgba(30, 41, 59, 0.95);
+--card-bg-alt: rgba(51, 65, 85, 0.9);
+--text-primary: #ffffff;
+--text-secondary: #cbd5e1;
+--text-muted: #94a3b8;
+--text-white: #ffffff;
+--input-bg: #334155;
+--input-border: #475569;
+--task-bg: #334155;
+--task-bg-correct: #14532d;
+--task-bg-wrong: #7f1d1d;
+--progress-bg: #475569;
+--shadow-color: rgba(0,0,0,0.5);
+--shadow-light: rgba(0,0,0,0.2);
+--btn-secondary-bg: #475569;
+--btn-secondary-bg-hover: #64748b;
+--delete-btn-bg: #ef4444;
+--delete-btn-bg-hover: #dc2626;
+--correct-btn-bg: #22c55e;
+--correct-btn-bg-hover: #16a34a;
+--wrong-btn-bg: #ef4444;
+--wrong-btn-bg-hover: #dc2626;
+--edit-btn-bg: #0ea5e9;
+--edit-btn-bg-hover: #0284c7;
+--undo-btn-bg: #64748b;
+--undo-btn-bg-hover: #475569;
+--snackbar-bg: #334155;
+--routine-border: #828BF8;
+--task-border: #a5b4fc;
+--empty-state-opacity: 0.6;
+--drag-handle-color: #94a3b8;
+--neon-glow: rgba(130, 139, 248, 0.6);
+--progress-text-color: #828BF8;
+--report-excellent: #22c55e;
+--report-good: #828BF8;
+--report-average: #f59e0b;
+--report-weak: #ef4444;
+--pct-excellent: #22c55e;
+--pct-good: #828BF8;
+--pct-average: #f59e0b;
+--pct-weak: #ef4444;
+--cash-color: #4ade80;
+--cash-bg: rgba(74, 222, 128, 0.15);
+--electronic-color: #60a5fa;
+--electronic-bg: rgba(96, 165, 250, 0.15);
+--expense-bg: #828BF8;
 }
 
-[data-theme="dark"] .floating-icon { opacity: 0.05; }
-[data-theme="dark"] .waves { opacity: 0.15; }
-[data-theme="dark"] .timer { color: #8892ff; text-shadow: 0 2px 10px rgba(136, 146, 255, 0.3); }
-[data-theme="dark"] .btn-secondary { color: #8892ff; }
-[data-theme="dark"] .mode-btn { border-color: #8892ff; color: #8892ff; }
-[data-theme="dark"] .quote-section::before { color: rgba(136, 146, 255, 0.1); }
-[data-theme="dark"] .quote-author { color: #8892ff; }
-[data-theme="dark"] .new-quote-btn { border-color: #8892ff; color: #8892ff; }
-[data-theme="dark"] .task-item { border-right-color: #8892ff; }
-[data-theme="dark"] .task-item.task-type { border-right-color: #a894ff; }
-[data-theme="dark"] .task-text:hover { color: #8892ff; }
-[data-theme="dark"] .task-edit-input { border-color: #8892ff; }
-[data-theme="dark"] .task-actions { border-right-color: #444; }
-[data-theme="dark"] .drag-handle:hover { color: #8892ff; }
-[data-theme="dark"] .section-divider { background: linear-gradient(90deg, transparent, #8892ff, transparent); }
-[data-theme="dark"] .progress-bar { background: linear-gradient(90deg, #8892ff, #a8b4ff); box-shadow: 0 0 15px rgba(136, 146, 255, 0.7); }
-[data-theme="dark"] .stat-card { border-right-color: #8892ff; }
-[data-theme="dark"] .brain-textarea:focus { border-color: #8892ff; box-shadow: 0 0 0 3px rgba(136, 146, 255, 0.1); }
-[data-theme="dark"] .task-input:focus { border-color: #8892ff; box-shadow: 0 0 0 3px rgba(136, 146, 255, 0.1); }
-[data-theme="dark"] .category-btn { color: #ccc; }
-[data-theme="dark"] .category-btn.active { background: #8892ff; color: #1a1a2e; }
 [data-theme="sunset"] {
 --bg-gradient-start: #ff6e7f;
 --bg-gradient-end: #bfe9ff;
@@ -163,10 +149,10 @@ padding-top: env(safe-area-inset-top, 40px);
 --task-border: #ff9a56;
 --neon-glow: rgba(255, 110, 127, 0.6);
 --progress-text-color: #ff6e7f;
---cash-color: #ff6e7f;
---cash-bg: #ffe5e8;
---electronic-color: #ff9a56;
---electronic-bg: #fff0e0;
+--cash-color: #f97316;
+--cash-bg: #fff7ed;
+--electronic-color: #0ea5e9;
+--electronic-bg: #f0f9ff;
 --expense-bg: #ff6e7f;
 }
 
@@ -193,10 +179,10 @@ padding-top: env(safe-area-inset-top, 40px);
 --task-border: #6dd5ed;
 --neon-glow: rgba(33, 147, 176, 0.6);
 --progress-text-color: #2193b0;
---cash-color: #2193b0;
---cash-bg: #d4eef5;
---electronic-color: #6dd5ed;
---electronic-bg: #e0f5ff;
+--cash-color: #10b981;
+--cash-bg: #ecfdf5;
+--electronic-color: #0ea5e9;
+--electronic-bg: #f0f9ff;
 --expense-bg: #2193b0;
 }
 
@@ -223,11 +209,11 @@ padding-top: env(safe-area-inset-top, 40px);
 --task-border: #fecfef;
 --neon-glow: rgba(255, 154, 158, 0.6);
 --progress-text-color: #ff9a9e;
---cash-color: #ff6b9d;
---cash-bg: #ffe0eb;
---electronic-color: #c471ed;
---electronic-bg: #f5e0ff;
---expense-bg: #ff6b9d;
+--cash-color: #f43f5e;
+--cash-bg: #fff1f2;
+--electronic-color: #a855f7;
+--electronic-bg: #faf5ff;
+--expense-bg: #ff9a9e;
 }
 
 [data-theme="forest"] {
@@ -253,18 +239,18 @@ padding-top: env(safe-area-inset-top, 40px);
 --task-border: #71b280;
 --neon-glow: rgba(113, 178, 128, 0.6);
 --progress-text-color: #134e5e;
---cash-color: #134e5e;
---cash-bg: #d4e8ec;
---electronic-color: #71b280;
---electronic-bg: #e0f0e5;
+--cash-color: #22c55e;
+--cash-bg: #f0fdf4;
+--electronic-color: #14b8a6;
+--electronic-bg: #f0fdfa;
 --expense-bg: #134e5e;
 }
 
-/* ✅ وضع باربي (جديد) */
+/* ✅ وضع باربي المتناسق والاحترافي */
 [data-theme="barbie"] {
 --bg-gradient-start: #d81b60;
---bg-gradient-end: #ff4081;
---bg-primary: linear-gradient(135deg, #d81b60 0%, #ff4081 100%);
+--bg-gradient-end: #f48fb1;
+--bg-primary: linear-gradient(135deg, #d81b60 0%, #f48fb1 100%);
 --card-bg: rgba(255, 240, 245, 0.95);
 --card-bg-alt: rgba(252, 228, 236, 0.9);
 --text-primary: #880e4f;
@@ -274,8 +260,8 @@ padding-top: env(safe-area-inset-top, 40px);
 --input-bg: #fff0f5;
 --input-border: #f8bbd0;
 --task-bg: #fce4ec;
---task-bg-correct: #e8f5e9;
---task-bg-wrong: #ffebee;
+--task-bg-correct: #dcfce7;
+--task-bg-wrong: #ffe4e6;
 --progress-bg: #f8bbd0;
 --shadow-color: rgba(216, 27, 96, 0.25);
 --shadow-light: rgba(216, 27, 96, 0.1);
@@ -283,33 +269,33 @@ padding-top: env(safe-area-inset-top, 40px);
 --btn-secondary-bg-hover: #f8bbd0;
 --delete-btn-bg: #e91e63;
 --delete-btn-bg-hover: #c2185b;
---correct-btn-bg: #4caf50;
---correct-btn-bg-hover: #388e3c;
---wrong-btn-bg: #f44336;
---wrong-btn-bg-hover: #d32f2f;
---edit-btn-bg: #e91e63;
---edit-btn-bg-hover: #c2185b;
---undo-btn-bg: #9c27b0;
---undo-btn-bg-hover: #7b1fa2;
+--correct-btn-bg: #16a34a;
+--correct-btn-bg-hover: #15803d;
+--wrong-btn-bg: #e11d48;
+--wrong-btn-bg-hover: #be123c;
+--edit-btn-bg: #d81b60;
+--edit-btn-bg-hover: #be185d;
+--undo-btn-bg: #9d174d;
+--undo-btn-bg-hover: #831843;
 --snackbar-bg: #880e4f;
 --routine-border: #d81b60;
---task-border: #ff4081;
+--task-border: #f48fb1;
 --empty-state-opacity: 0.6;
 --drag-handle-color: #f48fb1;
---neon-glow: rgba(255, 64, 129, 0.5);
+--neon-glow: rgba(244, 143, 177, 0.6);
 --progress-text-color: #d81b60;
 --report-excellent: #d81b60;
---report-good: #ff4081;
---report-average: #f48fb1;
+--report-good: #f48fb1;
+--report-average: #f9a8d4;
 --report-weak: #880e4f;
 --pct-excellent: #d81b60;
---pct-good: #ff4081;
---pct-average: #f48fb1;
+--pct-good: #f48fb1;
+--pct-average: #f9a8d4;
 --pct-weak: #880e4f;
---cash-color: #d81b60;
---cash-bg: #fce4ec;
---electronic-color: #ff4081;
---electronic-bg: #f8bbd0;
+--cash-color: #ec4899;
+--cash-bg: #fdf2f8;
+--electronic-color: #be185d;
+--electronic-bg: #fdf2f8;
 --expense-bg: #d81b60;
 }
 
@@ -365,35 +351,38 @@ align-items: center;
 gap: 10px;
 }
 .header-title { text-align: center; }
-.header h1 { color: var(--text-white); font-size: 1.5rem; font-weight: 900; text-shadow: 0 4px 15px rgba(0,0,0,0.3); margin: 0; }
-.header p { color: rgba(255,255,255,0.9); font-size: 0.8rem; margin: 3px 0 0 0; }
+/* ✅ تكبير عنوان التطبيق */
+.header h1 { color: var(--text-white); font-size: 1.9rem; font-weight: 900; text-shadow: 0 4px 15px rgba(0,0,0,0.3); margin: 0; }
+.header p { color: rgba(255,255,255,0.9); font-size: 0.9rem; margin: 3px 0 0 0; }
 .header-actions {
 display: flex;
-gap: 5px;
+gap: 8px;
 align-items: center;
 flex-wrap: nowrap;
 justify-content: center;
 }
+/* ✅ تكبير أزرار الهيدر وأيقوناتها */
 .header-btn {
 background: rgba(255,255,255,0.2);
 border: 2px solid rgba(255,255,255,0.4);
 border-radius: 50px;
-padding: 4px 8px;
+padding: 6px 14px;
 cursor: pointer;
 display: flex;
 align-items: center;
-gap: 3px;
+gap: 5px;
 color: var(--text-white);
 font-weight: 600;
 font-family: inherit;
 transition: background 0.3s ease, transform 0.2s ease;
 backdrop-filter: blur(5px);
-font-size: 0.7rem;
+font-size: 0.85rem;
 white-space: nowrap;
 }
 .header-btn:hover { background: rgba(255,255,255,0.3); transform: translateY(-2px); }
 .header-btn:active { transform: scale(0.95); }
-.header-btn .icon { font-size: 0.95rem; }
+.header-btn .icon { font-size: 1.15rem; }
+
 .timer-section { background: var(--card-bg); border-radius: 15px; padding: 16px; margin-bottom: 16px; box-shadow: 0 10px 40px var(--shadow-color); backdrop-filter: blur(10px); animation: fadeInUp 1s ease; transition: background 0.4s ease, box-shadow 0.4s ease; }
 .timer-display { text-align: center; margin-bottom: 12px; }
 .timer { font-size: 2.5rem; font-weight: 900; color: var(--bg-gradient-start); text-shadow: 0 2px 10px rgba(102, 126, 234, 0.3); font-family: 'Courier New', monospace; letter-spacing: 3px; transition: color 0.4s ease; }
@@ -457,8 +446,8 @@ white-space: nowrap;
 @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes slideIn { from { opacity: 0; transform: translateX(-20px); } to { opacity: 1; transform: translateX(0); } }
 @media (max-width: 768px) {
-.header h1 { font-size: 1.2rem; }
-.header p { font-size: 0.75rem; }
+.header h1 { font-size: 1.5rem; }
+.header p { font-size: 0.8rem; }
 .timer { font-size: 2rem; }
 .quote-text { font-size: 0.9rem; }
 .floating-icon { font-size: 2rem; }
@@ -468,8 +457,8 @@ white-space: nowrap;
 .task-item { flex-wrap: nowrap; }
 .task-actions { margin-top: 0; margin-right: 0; padding-right: 0; border-right: none; width: auto; justify-content: center; }
 .header-actions { width: 100%; justify-content: center; }
-.header-btn { padding: 3px 6px; font-size: 0.65rem; }
-.header-btn .icon { font-size: 0.85rem; }
+.header-btn { padding: 5px 10px; font-size: 0.8rem; }
+.header-btn .icon { font-size: 1rem; }
 }
 .progress-container { margin-top: 8px; background: var(--progress-bg); border-radius: 8px; height: 7px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); }
 .progress-bar { height: 100%; background: var(--bg-primary); transition: width 0.5s ease; border-radius: 8px; box-shadow: 0 0 10px var(--neon-glow); position: relative; }
@@ -484,7 +473,21 @@ white-space: nowrap;
 .brain-section { background: var(--card-bg); border-radius: 15px; padding: 16px; margin-bottom: 16px; box-shadow: 0 10px 40px var(--shadow-color); animation: fadeInUp 1s ease 0.5s both; transition: background 0.4s ease, box-shadow 0.4s ease; }
 .brain-header { display: flex; align-items: center; gap: 6px; margin-bottom: 8px; }
 .brain-title { font-size: 1rem; font-weight: 700; color: var(--text-primary); }
-.brain-textarea { width: 100%; min-height: 90px; padding: 9px; border: 2px solid var(--input-border); border-radius: 10px; font-size: 0.85rem; font-family: inherit; background: var(--input-bg); color: var(--text-primary); resize: vertical; line-height: 1.6; }
+/* ✅ تحسين منطقة "في دماغي" للسحب على الموبايل */
+.brain-textarea { 
+width: 100%; 
+min-height: 120px; 
+padding: 9px; 
+border: 2px solid var(--input-border); 
+border-radius: 10px; 
+font-size: 0.85rem; 
+font-family: inherit; 
+background: var(--input-bg); 
+color: var(--text-primary); 
+resize: vertical; 
+line-height: 1.6; 
+touch-action: pan-y; 
+}
 .brain-textarea:focus { outline: none; border-color: var(--bg-gradient-start); box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1); }
 .brain-status { text-align: left; font-size: 0.7rem; color: var(--text-muted); margin-top: 5px; display: flex; align-items: center; gap: 4px; }
 .brain-status.saved { color: var(--correct-btn-bg); }
@@ -848,29 +851,27 @@ word-break: break-word;
 .details-table .desc-value { font-size: 0.8rem; }
 }
 
-/* ✅ الوضع الداكن - تحسين تناسق النصوص والعناصر */
+/* ✅ الوضع الداكن - تناسق النصوص والعناصر مع اللون #828BF8 */
 [data-theme="dark"] .mode-btn {
 color: #ffffff;
-border-color: #818cf8;
+border-color: #828BF8;
 }
 [data-theme="dark"] .mode-btn.active {
-background: #818cf8;
+background: #828BF8;
 color: #ffffff;
 }
 [data-theme="dark"] .mode-btn:hover {
-background: rgba(129, 140, 248, 0.2);
+background: rgba(130, 139, 248, 0.2);
 }
 
 [data-theme="dark"] .timer {
-color: #ffffff;
-text-shadow: 0 2px 15px rgba(129, 140, 248, 0.5);
+color: #828BF8;
+text-shadow: 0 2px 15px rgba(130, 139, 248, 0.5);
 }
 
 [data-theme="dark"] .timer-label,
 [data-theme="dark"] .btn,
 [data-theme="dark"] .btn-secondary,
-[data-theme="dark"] .quote-text,
-[data-theme="dark"] .quote-author,
 [data-theme="dark"] .tasks-header h2,
 [data-theme="dark"] .task-counter,
 [data-theme="dark"] .category-btn,
@@ -925,12 +926,21 @@ text-shadow: 0 2px 15px rgba(129, 140, 248, 0.5);
 color: #ffffff;
 }
 
-[data-theme="dark"] .new-quote-btn {
+[data-theme="dark"] .quote-text {
 color: #ffffff;
-border-color: #ffffff;
+}
+
+[data-theme="dark"] .quote-author {
+color: #828BF8;
+}
+
+[data-theme="dark"] .new-quote-btn {
+color: #828BF8;
+border-color: #828BF8;
 }
 [data-theme="dark"] .new-quote-btn:hover {
-background: rgba(255,255,255,0.1);
+background: #828BF8;
+color: #ffffff;
 }
 </style>
 </head>
@@ -976,7 +986,7 @@ background: rgba(255,255,255,0.1);
 </div>
 <div class="timer-display">
 <div class="timer" id="timer">25:00</div>
-<div class="timer-label">️ الوقت المتبقي</div>
+<div class="timer-label">⏱ الوقت المتبقي</div>
 </div>
 <div class="timer-controls">
 <button class="btn btn-primary" id="startBtn">▶️ ابدأ</button>
@@ -1246,7 +1256,7 @@ try {
 localStorage.setItem('brainDump', document.getElementById('brainDump').value);
 const st = document.getElementById('brainStatus');
 st.textContent = '✅ تم الحفظ'; st.classList.add('saved');
-setTimeout(() => { st.textContent = ' يُحفظ تلقائياً'; st.classList.remove('saved'); }, 2000);
+setTimeout(() => { st.textContent = '💾 يُحفظ تلقائياً'; st.classList.remove('saved'); }, 2000);
 } catch(e) {}
 }
 function saveReportHistory() { try { localStorage.setItem('reportHistory', JSON.stringify(reportHistory)); } catch(e) {} }
@@ -1421,7 +1431,7 @@ const realIdx = reportHistory.indexOf(report);
 const gi = getGrade(report.totalPercent);
 html += `<div class="report-history-item" data-report-idx="${realIdx}">
 <div class="report-history-info">
-<div class="report-history-date"> ${report.date}</div>
+<div class="report-history-date">📅 ${report.date}</div>
 <div class="report-history-details">روتين: ${report.routinePercent}% · مهام: ${report.taskPercent}% · كلي: ${report.totalPercent}%</div>
 </div>
 <span class="report-history-grade" style="background: ${gi.color};">${report.totalPercent}%</span>
@@ -1451,7 +1461,7 @@ let rInc = r.routineIncompleteList && r.routineIncompleteList.length > 0 ? r.rou
 let tComp = r.taskCompletedList && r.taskCompletedList.length > 0 ? r.taskCompletedList.map(t => `<li class="correct">${t}</li>`).join('') : '<li style="color:var(--text-muted);">لا توجد بيانات</li>';
 let tInc = r.taskIncompleteList && r.taskIncompleteList.length > 0 ? r.taskIncompleteList.map(t => `<li class="incomplete">${t}</li>`).join('') : '<li style="color:var(--text-muted);">لا توجد بيانات</li>';
 document.getElementById('reportDetailContent').innerHTML = `
-<h3> تفاصيل التقرير</h3>
+<h3>📊 تفاصيل التقرير</h3>
 <div style="text-align:center;margin-bottom:10px;"><span class="grade-badge" style="background:${gi.color};color:white;">${r.date}</span></div>
 <div class="detail-stats">
 <div class="detail-stat-card"><div class="detail-stat-value">${r.totalPercent}%</div><div class="detail-stat-label">النسبة الكلية</div></div>
@@ -1498,7 +1508,7 @@ const splitHTML = `
 ${rc > 0 ? rt.filter(t => t.status === 'correct').map(t => `<li class="done">${t.text}</li>`).join('') : '<li style="color:var(--text-muted);">لم يُنجز شيء</li>'}
 ${rn > 0 ? rt.filter(t => t.status !== 'correct').map(t => `<li class="undone">${t.text}</li>`).join('') : ''}
 </ul>
-<div style="margin-top:5px;font-size:0.65rem;color:var(--text-muted);">✅ ${rc} منجزة ·  ${rn} غير منجزة</div>
+<div style="margin-top:5px;font-size:0.65rem;color:var(--text-muted);">✅ ${rc} منجزة · ⏳ ${rn} غير منجزة</div>
 </div>
 <div class="split-card task-card">
 <div class="split-header"><span class="split-title">📋 المهام اليومية</span><span class="split-percent" style="color: var(--task-border);">${gp}%</span></div>
@@ -1652,12 +1662,12 @@ function updateAllProgressColors() {
 const theme = localStorage.getItem('theme') || 'light';
 let color = '#667eea';
 let shadow = '0 0 10px rgba(102,126,234,0.6)';
-if (theme === 'dark') { color = '#818cf8'; shadow = '0 0 15px rgba(129,140,248,0.6)'; }
+if (theme === 'dark') { color = '#828BF8'; shadow = '0 0 15px rgba(130,139,248,0.6)'; }
 else if (theme === 'sunset') { color = '#ff6e7f'; shadow = '0 0 15px rgba(255,110,127,0.7)'; }
 else if (theme === 'ocean') { color = '#2193b0'; shadow = '0 0 15px rgba(33,147,176,0.7)'; }
 else if (theme === 'sakura') { color = '#ff9a9e'; shadow = '0 0 15px rgba(255,154,158,0.7)'; }
 else if (theme === 'forest') { color = '#134e5e'; shadow = '0 0 15px rgba(19,78,94,0.7)'; }
-else if (theme === 'barbie') { color = '#ff4081'; shadow = '0 0 15px rgba(255,64,129,0.7)'; }
+else if (theme === 'barbie') { color = '#d81b60'; shadow = '0 0 15px rgba(216,27,96,0.6)'; }
 ['routineProgressPercent', 'taskProgressPercent'].forEach(id => {
 const el = document.getElementById(id);
 el.style.color = color;
@@ -1741,7 +1751,7 @@ const input = document.getElementById('pinInput');
 const pin = input.value.trim();
 const errorEl = document.getElementById('pinError');
 if (pin.length < 4) {
-errorEl.textContent = '️ الرقم السري يجب أن يكون 4 أرقام على الأقل';
+errorEl.textContent = '⚠️ الرقم السري يجب أن يكون 4 أرقام على الأقل';
 return;
 }
 if (pinAction === 'create') {
@@ -1834,7 +1844,7 @@ function addExpense() {
 const desc = document.getElementById('expenseDesc').value.trim();
 const amount = parseFloat(document.getElementById('expenseAmount').value);
 if (desc === '' || isNaN(amount) || amount <= 0) {
-alert('️ يرجى إدخال وصف ومبلغ صحيح');
+alert('⚠️ يرجى إدخال وصف ومبلغ صحيح');
 return;
 }
 if (currentOperationType === 'صرف') {
