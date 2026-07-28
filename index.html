@@ -73,52 +73,115 @@ padding-top: env(safe-area-inset-top, 40px);
 --expense-bg: #28a745;
 }
 
-[data-theme="dark"] {
-    --bg-gradient-start: #1a1a2e;
-    --bg-gradient-end: #16213e;
-    --card-bg: rgba(30, 30, 50, 0.95);
-    --card-bg-alt: rgba(40, 40, 70, 0.9);
-    --text-primary: #f0f0f0;
-    --text-secondary: #ccc;
-    --text-muted: #aaa;
-    --text-white: #fff;
-    --input-bg: #2a2a4a;
-    --input-border: #444;
-    --task-bg: #252545;
-    --task-bg-correct: #1e5631;
-    --task-bg-wrong: #5c1e2a;
-    --progress-bg: #3a3a5a;
-    --shadow-color: rgba(0,0,0,0.5);
-    --shadow-light: rgba(0,0,0,0.2);
-    --btn-secondary-bg: #3a3a5a;
-    --btn-secondary-bg-hover: #4a4a6a;
-    --delete-btn-bg: #dc3545;
-    --delete-btn-bg-hover: #c82333;
-    --correct-btn-bg: #2ecc71;
-    --correct-btn-bg-hover: #27ae60;
-    --wrong-btn-bg: #e74c3c;
-    --wrong-btn-bg-hover: #c0392b;
-    --edit-btn-bg: #20c997;
-    --edit-btn-bg-hover: #1ea67d;
-    --undo-btn-bg: #6c757d;
-    --undo-btn-bg-hover: #5a6268;
-    --snackbar-bg: #444;
-    --routine-border: #8892ff;
-    --task-border: #a894ff;
-    --empty-state-opacity: 0.3;
-    --drag-handle-color: #666;
-    --neon-glow: rgba(136, 146, 255, 0.7);
-    --progress-text-color: #8892ff;
-    --report-excellent: #2ecc71;
-    --report-good: #20c997;
-    --report-average: #f39c12;
-    --report-weak: #e74c3c;
-    --pct-excellent: #2ecc71;
-    --pct-good: #20c997;
-    --pct-average: #f39c12;
-    --pct-weak: #e74c3c;
-}
+<!-- ==================== 1. كود CSS الخاص بالوضع الداكن ==================== -->
+<style>
+    [data-theme="dark"] {
+        --bg-gradient-start: #1a1a2e;
+        --bg-gradient-end: #16213e;
+        --card-bg: rgba(30, 30, 50, 0.95);
+        --card-bg-alt: rgba(40, 40, 70, 0.9);
+        --text-primary: #f0f0f0;
+        --text-secondary: #ccc;
+        --text-muted: #aaa;
+        --text-white: #fff;
+        --input-bg: #2a2a4a;
+        --input-border: #444;
+        --task-bg: #252545;
+        --task-bg-correct: #1e5631;
+        --task-bg-wrong: #5c1e2a;
+        --progress-bg: #3a3a5a;
+        --shadow-color: rgba(0,0,0,0.5);
+        --shadow-light: rgba(0,0,0,0.2);
+        --btn-secondary-bg: #3a3a5a;
+        --btn-secondary-bg-hover: #4a4a6a;
+        --delete-btn-bg: #dc3545;
+        --delete-btn-bg-hover: #c82333;
+        --correct-btn-bg: #2ecc71;
+        --correct-btn-bg-hover: #27ae60;
+        --wrong-btn-bg: #e74c3c;
+        --wrong-btn-bg-hover: #c0392b;
+        --edit-btn-bg: #20c997;
+        --edit-btn-bg-hover: #1ea67d;
+        --undo-btn-bg: #6c757d;
+        --undo-btn-bg-hover: #5a6268;
+        --snackbar-bg: #444;
+        --routine-border: #8892ff;
+        --task-border: #a894ff;
+        --empty-state-opacity: 0.3;
+        --drag-handle-color: #666;
+        --neon-glow: rgba(136, 146, 255, 0.7);
+        --progress-text-color: #8892ff;
+        --report-excellent: #2ecc71;
+        --report-good: #20c997;
+        --report-average: #f39c12;
+        --report-weak: #e74c3c;
+        --pct-excellent: #2ecc71;
+        --pct-good: #20c997;
+        --pct-average: #f39c12;
+        --pct-weak: #e74c3c;
+    }
 
+    [data-theme="dark"] .floating-icon { opacity: 0.05; }
+    [data-theme="dark"] .waves { opacity: 0.15; }
+    [data-theme="dark"] .timer { color: #8892ff; text-shadow: 0 2px 10px rgba(136, 146, 255, 0.3); }
+    [data-theme="dark"] .btn-secondary { color: #8892ff; }
+    [data-theme="dark"] .mode-btn { border-color: #8892ff; color: #8892ff; }
+    [data-theme="dark"] .quote-section::before { color: rgba(136, 146, 255, 0.1); }
+    [data-theme="dark"] .quote-author { color: #8892ff; }
+    [data-theme="dark"] .new-quote-btn { border-color: #8892ff; color: #8892ff; }
+    [data-theme="dark"] .task-item { border-right-color: #8892ff; }
+    [data-theme="dark"] .task-item.task-type { border-right-color: #a894ff; }
+    [data-theme="dark"] .task-text:hover { color: #8892ff; }
+    [data-theme="dark"] .task-edit-input { border-color: #8892ff; }
+    [data-theme="dark"] .task-actions { border-right-color: #444; }
+    [data-theme="dark"] .drag-handle:hover { color: #8892ff; }
+    [data-theme="dark"] .section-divider { background: linear-gradient(90deg, transparent, #8892ff, transparent); }
+    [data-theme="dark"] .progress-bar { background: linear-gradient(90deg, #8892ff, #a8b4ff); box-shadow: 0 0 15px rgba(136, 146, 255, 0.7); }
+    [data-theme="dark"] .stat-card { border-right-color: #8892ff; }
+    [data-theme="dark"] .brain-textarea:focus { border-color: #8892ff; box-shadow: 0 0 0 3px rgba(136, 146, 255, 0.1); }
+    [data-theme="dark"] .task-input:focus { border-color: #8892ff; box-shadow: 0 0 0 3px rgba(136, 146, 255, 0.1); }
+    [data-theme="dark"] .category-btn { color: #ccc; }
+    [data-theme="dark"] .category-btn.active { background: #8892ff; color: #1a1a2e; }
+</style>
+
+<!-- ==================== 2. كود JavaScript الخاص بالوضع الداكن ==================== -->
+<script>
+    // دالة تبديل الوضع (ضعها في زر التبديل)
+    function toggleTheme() {
+        const html = document.documentElement;
+        const themeIcon = document.getElementById('themeIcon');
+        const themeText = document.getElementById('themeText');
+        if (html.getAttribute('data-theme') === 'dark') {
+            html.removeAttribute('data-theme');
+            themeIcon.textContent = '🌙';
+            themeText.textContent = 'الوضع الداكن';
+            localStorage.setItem('theme', 'light');
+        } else {
+            html.setAttribute('data-theme', 'dark');
+            themeIcon.textContent = '☀️';
+            themeText.textContent = 'الوضع الفاتح';
+            localStorage.setItem('theme', 'dark');
+        }
+        updateAllProgressColors();
+    }
+
+    // دالة تحديث ألوان شريط التقدم
+    function updateAllProgressColors() {
+        const dk = document.documentElement.getAttribute('data-theme') === 'dark';
+        ['routineProgressPercent', 'taskProgressPercent'].forEach(id => {
+            const el = document.getElementById(id);
+            el.style.color = dk ? '#8892ff' : '#667eea';
+            el.style.textShadow = dk ? '0 0 15px rgba(136,146,255,0.7)' : '0 0 10px rgba(102,126,234,0.6)';
+        });
+    }
+
+    // كود التشغيل التلقائي (ضعه داخل document.addEventListener('DOMContentLoaded', () => { ... }))
+    if (localStorage.getItem('theme') === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        document.getElementById('themeIcon').textContent = '☀️';
+        document.getElementById('themeText').textContent = 'الوضع الفاتح';
+    }
+</script>
 [data-theme="ocean"] {
 --bg-gradient-start: #2193b0;
 --bg-gradient-end: #6dd5ed;
