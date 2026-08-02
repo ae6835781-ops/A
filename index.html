@@ -71,59 +71,63 @@ padding-top: env(safe-area-inset-top, 40px);
 --electronic-color: #17a2b8;
 --electronic-bg: #d1ecf1;
 --expense-bg: #28a745;
+--total-balance-bg: rgba(102, 126, 234, 0.1);
+--total-balance-border: #667eea;
 }
 
-/* ✅ الوضع الداكن المحسن والمتناسق */
+/* ✅ الوضع الداكن القديم (تمت استعادته بالضبط) */
 [data-theme="dark"] {
---bg-gradient-start: #0f172a;
---bg-gradient-end: #1e293b;
---bg-primary: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
---card-bg: rgba(30, 41, 59, 0.95);
---card-bg-alt: rgba(51, 65, 85, 0.9);
---text-primary: #ffffff;
---text-secondary: #cbd5e1;
---text-muted: #94a3b8;
---text-white: #ffffff;
---input-bg: #334155;
---input-border: #475569;
---task-bg: #334155;
---task-bg-correct: #14532d;
---task-bg-wrong: #7f1d1d;
---progress-bg: #475569;
+--bg-gradient-start: #1a1a2e;
+--bg-gradient-end: #16213e;
+--bg-primary: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+--card-bg: rgba(30, 30, 50, 0.95);
+--card-bg-alt: rgba(40, 40, 70, 0.9);
+--text-primary: #f0f0f0;
+--text-secondary: #ccc;
+--text-muted: #aaa;
+--text-white: #fff;
+--input-bg: #2a2a4a;
+--input-border: #444;
+--task-bg: #252545;
+--task-bg-correct: #1e5631;
+--task-bg-wrong: #5c1e2a;
+--progress-bg: #3a3a5a;
 --shadow-color: rgba(0,0,0,0.5);
 --shadow-light: rgba(0,0,0,0.2);
---btn-secondary-bg: #475569;
---btn-secondary-bg-hover: #64748b;
---delete-btn-bg: #ef4444;
---delete-btn-bg-hover: #dc2626;
---correct-btn-bg: #22c55e;
---correct-btn-bg-hover: #16a34a;
---wrong-btn-bg: #ef4444;
---wrong-btn-bg-hover: #dc2626;
---edit-btn-bg: #0ea5e9;
---edit-btn-bg-hover: #0284c7;
---undo-btn-bg: #64748b;
---undo-btn-bg-hover: #475569;
---snackbar-bg: #334155;
---routine-border: #828BF8;
---task-border: #a5b4fc;
---empty-state-opacity: 0.6;
---drag-handle-color: #94a3b8;
---neon-glow: rgba(130, 139, 248, 0.6);
---progress-text-color: #828BF8;
---report-excellent: #22c55e;
---report-good: #828BF8;
---report-average: #f59e0b;
---report-weak: #ef4444;
---pct-excellent: #22c55e;
---pct-good: #828BF8;
---pct-average: #f59e0b;
---pct-weak: #ef4444;
---cash-color: #4ade80;
---cash-bg: rgba(74, 222, 128, 0.15);
---electronic-color: #60a5fa;
---electronic-bg: rgba(96, 165, 250, 0.15);
---expense-bg: #828BF8;
+--btn-secondary-bg: #3a3a5a;
+--btn-secondary-bg-hover: #4a4a6a;
+--delete-btn-bg: #dc3545;
+--delete-btn-bg-hover: #c82333;
+--correct-btn-bg: #2ecc71;
+--correct-btn-bg-hover: #27ae60;
+--wrong-btn-bg: #e74c3c;
+--wrong-btn-bg-hover: #c0392b;
+--edit-btn-bg: #20c997;
+--edit-btn-bg-hover: #1ea67d;
+--undo-btn-bg: #6c757d;
+--undo-btn-bg-hover: #5a6268;
+--snackbar-bg: #444;
+--routine-border: #8892ff;
+--task-border: #a894ff;
+--empty-state-opacity: 0.3;
+--drag-handle-color: #666;
+--neon-glow: rgba(136, 146, 255, 0.7);
+--progress-text-color: #8892ff;
+--report-excellent: #2ecc71;
+--report-good: #20c997;
+--report-average: #f39c12;
+--report-weak: #e74c3c;
+--pct-excellent: #2ecc71;
+--pct-good: #20c997;
+--pct-average: #f39c12;
+--pct-weak: #e74c3c;
+--cash-color: #2ecc71;
+--cash-bg: rgba(46, 204, 113, 0.15);
+--electronic-color: #3498db;
+--electronic-bg: rgba(52, 152, 219, 0.15);
+--expense-bg: #8892ff;
+--total-balance-bg: rgba(136, 146, 255, 0.15);
+--total-balance-border: #8892ff;
 }
 
 [data-theme="sunset"] {
@@ -154,6 +158,8 @@ padding-top: env(safe-area-inset-top, 40px);
 --electronic-color: #0ea5e9;
 --electronic-bg: #f0f9ff;
 --expense-bg: #ff6e7f;
+--total-balance-bg: rgba(255, 110, 127, 0.12);
+--total-balance-border: #ff6e7f;
 }
 
 [data-theme="ocean"] {
@@ -184,6 +190,8 @@ padding-top: env(safe-area-inset-top, 40px);
 --electronic-color: #0ea5e9;
 --electronic-bg: #f0f9ff;
 --expense-bg: #2193b0;
+--total-balance-bg: rgba(33, 147, 176, 0.12);
+--total-balance-border: #2193b0;
 }
 
 [data-theme="sakura"] {
@@ -214,6 +222,8 @@ padding-top: env(safe-area-inset-top, 40px);
 --electronic-color: #a855f7;
 --electronic-bg: #faf5ff;
 --expense-bg: #ff9a9e;
+--total-balance-bg: rgba(255, 154, 158, 0.12);
+--total-balance-border: #ff9a9e;
 }
 
 [data-theme="forest"] {
@@ -244,9 +254,10 @@ padding-top: env(safe-area-inset-top, 40px);
 --electronic-color: #14b8a6;
 --electronic-bg: #f0fdfa;
 --expense-bg: #134e5e;
+--total-balance-bg: rgba(19, 78, 94, 0.12);
+--total-balance-border: #134e5e;
 }
 
-/* ✅ وضع باربي المتناسق والاحترافي */
 [data-theme="barbie"] {
 --bg-gradient-start: #d81b60;
 --bg-gradient-end: #f48fb1;
@@ -297,6 +308,8 @@ padding-top: env(safe-area-inset-top, 40px);
 --electronic-color: #be185d;
 --electronic-bg: #fdf2f8;
 --expense-bg: #d81b60;
+--total-balance-bg: rgba(216, 27, 96, 0.12);
+--total-balance-border: #d81b60;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -351,7 +364,6 @@ align-items: center;
 gap: 10px;
 }
 .header-title { text-align: center; }
-/* ✅ تكبير عنوان التطبيق */
 .header h1 { color: var(--text-white); font-size: 1.9rem; font-weight: 900; text-shadow: 0 4px 15px rgba(0,0,0,0.3); margin: 0; }
 .header p { color: rgba(255,255,255,0.9); font-size: 0.9rem; margin: 3px 0 0 0; }
 .header-actions {
@@ -361,7 +373,6 @@ align-items: center;
 flex-wrap: nowrap;
 justify-content: center;
 }
-/* ✅ تكبير أزرار الهيدر وأيقوناتها */
 .header-btn {
 background: rgba(255,255,255,0.2);
 border: 2px solid rgba(255,255,255,0.4);
@@ -473,7 +484,6 @@ white-space: nowrap;
 .brain-section { background: var(--card-bg); border-radius: 15px; padding: 16px; margin-bottom: 16px; box-shadow: 0 10px 40px var(--shadow-color); animation: fadeInUp 1s ease 0.5s both; transition: background 0.4s ease, box-shadow 0.4s ease; }
 .brain-header { display: flex; align-items: center; gap: 6px; margin-bottom: 8px; }
 .brain-title { font-size: 1rem; font-weight: 700; color: var(--text-primary); }
-/* ✅ تحسين منطقة "في دماغي" للسحب على الموبايل */
 .brain-textarea { 
 width: 100%; 
 min-height: 120px; 
@@ -607,6 +617,31 @@ transition: all 0.3s ease;
 }
 .wallet-card.cash-wallet .wallet-balance { color: var(--cash-color); }
 .wallet-card.electronic-wallet .wallet-balance { color: var(--electronic-color); }
+
+/* ✅ بطاقة إجمالي الرصيد (بدون إيموجي) */
+.total-balance-card {
+padding: 10px;
+border-radius: 12px;
+background: var(--total-balance-bg);
+border: 2px solid var(--total-balance-border);
+text-align: center;
+margin-bottom: 15px;
+transition: all 0.3s ease;
+}
+.total-balance-label {
+font-size: 0.7rem;
+color: var(--text-secondary);
+font-weight: 700;
+margin-bottom: 4px;
+letter-spacing: 0.5px;
+}
+.total-balance-value {
+font-size: 1.1rem;
+font-weight: 900;
+direction: ltr;
+color: var(--total-balance-border);
+}
+
 .expense-form-wrapper {
 background: var(--card-bg-alt);
 border-radius: 12px;
@@ -675,6 +710,17 @@ font-family: inherit;
 .payment-btn.active.electronic-active { background: var(--electronic-color); color: white; box-shadow: 0 2px 8px rgba(23, 162, 184, 0.4); }
 .op-btn.active.add-active { background: var(--correct-btn-bg); color: white; }
 .op-btn.active.spend-active { background: var(--wrong-btn-bg); color: white; }
+
+/* ✅ شريط بحث المصروفات */
+.expense-search-wrapper { margin-bottom: 12px; position: relative; }
+.expense-search-input { width: 100%; padding: 8px 12px; padding-right: 35px; border: 2px solid var(--input-border); border-radius: 10px; font-size: 0.85rem; font-family: inherit; background: var(--input-bg); color: var(--text-primary); transition: all 0.3s ease; height: 38px; }
+.expense-search-input:focus { outline: none; border-color: var(--bg-gradient-start); box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15); }
+[data-theme="dark"] .expense-search-input:focus { border-color: #8892ff; box-shadow: 0 0 0 3px rgba(136, 146, 255, 0.15); }
+.expense-search-icon { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); font-size: 0.9rem; color: var(--text-muted); pointer-events: none; }
+.expense-search-clear { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); width: 22px; height: 22px; border-radius: 50%; background: var(--delete-btn-bg); color: white; border: none; cursor: pointer; font-size: 0.7rem; display: none; align-items: center; justify-content: center; transition: all 0.2s ease; padding: 0; }
+.expense-search-clear.show { display: flex; }
+.expense-search-clear:hover { transform: translateY(-50%) scale(1.1); }
+
 .expense-log { list-style: none; min-height: 60px; }
 .expense-log-item {
 display: flex;
@@ -851,22 +897,22 @@ word-break: break-word;
 .details-table .desc-value { font-size: 0.8rem; }
 }
 
-/* ✅ الوضع الداكن - تناسق النصوص والعناصر مع اللون #828BF8 */
+/* ✅ الوضع الداكن - تناسق النصوص والعناصر مع اللون #8892ff (القديم) */
 [data-theme="dark"] .mode-btn {
 color: #ffffff;
-border-color: #828BF8;
+border-color: #8892ff;
 }
 [data-theme="dark"] .mode-btn.active {
-background: #828BF8;
+background: #8892ff;
 color: #ffffff;
 }
 [data-theme="dark"] .mode-btn:hover {
-background: rgba(130, 139, 248, 0.2);
+background: rgba(136, 146, 255, 0.2);
 }
 
 [data-theme="dark"] .timer {
-color: #828BF8;
-text-shadow: 0 2px 15px rgba(130, 139, 248, 0.5);
+color: #8892ff;
+text-shadow: 0 2px 15px rgba(136, 146, 255, 0.5);
 }
 
 [data-theme="dark"] .timer-label,
@@ -922,7 +968,9 @@ text-shadow: 0 2px 15px rgba(130, 139, 248, 0.5);
 [data-theme="dark"] .detail-stat-value,
 [data-theme="dark"] .split-percent,
 [data-theme="dark"] .circular-progress .progress-value,
-[data-theme="dark"] .combined-total .total-pct {
+[data-theme="dark"] .combined-total .total-pct,
+[data-theme="dark"] .total-balance-label,
+[data-theme="dark"] .total-balance-value {
 color: #ffffff;
 }
 
@@ -931,15 +979,15 @@ color: #ffffff;
 }
 
 [data-theme="dark"] .quote-author {
-color: #828BF8;
+color: #8892ff;
 }
 
 [data-theme="dark"] .new-quote-btn {
-color: #828BF8;
-border-color: #828BF8;
+color: #8892ff;
+border-color: #8892ff;
 }
 [data-theme="dark"] .new-quote-btn:hover {
-background: #828BF8;
+background: #8892ff;
 color: #ffffff;
 }
 </style>
@@ -1073,6 +1121,13 @@ Made by <a href="https://wa.me/201102594058" target="_blank">Ahmed Emad Farhoud<
 <div class="wallet-balance" id="electronicBalance">0.00 ج.م</div>
 </div>
 </div>
+
+<!-- ✅ بطاقة إجمالي الرصيد (بدون إيموجي) -->
+<div class="total-balance-card">
+    <div class="total-balance-label">إجمالي الرصيد</div>
+    <div class="total-balance-value" id="totalBalance">0.00 ج.م</div>
+</div>
+
 <div style="text-align: center; font-size: 0.6rem; color: var(--text-muted); margin-bottom: 8px;">
 👆 اضغط مطولاً على البطاقة للتعديل
 </div>
@@ -1100,6 +1155,14 @@ Made by <a href="https://wa.me/201102594058" target="_blank">Ahmed Emad Farhoud<
 <span>سجل العمليات</span>
 <span style="margin-right: auto; font-size: 0.65rem; color: var(--text-muted); font-weight: 400;">(اضغط ℹ️ للتفاصيل)</span>
 </div>
+
+<!-- ✅ شريط بحث المصروفات -->
+<div class="expense-search-wrapper">
+    <span class="expense-search-icon">🔍</span>
+    <input type="text" class="expense-search-input" id="expenseSearchInput" placeholder="ابحث عن عملية (الوصف، المبلغ، التاريخ)...">
+    <button class="expense-search-clear" id="expenseSearchClear" onclick="clearExpenseSearch()">✕</button>
+</div>
+
 <div class="expense-log" id="expenseLog">
 <div class="empty-state"><div class="empty-state-icon">💰</div><p>لا توجد عمليات مسجلة بعد</p></div>
 </div>
@@ -1249,6 +1312,8 @@ let expenseUndoStack = JSON.parse(localStorage.getItem('expenseUndoStack')) || [
 let expenseUndoTimeout = null;
 let expensesPin = localStorage.getItem('expensesPin') || '';
 let pinAction = null;
+let expenseSearchQuery = '';
+
 function saveToStorage() { try { localStorage.setItem('userTasks', JSON.stringify(tasks)); } catch(e) {} }
 function saveUndoStack() { try { localStorage.setItem('undoStack', JSON.stringify(undoStack)); } catch(e) {} }
 function saveBrainDump() {
@@ -1662,7 +1727,7 @@ function updateAllProgressColors() {
 const theme = localStorage.getItem('theme') || 'light';
 let color = '#667eea';
 let shadow = '0 0 10px rgba(102,126,234,0.6)';
-if (theme === 'dark') { color = '#828BF8'; shadow = '0 0 15px rgba(130,139,248,0.6)'; }
+if (theme === 'dark') { color = '#8892ff'; shadow = '0 0 15px rgba(136,146,255,0.7)'; }
 else if (theme === 'sunset') { color = '#ff6e7f'; shadow = '0 0 15px rgba(255,110,127,0.7)'; }
 else if (theme === 'ocean') { color = '#2193b0'; shadow = '0 0 15px rgba(33,147,176,0.7)'; }
 else if (theme === 'sakura') { color = '#ff9a9e'; shadow = '0 0 15px rgba(255,154,158,0.7)'; }
@@ -1958,15 +2023,47 @@ document.getElementById('detailsModal').classList.add('show');
 function closeDetailsModal() {
 document.getElementById('detailsModal').classList.remove('show');
 }
+
+// ✅ دالة البحث في المصروفات
+function filterExpensesBySearch(query) {
+    expenseSearchQuery = query.trim().toLowerCase();
+    renderExpenses();
+}
+function clearExpenseSearch() {
+    const input = document.getElementById('expenseSearchInput');
+    input.value = '';
+    filterExpensesBySearch('');
+    document.getElementById('expenseSearchClear').classList.remove('show');
+    input.focus();
+}
+
 function renderExpenses() {
 document.getElementById('cashBalance').textContent = cashBalance.toFixed(2) + ' ج.م';
 document.getElementById('electronicBalance').textContent = electronicBalance.toFixed(2) + ' ج.م';
+
+// ✅ تحديث إجمالي الرصيد
+const total = cashBalance + electronicBalance;
+document.getElementById('totalBalance').textContent = total.toFixed(2) + ' ج.م';
+
 const log = document.getElementById('expenseLog');
-if (expenses.length === 0) {
-log.innerHTML = '<div class="empty-state"><div class="empty-state-icon">💰</div><p>لا توجد عمليات مسجلة بعد</p></div>';
-return;
+
+// ✅ فلترة المصروفات حسب البحث
+let filtered = expenses;
+if (expenseSearchQuery) {
+    filtered = expenses.filter(op => 
+        op.desc.toLowerCase().includes(expenseSearchQuery) ||
+        op.amount.toString().includes(expenseSearchQuery) ||
+        op.date.toLowerCase().includes(expenseSearchQuery) ||
+        op.type.toLowerCase().includes(expenseSearchQuery)
+    );
 }
-const sorted = [...expenses].reverse();
+
+if (filtered.length === 0) {
+    log.innerHTML = '<div class="empty-state"><div class="empty-state-icon">💰</div><p>' + (expenseSearchQuery ? 'لا توجد نتائج مطابقة للبحث' : 'لا توجد عمليات مسجلة بعد') + '</p></div>';
+    return;
+}
+
+const sorted = [...filtered].reverse();
 let html = '';
 sorted.forEach((op) => {
 const isAdd = op.type === 'إضافة';
@@ -2071,6 +2168,15 @@ return;
 document.getElementById('pinInput').addEventListener('keypress', e => {
 if (e.key === 'Enter') confirmPin();
 });
+
+// ✅ مستمع حدث البحث في المصروفات
+document.getElementById('expenseSearchInput').addEventListener('input', function(e) {
+    const val = e.target.value;
+    const clearBtn = document.getElementById('expenseSearchClear');
+    if (val.trim() !== '') clearBtn.classList.add('show'); else clearBtn.classList.remove('show');
+    filterExpensesBySearch(val);
+});
+
 function updateTimerDisplay() {
 const m = Math.floor(timeLeft/60), s = timeLeft%60;
 document.getElementById('timer').textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
