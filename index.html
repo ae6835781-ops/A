@@ -75,7 +75,6 @@ padding-top: env(safe-area-inset-top, 40px);
 --total-balance-border: #667eea;
 }
 
-/* ✅ الوضع الداكن القديم (تمت استعادته بالضبط) */
 [data-theme="dark"] {
 --bg-gradient-start: #1a1a2e;
 --bg-gradient-end: #16213e;
@@ -618,7 +617,6 @@ transition: all 0.3s ease;
 .wallet-card.cash-wallet .wallet-balance { color: var(--cash-color); }
 .wallet-card.electronic-wallet .wallet-balance { color: var(--electronic-color); }
 
-/* ✅ بطاقة إجمالي الرصيد (بدون إيموجي) */
 .total-balance-card {
 padding: 10px;
 border-radius: 12px;
@@ -711,7 +709,6 @@ font-family: inherit;
 .op-btn.active.add-active { background: var(--correct-btn-bg); color: white; }
 .op-btn.active.spend-active { background: var(--wrong-btn-bg); color: white; }
 
-/* ✅ شريط بحث المصروفات */
 .expense-search-wrapper { margin-bottom: 12px; position: relative; }
 .expense-search-input { width: 100%; padding: 8px 12px; padding-right: 35px; border: 2px solid var(--input-border); border-radius: 10px; font-size: 0.85rem; font-family: inherit; background: var(--input-bg); color: var(--text-primary); transition: all 0.3s ease; height: 38px; }
 .expense-search-input:focus { outline: none; border-color: var(--bg-gradient-start); box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15); }
@@ -768,22 +765,74 @@ flex-shrink: 0;
 }
 .expense-log-amount.add { color: var(--correct-btn-bg); }
 .expense-log-amount.spend { color: var(--wrong-btn-bg); }
+
+/* ✨ إخفاء أزرار التفاصيل والتسديد افتراضياً */
+.expense-log-info-btn,
+.settle-btn {
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s ease;
+    width: 26px;
+    height: 26px;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    flex-shrink: 0;
+}
 .expense-log-info-btn {
-width: 26px;
-height: 26px;
-border: none;
-border-radius: 50%;
-cursor: pointer;
-font-size: 0.75rem;
-display: flex;
-align-items: center;
-justify-content: center;
-transition: all 0.2s ease;
-color: white;
-background: var(--expense-bg);
-flex-shrink: 0;
+    background: var(--expense-bg);
 }
 .expense-log-info-btn:hover { transform: scale(1.15); }
+
+/* ✨ إظهار الأزرار عند الضغط/التمرير */
+.expense-log-item:hover .expense-log-info-btn,
+.expense-log-item:hover .settle-btn,
+.expense-log-item.active .expense-log-info-btn,
+.expense-log-item.active .settle-btn,
+.expense-log-item.selected .expense-log-info-btn,
+.expense-log-item.selected .settle-btn {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.settle-btn {
+    background: var(--correct-btn-bg);
+    border: 2px solid var(--correct-btn-bg);
+    font-weight: 900;
+}
+.settle-btn:hover { transform: scale(1.15); box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3); }
+
+/* ✨ شارة تاريخ التسديد */
+.settled-date-tag {
+    font-size: 0.6rem;
+    background: var(--correct-btn-bg);
+    color: white;
+    padding: 1px 6px;
+    border-radius: 8px;
+    font-weight: 700;
+    margin-right: 4px;
+    display: inline-block;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+.settled-tag {
+    font-size: 0.6rem;
+    background: var(--correct-btn-bg);
+    color: white;
+    padding: 1px 6px;
+    border-radius: 8px;
+    font-weight: 700;
+    margin-right: 4px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
 .balance-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: none; justify-content: center; align-items: center; z-index: 3000; padding: 20px; backdrop-filter: blur(5px); }
 .balance-modal.show { display: flex; }
 .balance-modal-content { background: var(--card-bg); border-radius: 18px; padding: 20px; max-width: 380px; width: 100%; box-shadow: 0 20px 60px var(--shadow-color); animation: slideUp 0.3s ease; }
@@ -897,7 +946,6 @@ word-break: break-word;
 .details-table .desc-value { font-size: 0.8rem; }
 }
 
-/* ✅ الوضع الداكن - تناسق النصوص والعناصر مع اللون #8892ff (القديم) */
 [data-theme="dark"] .mode-btn {
 color: #ffffff;
 border-color: #8892ff;
@@ -989,6 +1037,179 @@ border-color: #8892ff;
 [data-theme="dark"] .new-quote-btn:hover {
 background: #8892ff;
 color: #ffffff;
+}
+
+/* ================================ */
+/* ✨ الميزات الجديدة - التحديد المتعدد والتسديد */
+/* ================================ */
+
+.selection-mode-bar {
+    background: linear-gradient(135deg, rgba(40, 167, 69, 0.15) 0%, rgba(40, 167, 69, 0.05) 100%);
+    border: 2px solid var(--correct-btn-bg);
+    border-radius: 12px;
+    padding: 10px;
+    margin-bottom: 12px;
+    display: none;
+    flex-direction: column;
+    gap: 8px;
+    animation: slideIn 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+.selection-mode-bar.show { display: flex; }
+.selection-mode-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+.selection-mode-info {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--correct-btn-bg);
+}
+.selection-mode-info .selection-icon {
+    font-size: 1.2rem;
+}
+.selection-mode-info .selection-count {
+    background: var(--correct-btn-bg);
+    color: white;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 900;
+    min-width: 24px;
+    text-align: center;
+}
+.selection-mode-actions {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.selection-btn {
+    padding: 7px 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    white-space: nowrap;
+}
+.selection-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+.selection-btn:active { transform: scale(0.95); }
+.selection-btn.select-all { background: var(--correct-btn-bg); color: white; }
+.selection-btn.deselect-all { background: var(--btn-secondary-bg); color: var(--text-primary); border: 1px solid var(--input-border); }
+.selection-btn.delete-selected { background: var(--delete-btn-bg); color: white; }
+.selection-btn.exit-mode { background: var(--wrong-btn-bg); color: white; }
+
+.expense-checkbox {
+    width: 22px;
+    height: 22px;
+    border: 2px solid var(--input-border);
+    border-radius: 6px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    margin-left: 6px;
+    flex-shrink: 0;
+    transition: all 0.2s ease;
+    background: var(--input-bg);
+    color: transparent;
+    font-size: 0.8rem;
+    font-weight: 900;
+    cursor: pointer;
+}
+.selection-mode-bar.show ~ .expense-log .expense-checkbox,
+body.selection-active .expense-checkbox {
+    display: flex;
+}
+.expense-checkbox.checked {
+    background: var(--correct-btn-bg);
+    border-color: var(--correct-btn-bg);
+    color: white;
+    animation: checkPop 0.3s ease;
+}
+@keyframes checkPop {
+    0% { transform: scale(0.5); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+.expense-log-item.selected {
+    background: var(--task-bg-correct);
+    border-right-width: 5px;
+    transform: translateX(-5px);
+    box-shadow: 0 4px 15px rgba(40, 167, 69, 0.25);
+}
+
+.expense-log-item.settled {
+    opacity: 0.7;
+}
+.expense-log-item.settled .expense-log-desc {
+    text-decoration: line-through;
+    text-decoration-color: var(--correct-btn-bg);
+    text-decoration-thickness: 2px;
+}
+.expense-log-item.settled .expense-log-amount {
+    text-decoration: line-through;
+    text-decoration-color: var(--correct-btn-bg);
+    text-decoration-thickness: 2px;
+    opacity: 0.7;
+}
+.expense-log-item.settled .expense-log-icon {
+    opacity: 0.6;
+}
+
+[data-theme="dark"] .selection-mode-bar {
+    background: linear-gradient(135deg, rgba(46, 204, 113, 0.2) 0%, rgba(46, 204, 113, 0.05) 100%);
+    border-color: #2ecc71;
+}
+[data-theme="dark"] .selection-mode-info {
+    color: #2ecc71;
+}
+[data-theme="dark"] .selection-mode-info .selection-count {
+    background: #2ecc71;
+}
+[data-theme="dark"] .settled-tag,
+[data-theme="dark"] .settled-date-tag {
+    background: #2ecc71;
+}
+[data-theme="dark"] .expense-log-item.settled .expense-log-desc,
+[data-theme="dark"] .expense-log-item.settled .expense-log-amount {
+    text-decoration-color: #2ecc71;
+}
+
+@keyframes longPressPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+}
+.expense-log-item.long-press-active {
+    animation: longPressPulse 0.4s ease;
+    background: rgba(102, 126, 234, 0.1);
+}
+
+.expense-log-item.selectable {
+    padding-right: 6px;
+}
+
+@media (max-width: 600px) {
+    .selection-mode-actions {
+        width: 100%;
+        justify-content: center;
+    }
+    .selection-btn {
+        padding: 6px 10px;
+        font-size: 0.68rem;
+    }
 }
 </style>
 </head>
@@ -1109,6 +1330,35 @@ Made by <a href="https://wa.me/201102594058" target="_blank">Ahmed Emad Farhoud<
 <h3>💰 المصروفات</h3>
 <button class="modal-close" onclick="closeExpensesModal()">✕</button>
 </div>
+
+<div class="selection-mode-bar" id="selectionModeBar">
+    <div class="selection-mode-top">
+        <div class="selection-mode-info">
+            <span class="selection-icon">✅</span>
+            <span>وضع التحديد</span>
+            <span class="selection-count" id="selectionCount">0</span>
+        </div>
+        <button class="selection-btn exit-mode" onclick="exitSelectionMode()">
+            <span>🚪</span>
+            <span>خروج</span>
+        </button>
+    </div>
+    <div class="selection-mode-actions">
+        <button class="selection-btn select-all" onclick="selectAllExpenses()">
+            <span>☑️</span>
+            <span>تحديد الكل</span>
+        </button>
+        <button class="selection-btn deselect-all" onclick="deselectAllExpenses()">
+            <span>◻️</span>
+            <span>إلغاء التحديد</span>
+        </button>
+        <button class="selection-btn delete-selected" onclick="deleteSelectedExpenses()">
+            <span>🗑️</span>
+            <span>حذف المحدد</span>
+        </button>
+    </div>
+</div>
+
 <div class="wallet-grid">
 <div class="wallet-card cash-wallet" data-wallet="كاش">
 <div class="wallet-icon">💵</div>
@@ -1122,12 +1372,12 @@ Made by <a href="https://wa.me/201102594058" target="_blank">Ahmed Emad Farhoud<
 </div>
 </div>
 
-<!-- ✅ بطاقة إجمالي الرصيد (بدون إيموجي) -->
 <div class="total-balance-card">
     <div class="total-balance-label">إجمالي الرصيد</div>
     <div class="total-balance-value" id="totalBalance">0.00 ج.م</div>
 </div>
 
+<!-- ✨ تم حذف النص الزائد -->
 <div style="text-align: center; font-size: 0.6rem; color: var(--text-muted); margin-bottom: 8px;">
 👆 اضغط مطولاً على البطاقة للتعديل
 </div>
@@ -1153,10 +1403,8 @@ Made by <a href="https://wa.me/201102594058" target="_blank">Ahmed Emad Farhoud<
 <div class="form-title">
 <span>📜</span>
 <span>سجل العمليات</span>
-<span style="margin-right: auto; font-size: 0.65rem; color: var(--text-muted); font-weight: 400;">(اضغط ℹ️ للتفاصيل)</span>
 </div>
 
-<!-- ✅ شريط بحث المصروفات -->
 <div class="expense-search-wrapper">
     <span class="expense-search-icon">🔍</span>
     <input type="text" class="expense-search-input" id="expenseSearchInput" placeholder="ابحث عن عملية (الوصف، المبلغ، التاريخ)...">
@@ -1313,6 +1561,9 @@ let expenseUndoTimeout = null;
 let expensesPin = localStorage.getItem('expensesPin') || '';
 let pinAction = null;
 let expenseSearchQuery = '';
+
+let isSelectionMode = false;
+let selectedExpenseIds = [];
 
 function saveToStorage() { try { localStorage.setItem('userTasks', JSON.stringify(tasks)); } catch(e) {} }
 function saveUndoStack() { try { localStorage.setItem('undoStack', JSON.stringify(undoStack)); } catch(e) {} }
@@ -1683,6 +1934,7 @@ closeBalanceModal();
 closeDetailsModal();
 closeExpensesModal();
 closePinModal();
+exitSelectionMode();
 }
 });
 function renderTasksByCategory(cat, lid, cid, tid, pid, pctid, em, ei) {
@@ -1841,10 +2093,12 @@ document.getElementById('expensesModal').classList.add('show');
 document.body.style.overflow = 'hidden';
 renderExpenses();
 initWalletLongPress();
+initExpenseLongPress();
 }
 function closeExpensesModal() {
 document.getElementById('expensesModal').classList.remove('show');
 document.body.style.overflow = '';
+exitSelectionMode();
 }
 function setPaymentMethod(method) {
 currentPaymentMethod = method;
@@ -1932,7 +2186,9 @@ type: currentOperationType,
 paymentMethod: currentPaymentMethod,
 date: now.toLocaleDateString('ar-EG', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }),
 time: now.toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit' }),
-timestamp: now.getTime()
+timestamp: now.getTime(),
+settled: false,
+settledDate: null
 };
 expenses.push(op);
 if (currentPaymentMethod === 'كاش') {
@@ -1978,6 +2234,20 @@ if (!op) return;
 const isAdd = op.type === 'إضافة';
 const isCash = op.paymentMethod === 'كاش';
 const content = document.getElementById('detailsModalContent');
+
+// ✨ تنسيق تاريخ التسديد
+let settledDateStr = '';
+if (op.settled && op.settledDate) {
+    const d = new Date(op.settledDate);
+    settledDateStr = d.toLocaleDateString('ar-EG', { 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+    });
+}
+
 content.innerHTML = `
 <h3>📋 تفاصيل العملية</h3>
 <table class="details-table">
@@ -2011,6 +2281,18 @@ content.innerHTML = `
 <td class="detail-label">التاريخ</td>
 <td class="detail-value">${op.date}</td>
 </tr>
+${op.settled ? `
+<tr>
+<td class="detail-icon">✅</td>
+<td class="detail-label">حالة التسديد</td>
+<td class="detail-value type-add">تم التسديد ✓</td>
+</tr>
+<tr>
+<td class="detail-icon">📅</td>
+<td class="detail-label">تاريخ التسديد</td>
+<td class="detail-value">${settledDateStr || 'غير محدد'}</td>
+</tr>
+` : ''}
 </table>
 <div class="details-modal-actions">
 <button class="repeat-modal-btn" data-repeat-id="${op.id}">🔄 تكرار</button>
@@ -2024,7 +2306,231 @@ function closeDetailsModal() {
 document.getElementById('detailsModal').classList.remove('show');
 }
 
-// ✅ دالة البحث في المصروفات
+function toggleSelectionMode() {
+    isSelectionMode = !isSelectionMode;
+    const bar = document.getElementById('selectionModeBar');
+    if (isSelectionMode) {
+        bar.classList.add('show');
+        document.body.classList.add('selection-active');
+    } else {
+        bar.classList.remove('show');
+        document.body.classList.remove('selection-active');
+        selectedExpenseIds = [];
+    }
+    renderExpenses();
+}
+
+function enterSelectionModeWithItem(id) {
+    isSelectionMode = true;
+    selectedExpenseIds = [id];
+    const bar = document.getElementById('selectionModeBar');
+    bar.classList.add('show');
+    document.body.classList.add('selection-active');
+    if (navigator.vibrate) navigator.vibrate(50);
+    renderExpenses();
+}
+
+function exitSelectionMode() {
+    isSelectionMode = false;
+    selectedExpenseIds = [];
+    const bar = document.getElementById('selectionModeBar');
+    bar.classList.remove('show');
+    document.body.classList.remove('selection-active');
+    renderExpenses();
+}
+
+function toggleExpenseSelection(id) {
+    const idx = selectedExpenseIds.indexOf(id);
+    if (idx === -1) {
+        selectedExpenseIds.push(id);
+    } else {
+        selectedExpenseIds.splice(idx, 1);
+    }
+    updateSelectionCount();
+    renderExpenses();
+}
+
+function updateSelectionCount() {
+    const countEl = document.getElementById('selectionCount');
+    if (countEl) countEl.textContent = selectedExpenseIds.length;
+}
+
+function selectAllExpenses() {
+    let filtered = expenses;
+    if (expenseSearchQuery) {
+        filtered = expenses.filter(op => 
+            op.desc.toLowerCase().includes(expenseSearchQuery) ||
+            op.amount.toString().includes(expenseSearchQuery) ||
+            op.date.toLowerCase().includes(expenseSearchQuery) ||
+            op.type.toLowerCase().includes(expenseSearchQuery)
+        );
+    }
+    selectedExpenseIds = filtered.map(op => op.id);
+    updateSelectionCount();
+    renderExpenses();
+    if (navigator.vibrate) navigator.vibrate(30);
+}
+
+function deselectAllExpenses() {
+    selectedExpenseIds = [];
+    updateSelectionCount();
+    renderExpenses();
+}
+
+function deleteSelectedExpenses() {
+    if (selectedExpenseIds.length === 0) {
+        alert('⚠️ لا توجد عمليات محددة للحذف');
+        return;
+    }
+    if (!confirm(`هل أنت متأكد من حذف ${selectedExpenseIds.length} عملية؟`)) return;
+    
+    selectedExpenseIds.forEach(id => {
+        const idx = expenses.findIndex(e => e.id === id);
+        if (idx !== -1) {
+            const op = expenses[idx];
+            expenseUndoStack.push({ op: op, index: idx, timestamp: Date.now() });
+            expenses.splice(idx, 1);
+        }
+    });
+    
+    if (expenseUndoStack.length > 10) {
+        expenseUndoStack = expenseUndoStack.slice(-10);
+    }
+    
+    saveExpenses();
+    saveExpenseUndoStack();
+    
+    const deletedCount = selectedExpenseIds.length;
+    selectedExpenseIds = [];
+    exitSelectionMode();
+    renderExpenses();
+    showExpenseUndoSnackbar();
+    
+    const s = document.getElementById('expenseUndoSnackbar');
+    s.querySelector('span').textContent = `🗑️ تم حذف ${deletedCount} عملية`;
+}
+
+// ✨ دالة التسديد المحدثة مع حفظ تاريخ التسديد
+function toggleSettle(id, event) {
+    if (event) event.stopPropagation();
+    const op = expenses.find(e => e.id === id);
+    if (!op) return;
+    
+    if (!op.settled) {
+        // عند تفعيل التسديد - حفظ تاريخ ووقت التسديد
+        op.settled = true;
+        op.settledDate = new Date().toISOString();
+    } else {
+        // عند إلغاء التسديد - مسح تاريخ التسديد
+        op.settled = false;
+        op.settledDate = null;
+    }
+    
+    saveExpenses();
+    renderExpenses();
+    if (navigator.vibrate) navigator.vibrate(20);
+}
+
+function initExpenseLongPress() {
+    const log = document.getElementById('expenseLog');
+    if (!log) return;
+    
+    let pressTimer = null;
+    let isLongPress = false;
+    let startX = 0, startY = 0;
+    let currentItem = null;
+    
+    log.addEventListener('touchstart', function(e) {
+        const item = e.target.closest('.expense-log-item');
+        if (!item) return;
+        if (e.target.closest('.expense-log-info-btn') || 
+            e.target.closest('.settle-btn') || 
+            e.target.closest('.expense-checkbox')) return;
+        
+        currentItem = item;
+        isLongPress = false;
+        startX = e.touches[0].clientX;
+        startY = e.touches[0].clientY;
+        
+        pressTimer = setTimeout(() => {
+            isLongPress = true;
+            const opId = parseInt(item.dataset.opId);
+            if (opId && !isSelectionMode) {
+                enterSelectionModeWithItem(opId);
+                item.classList.add('long-press-active');
+                setTimeout(() => item.classList.remove('long-press-active'), 500);
+            }
+        }, 500);
+    }, { passive: true });
+    
+    log.addEventListener('touchmove', function(e) {
+        if (!pressTimer) return;
+        const moveX = Math.abs(e.touches[0].clientX - startX);
+        const moveY = Math.abs(e.touches[0].clientY - startY);
+        if (moveX > 10 || moveY > 10) {
+            clearTimeout(pressTimer);
+            pressTimer = null;
+        }
+    });
+    
+    log.addEventListener('touchend', function(e) {
+        clearTimeout(pressTimer);
+        pressTimer = null;
+        if (isLongPress) {
+            e.preventDefault();
+        }
+        currentItem = null;
+    });
+    
+    log.addEventListener('touchcancel', function() {
+        clearTimeout(pressTimer);
+        pressTimer = null;
+        currentItem = null;
+    });
+    
+    log.addEventListener('mousedown', function(e) {
+        const item = e.target.closest('.expense-log-item');
+        if (!item) return;
+        if (e.target.closest('.expense-log-info-btn') || 
+            e.target.closest('.settle-btn') || 
+            e.target.closest('.expense-checkbox')) return;
+        
+        currentItem = item;
+        isLongPress = false;
+        
+        pressTimer = setTimeout(() => {
+            isLongPress = true;
+            const opId = parseInt(item.dataset.opId);
+            if (opId && !isSelectionMode) {
+                enterSelectionModeWithItem(opId);
+                item.classList.add('long-press-active');
+                setTimeout(() => item.classList.remove('long-press-active'), 500);
+            }
+        }, 500);
+    });
+    
+    log.addEventListener('mouseup', function() {
+        clearTimeout(pressTimer);
+        pressTimer = null;
+    });
+    
+    log.addEventListener('mouseleave', function() {
+        clearTimeout(pressTimer);
+        pressTimer = null;
+        currentItem = null;
+    });
+}
+
+// ✨ تفعيل/إلغاء class "active" عند الضغط على الهاتف لإظهار الأزرار
+function toggleExpenseActive(item) {
+    if (!item) return;
+    const wasActive = item.classList.contains('active');
+    document.querySelectorAll('.expense-log-item.active').forEach(i => i.classList.remove('active'));
+    if (!wasActive) {
+        item.classList.add('active');
+    }
+}
+
 function filterExpensesBySearch(query) {
     expenseSearchQuery = query.trim().toLowerCase();
     renderExpenses();
@@ -2041,13 +2547,11 @@ function renderExpenses() {
 document.getElementById('cashBalance').textContent = cashBalance.toFixed(2) + ' ج.م';
 document.getElementById('electronicBalance').textContent = electronicBalance.toFixed(2) + ' ج.م';
 
-// ✅ تحديث إجمالي الرصيد
 const total = cashBalance + electronicBalance;
 document.getElementById('totalBalance').textContent = total.toFixed(2) + ' ج.م';
 
 const log = document.getElementById('expenseLog');
 
-// ✅ فلترة المصروفات حسب البحث
 let filtered = expenses;
 if (expenseSearchQuery) {
     filtered = expenses.filter(op => 
@@ -2069,20 +2573,43 @@ sorted.forEach((op) => {
 const isAdd = op.type === 'إضافة';
 const isCash = op.paymentMethod === 'كاش';
 const icon = isAdd ? (isCash ? '💵' : '💳') : (isCash ? '💸' : '💳');
+const isSelected = selectedExpenseIds.includes(op.id);
+const isSettled = op.settled === true;
+
+// ✨ تنسيق تاريخ التسديد للشارة
+let settledDateBadge = '';
+if (isSettled && op.settledDate) {
+    const d = new Date(op.settledDate);
+    const day = String(d.getDate()).padStart(2, '0');
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const hours = String(d.getHours()).padStart(2, '0');
+    const mins = String(d.getMinutes()).padStart(2, '0');
+    settledDateBadge = `<span class="settled-date-tag">📅 ${day}/${month} ${hours}:${mins}</span>`;
+}
+
 html += `
-<div class="expense-log-item ${isCash ? 'cash-op' : 'electronic-op'} ${isAdd ? 'add-op' : 'spend-op'}" data-op-id="${op.id}">
-<div class="expense-log-icon">${icon}</div>
-<div class="expense-log-main">
-<div class="expense-log-desc">${op.desc}</div>
-</div>
-<div class="expense-log-amount ${isAdd ? 'add' : 'spend'}">
-${isAdd ? '+' : '-'}${op.amount.toFixed(2)}
-</div>
-<button class="expense-log-info-btn" data-details-id="${op.id}" title="التفاصيل">ℹ️</button>
+<div class="expense-log-item ${isCash ? 'cash-op' : 'electronic-op'} ${isAdd ? 'add-op' : 'spend-op'} ${isSelected ? 'selected' : ''} ${isSettled ? 'settled' : ''} selectable" data-op-id="${op.id}">
+    ${isSelectionMode ? `<div class="expense-checkbox ${isSelected ? 'checked' : ''}" data-checkbox-id="${op.id}">${isSelected ? '✓' : ''}</div>` : ''}
+    <div class="expense-log-icon">${icon}</div>
+    <div class="expense-log-main">
+        <div class="expense-log-desc">
+            ${isSettled ? `<span class="settled-tag">✅ مُسددة</span>${settledDateBadge}` : ''}
+            ${op.desc}
+        </div>
+    </div>
+    <div class="expense-log-amount ${isAdd ? 'add' : 'spend'}">
+        ${isAdd ? '+' : '-'}${op.amount.toFixed(2)}
+    </div>
+    <button class="settle-btn" data-settle-id="${op.id}" title="${isSettled ? 'إلغاء التسديد' : 'تم التسديد'}">
+        ${isSettled ? '✓' : '✓'}
+    </button>
+    <button class="expense-log-info-btn" data-details-id="${op.id}" title="التفاصيل">ℹ️</button>
 </div>
 `;
 });
 log.innerHTML = html;
+
+updateSelectionCount();
 }
 function initWalletLongPress() {
 document.querySelectorAll('.wallet-card').forEach(card => {
@@ -2153,6 +2680,39 @@ deleteExpense(+deleteOpBtn.dataset.deleteOpId);
 return;
 }
 if (e.target.id === 'closeDetailsBtn') { closeDetailsModal(); return; }
+
+const settleBtn = e.target.closest('[data-settle-id]');
+if (settleBtn) {
+    e.stopPropagation();
+    toggleSettle(+settleBtn.dataset.settleId, e);
+    return;
+}
+
+const checkbox = e.target.closest('[data-checkbox-id]');
+if (checkbox) {
+    e.stopPropagation();
+    toggleExpenseSelection(+checkbox.dataset.checkboxId);
+    return;
+}
+
+if (isSelectionMode) {
+    const expenseItem = e.target.closest('.expense-log-item');
+    if (expenseItem && !e.target.closest('.expense-log-info-btn') && !e.target.closest('.settle-btn') && !e.target.closest('.expense-checkbox')) {
+        const opId = parseInt(expenseItem.dataset.opId);
+        if (opId) {
+            toggleExpenseSelection(opId);
+            return;
+        }
+    }
+}
+
+// ✨ تفعيل class "active" عند النقر على العملية لإظهار الأزرار (للهاتف)
+const expenseItem = e.target.closest('.expense-log-item');
+if (expenseItem && !e.target.closest('.expense-log-info-btn') && !e.target.closest('.settle-btn') && !e.target.closest('.expense-checkbox') && !isSelectionMode) {
+    toggleExpenseActive(expenseItem);
+    return;
+}
+
 const reportItem = e.target.closest('.report-history-item');
 if (reportItem && !e.target.closest('.report-history-delete')) {
 showReportDetail(+reportItem.dataset.reportIdx);
@@ -2169,7 +2729,6 @@ document.getElementById('pinInput').addEventListener('keypress', e => {
 if (e.key === 'Enter') confirmPin();
 });
 
-// ✅ مستمع حدث البحث في المصروفات
 document.getElementById('expenseSearchInput').addEventListener('input', function(e) {
     const val = e.target.value;
     const clearBtn = document.getElementById('expenseSearchClear');
