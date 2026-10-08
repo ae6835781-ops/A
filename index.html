@@ -766,7 +766,6 @@ flex-shrink: 0;
 .expense-log-amount.add { color: var(--correct-btn-bg); }
 .expense-log-amount.spend { color: var(--wrong-btn-bg); }
 
-/* ✨ أزرار التفاصيل والتسديد ظاهرة دائماً */
 .expense-log-info-btn,
 .settle-btn {
     width: 26px;
@@ -796,7 +795,6 @@ flex-shrink: 0;
 }
 .settle-btn:hover { transform: scale(1.15); box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3); }
 
-/* ✨ العملية المُسددة - خط شطب فقط بدون شارات */
 .expense-log-item.settled {
     opacity: 0.6;
 }
@@ -815,7 +813,6 @@ flex-shrink: 0;
     opacity: 0.5;
 }
 
-/* شارة "مُسددة" فقط في التفاصيل */
 .settled-tag {
     font-size: 0.7rem;
     background: var(--correct-btn-bg);
@@ -1033,10 +1030,6 @@ background: #8892ff;
 color: #ffffff;
 }
 
-/* ================================ */
-/* ✨ الميزات الجديدة - التحديد المتعدد */
-/* ================================ */
-
 .selection-mode-bar {
     background: linear-gradient(135deg, rgba(40, 167, 69, 0.15) 0%, rgba(40, 167, 69, 0.05) 100%);
     border: 2px solid var(--correct-btn-bg);
@@ -1188,7 +1181,7 @@ body.selection-active .expense-checkbox {
 }
 
 /* ================================ */
-/* ✨ ميزات نقل البيانات (جديد) */
+/* ✨ ميزات نقل البيانات (مصححة وقوية) */
 /* ================================ */
 .transfer-section {
     background: var(--card-bg-alt);
@@ -1541,11 +1534,11 @@ Made by <a href="https://wa.me/201102594058" target="_blank">Ahmed Emad Farhoud<
                 انسخ هذا الكود واحفظه في مكان آمن (مثل ملاحظات واتساب). استخدمه في هاتفك الجديد لاستعادة كل بياناتك:
             </p>
             <textarea class="transfer-modal-textarea" id="exportCodeArea" readonly onclick="this.select()"></textarea>
-            <button class="btn btn-primary" style="width: 100%;" onclick="copyExportCode()">📋 نسخ الكود</button>
+            <button class="btn btn-primary" id="copyCodeBtn" style="width: 100%;" onclick="copyExportCode()">📋 نسخ الكود</button>
         </div>
         <div id="transferImportView" style="display: none;">
             <div class="transfer-warning">
-                ⚠️ تحذير: استعادة الكود ستقوم باستبدال جميع البيانات الحالية في هذا الجهاز بالبيانات الموجودة في الكود. تأكد من أنك تلصق الكود الصحيح.
+                ⚠️ تحذير: استعادة الكود ستقوم باستبدال جميع البيانات الحالية في هذا الجهاز بالبيانات الموجودة في الكود. تأكد من أنك تلصق الكود الصحيح بالكامل.
             </div>
             <textarea class="transfer-modal-textarea" id="importCodeArea" placeholder="الصق كود الاستعادة هنا..."></textarea>
             <button class="btn btn-primary" style="width: 100%; background: var(--correct-btn-bg);" onclick="processImportCode()">✅ استعادة البيانات وإعادة التشغيل</button>
@@ -2754,7 +2747,6 @@ if (checkbox) {
     return;
 }
 
-/* ✨ النقر على العملية في وضع التحديد لتحديدها/إلغاء تحديدها */
 if (isSelectionMode) {
     const expenseItem = e.target.closest('.expense-log-item');
     if (expenseItem && !e.target.closest('.expense-log-info-btn') && !e.target.closest('.settle-btn') && !e.target.closest('.expense-checkbox')) {
@@ -2766,12 +2758,10 @@ if (isSelectionMode) {
     }
 }
 
-/* ✨ النقر على عملية خارج وضع التحديد - إذا كانت محددة مسبقاً، يمكن الرجوع لها */
 const expenseItem = e.target.closest('.expense-log-item');
 if (expenseItem && !e.target.closest('.expense-log-info-btn') && !e.target.closest('.settle-btn') && !e.target.closest('.expense-checkbox') && !isSelectionMode) {
     const opId = parseInt(expenseItem.dataset.opId);
     if (opId && selectedExpenseIds.includes(opId)) {
-        // إذا كانت العملية محددة مسبقاً، الدخول في وضع التحديد مع الحفاظ على التحديد السابق
         isSelectionMode = true;
         const bar = document.getElementById('selectionModeBar');
         bar.classList.add('show');
@@ -2879,7 +2869,7 @@ updateTimerDisplay(); resetTimer();
 });
 
 /* ================================ */
-/* ✨ منطق نقل البيانات (جديد) */
+/* ✨ منطق نقل البيانات (مصحح وقوي) */
 /* ================================ */
 function openExportModal() {
     const dataKeys = ['userTasks', 'undoStack', 'brainDump', 'reportHistory', 'userExpenses', 'cashBalance', 'electronicBalance', 'expensesPin', 'theme', 'expenseUndoStack'];
@@ -2889,15 +2879,20 @@ function openExportModal() {
         if (val !== null) dataObj[key] = val;
     });
     
-    // تشفير آمن يدعم اللغة العربية
-    const jsonString = JSON.stringify(dataObj);
-    const base64Code = btoa(unescape(encodeURIComponent(jsonString)));
-    
-    document.getElementById('exportCodeArea').value = base64Code;
-    document.getElementById('transferExportView').style.display = 'block';
-    document.getElementById('transferImportView').style.display = 'none';
-    document.getElementById('transferModalTitle').textContent = '📤 تصدير كود النقل';
-    document.getElementById('transferModal').classList.add('show');
+    try {
+        const jsonString = JSON.stringify(dataObj);
+        // تشفير آمن يدعم اللغة العربية والبيانات الكبيرة
+        const base64Code = btoa(unescape(encodeURIComponent(jsonString)));
+        
+        document.getElementById('exportCodeArea').value = base64Code;
+        document.getElementById('transferExportView').style.display = 'block';
+        document.getElementById('transferImportView').style.display = 'none';
+        document.getElementById('transferModalTitle').textContent = '📤 تصدير كود النقل';
+        document.getElementById('transferModal').classList.add('show');
+    } catch (e) {
+        alert('❌ حدث خطأ أثناء تجهيز الكود. البيانات قد تكون كبيرة جداً.');
+        console.error(e);
+    }
 }
 
 function openImportModal() {
@@ -2914,51 +2909,66 @@ function closeTransferModal() {
 
 function copyExportCode() {
     const textarea = document.getElementById('exportCodeArea');
-    textarea.select();
-    document.execCommand('copy');
+    const textToCopy = textarea.value;
     
-    // تأثير بصري بسيط للتأكيد
-    const btn = event.target;
-    const originalText = btn.innerHTML;
-    btn.innerHTML = '✅ تم النسخ!';
-    setTimeout(() => { btn.innerHTML = originalText; }, 2000);
+    // طريقة نسخ حديثة وموثوقة
+    navigator.clipboard.writeText(textToCopy).then(() => {
+        const copyBtn = document.getElementById('copyCodeBtn');
+        const originalText = copyBtn.innerHTML;
+        copyBtn.innerHTML = '✅ تم النسخ بنجاح!';
+        copyBtn.style.background = '#28a745';
+        setTimeout(() => {
+            copyBtn.innerHTML = originalText;
+            copyBtn.style.background = '';
+        }, 2000);
+    }).catch(err => {
+        // طريقة بديلة في حال فشل الحافظة الحديثة
+        textarea.select();
+        document.execCommand('copy');
+        alert('✅ تم نسخ الكود!');
+    });
 }
 
 function processImportCode() {
-    const code = document.getElementById('importCodeArea').value.trim();
+    let code = document.getElementById('importCodeArea').value.trim();
     if (!code) {
         alert('⚠️ يرجى لصق الكود أولاً.');
         return;
     }
     
-    if (!confirm('هل أنت متأكد تماماً؟ سيتم استبدال جميع البيانات الحالية بالبيانات الموجودة في هذا الكود.')) {
+    if (!confirm('هل أنت متأكد تماماً؟ سيتم استبدال جميع البيانات الحالية بالبيانات الموجودة في هذا الكود ولا يمكن التراجع عن هذا.')) {
         return;
     }
     
     try {
-        // فك التشفير الآمن
-        const jsonString = decodeURIComponent(escape(atob(code)));
+        // 1. تنظيف الكود من أي مسافات أو أسطر جديدة زائدة (السبب الرئيسي لفشل النسخ من واتساب)
+        const cleanCode = code.replace(/[^A-Za-z0-9+/=]/g, '');
+        
+        // 2. فك التشفير الآمن
+        const jsonString = decodeURIComponent(escape(atob(cleanCode)));
+        
+        // 3. تحليل البيانات
         const dataObj = JSON.parse(jsonString);
         
-        // المفاتيح المسموح باستعادتها
+        // 4. المفاتيح المسموح باستعادتها
         const allowedKeys = ['userTasks', 'undoStack', 'brainDump', 'reportHistory', 'userExpenses', 'cashBalance', 'electronicBalance', 'expensesPin', 'theme', 'expenseUndoStack'];
         
-        // مسح البيانات القديمة كتابةً لضمان النظافة (اختياري، لكننا سنكتب فوقها مباشرة للأمان)
+        // 5. حفظ البيانات
         allowedKeys.forEach(key => {
             if (dataObj[key] !== undefined) {
                 localStorage.setItem(key, dataObj[key]);
             } else {
-                localStorage.removeItem(key); // في حال كان الكود لا يحتوي على هذا المفتاح
+                localStorage.removeItem(key);
             }
         });
         
-        alert('✅ تم استعادة جميع بياناتك بنجاح! سيتم إعادة تحميل الصفحة الآن لتطبيق التغييرات.');
+        alert('✅ تم استعادة جميع بياناتك بنجاح! سيتم إعادة تحميل الصفحة الآن.');
         closeTransferModal();
-        location.reload(); // إعادة تحميل الصفحة لتطبيق كل شيء
+        location.reload();
         
     } catch (error) {
         console.error(error);
-        alert('❌ فشل الاستعادة: الكود غير صالح أو تالف. تأكد من أنك نسخت الكود بالكامل دون أي زيادات أو نقصان.');
+        alert('❌ فشل الاستعادة: الكود غير صالح أو تالف.\n\nتأكد من:\n1. نسخ الكود بالكامل من أول حرف لآخره.\n2. عدم وجود مسافات زائدة قبل أو بعد الكود.\n3. أن الكود من نفس التطبيق بالضبط.');
     }
 }
 
