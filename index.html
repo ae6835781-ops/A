@@ -1186,6 +1186,80 @@ body.selection-active .expense-checkbox {
         font-size: 0.68rem;
     }
 }
+
+/* ================================ */
+/* ✨ ميزات نقل البيانات (جديد) */
+/* ================================ */
+.transfer-section {
+    background: var(--card-bg-alt);
+    border-radius: 12px;
+    padding: 12px;
+    margin-top: 12px;
+    border: 1px dashed var(--bg-gradient-start);
+    text-align: center;
+}
+.transfer-title {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+.transfer-buttons {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+}
+.transfer-btn {
+    flex: 1;
+    padding: 8px;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+}
+.transfer-btn.export { background: var(--correct-btn-bg); color: white; }
+.transfer-btn.import { background: var(--bg-gradient-start); color: white; }
+.transfer-btn:hover { transform: translateY(-2px); opacity: 0.9; }
+
+.transfer-modal-textarea {
+    width: 100%;
+    min-height: 120px;
+    padding: 10px;
+    border: 2px solid var(--input-border);
+    border-radius: 10px;
+    font-size: 0.75rem;
+    font-family: monospace;
+    background: var(--input-bg);
+    color: var(--text-primary);
+    resize: vertical;
+    margin: 10px 0;
+    direction: ltr;
+    text-align: left;
+}
+.transfer-modal-textarea:focus {
+    outline: none;
+    border-color: var(--bg-gradient-start);
+}
+.transfer-warning {
+    font-size: 0.7rem;
+    color: var(--wrong-btn-bg);
+    background: var(--task-bg-wrong);
+    padding: 6px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    line-height: 1.4;
+}
 </style>
 </head>
 <body>
@@ -1352,6 +1426,19 @@ Made by <a href="https://wa.me/201102594058" target="_blank">Ahmed Emad Farhoud<
     <div class="total-balance-value" id="totalBalance">0.00 ج.م</div>
 </div>
 
+<!-- ✨ قسم نقل البيانات الجديد -->
+<div class="transfer-section">
+    <div class="transfer-title">🔄 نقل البيانات لجهاز آخر</div>
+    <div class="transfer-buttons">
+        <button class="transfer-btn export" onclick="openExportModal()">
+            <span>📤</span> تصدير الكود
+        </button>
+        <button class="transfer-btn import" onclick="openImportModal()">
+            <span>📥</span> استعادة الكود
+        </button>
+    </div>
+</div>
+
 <div style="text-align: center; font-size: 0.6rem; color: var(--text-muted); margin-bottom: 8px;">
 👆 اضغط مطولاً على البطاقة للتعديل
 </div>
@@ -1441,6 +1528,31 @@ Made by <a href="https://wa.me/201102594058" target="_blank">Ahmed Emad Farhoud<
 <div class="report-date" id="reportDate"></div>
 </div>
 </div>
+
+<!-- ✨ نافذة نقل البيانات -->
+<div class="modal-overlay" id="transferModal">
+    <div class="modal" style="max-width: 500px;">
+        <div class="modal-header">
+            <h3 id="transferModalTitle">🔄 نقل البيانات</h3>
+            <button class="modal-close" onclick="closeTransferModal()">✕</button>
+        </div>
+        <div id="transferExportView" style="display: none;">
+            <p style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 8px;">
+                انسخ هذا الكود واحفظه في مكان آمن (مثل ملاحظات واتساب). استخدمه في هاتفك الجديد لاستعادة كل بياناتك:
+            </p>
+            <textarea class="transfer-modal-textarea" id="exportCodeArea" readonly onclick="this.select()"></textarea>
+            <button class="btn btn-primary" style="width: 100%;" onclick="copyExportCode()">📋 نسخ الكود</button>
+        </div>
+        <div id="transferImportView" style="display: none;">
+            <div class="transfer-warning">
+                ⚠️ تحذير: استعادة الكود ستقوم باستبدال جميع البيانات الحالية في هذا الجهاز بالبيانات الموجودة في الكود. تأكد من أنك تلصق الكود الصحيح.
+            </div>
+            <textarea class="transfer-modal-textarea" id="importCodeArea" placeholder="الصق كود الاستعادة هنا..."></textarea>
+            <button class="btn btn-primary" style="width: 100%; background: var(--correct-btn-bg);" onclick="processImportCode()">✅ استعادة البيانات وإعادة التشغيل</button>
+        </div>
+    </div>
+</div>
+
 <script>
 if ('serviceWorker' in navigator) {
 const swCode = `
@@ -2764,6 +2876,95 @@ currentMode = this.dataset.mode;
 timeLeft = modes[currentMode];
 updateTimerDisplay(); resetTimer();
 });
+});
+
+/* ================================ */
+/* ✨ منطق نقل البيانات (جديد) */
+/* ================================ */
+function openExportModal() {
+    const dataKeys = ['userTasks', 'undoStack', 'brainDump', 'reportHistory', 'userExpenses', 'cashBalance', 'electronicBalance', 'expensesPin', 'theme', 'expenseUndoStack'];
+    const dataObj = {};
+    dataKeys.forEach(key => {
+        const val = localStorage.getItem(key);
+        if (val !== null) dataObj[key] = val;
+    });
+    
+    // تشفير آمن يدعم اللغة العربية
+    const jsonString = JSON.stringify(dataObj);
+    const base64Code = btoa(unescape(encodeURIComponent(jsonString)));
+    
+    document.getElementById('exportCodeArea').value = base64Code;
+    document.getElementById('transferExportView').style.display = 'block';
+    document.getElementById('transferImportView').style.display = 'none';
+    document.getElementById('transferModalTitle').textContent = '📤 تصدير كود النقل';
+    document.getElementById('transferModal').classList.add('show');
+}
+
+function openImportModal() {
+    document.getElementById('importCodeArea').value = '';
+    document.getElementById('transferExportView').style.display = 'none';
+    document.getElementById('transferImportView').style.display = 'block';
+    document.getElementById('transferModalTitle').textContent = '📥 استعادة من كود';
+    document.getElementById('transferModal').classList.add('show');
+}
+
+function closeTransferModal() {
+    document.getElementById('transferModal').classList.remove('show');
+}
+
+function copyExportCode() {
+    const textarea = document.getElementById('exportCodeArea');
+    textarea.select();
+    document.execCommand('copy');
+    
+    // تأثير بصري بسيط للتأكيد
+    const btn = event.target;
+    const originalText = btn.innerHTML;
+    btn.innerHTML = '✅ تم النسخ!';
+    setTimeout(() => { btn.innerHTML = originalText; }, 2000);
+}
+
+function processImportCode() {
+    const code = document.getElementById('importCodeArea').value.trim();
+    if (!code) {
+        alert('⚠️ يرجى لصق الكود أولاً.');
+        return;
+    }
+    
+    if (!confirm('هل أنت متأكد تماماً؟ سيتم استبدال جميع البيانات الحالية بالبيانات الموجودة في هذا الكود.')) {
+        return;
+    }
+    
+    try {
+        // فك التشفير الآمن
+        const jsonString = decodeURIComponent(escape(atob(code)));
+        const dataObj = JSON.parse(jsonString);
+        
+        // المفاتيح المسموح باستعادتها
+        const allowedKeys = ['userTasks', 'undoStack', 'brainDump', 'reportHistory', 'userExpenses', 'cashBalance', 'electronicBalance', 'expensesPin', 'theme', 'expenseUndoStack'];
+        
+        // مسح البيانات القديمة كتابةً لضمان النظافة (اختياري، لكننا سنكتب فوقها مباشرة للأمان)
+        allowedKeys.forEach(key => {
+            if (dataObj[key] !== undefined) {
+                localStorage.setItem(key, dataObj[key]);
+            } else {
+                localStorage.removeItem(key); // في حال كان الكود لا يحتوي على هذا المفتاح
+            }
+        });
+        
+        alert('✅ تم استعادة جميع بياناتك بنجاح! سيتم إعادة تحميل الصفحة الآن لتطبيق التغييرات.');
+        closeTransferModal();
+        location.reload(); // إعادة تحميل الصفحة لتطبيق كل شيء
+        
+    } catch (error) {
+        console.error(error);
+        alert('❌ فشل الاستعادة: الكود غير صالح أو تالف. تأكد من أنك نسخت الكود بالكامل دون أي زيادات أو نقصان.');
+    }
+}
+
+// إغلاق النافذة عند النقر خارجها
+document.getElementById('transferModal').addEventListener('click', function(e) {
+    if (e.target === this) closeTransferModal();
 });
 </script>
 </body>
