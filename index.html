@@ -362,8 +362,9 @@ flex-direction: column;
 align-items: center;
 gap: 10px;
 }
-.header-title { text-align: center; }
-.header h1 { color: var(--text-white); font-size: 1.9rem; font-weight: 900; text-shadow: 0 4px 15px rgba(0,0,0,0.3); margin: 0; }
+.header-title { text-align: center; cursor: pointer; user-select: none; }
+.header h1 { color: var(--text-white); font-size: 1.9rem; font-weight: 900; text-shadow: 0 4px 15px rgba(0,0,0,0.3); margin: 0; transition: transform 0.2s ease; }
+.header h1:active { transform: scale(0.98); }
 .header p { color: rgba(255,255,255,0.9); font-size: 0.9rem; margin: 3px 0 0 0; }
 .header-actions {
 display: flex;
@@ -766,7 +767,6 @@ flex-shrink: 0;
 .expense-log-amount.add { color: var(--correct-btn-bg); }
 .expense-log-amount.spend { color: var(--wrong-btn-bg); }
 
-/* ✨ أزرار التفاصيل والتسديد ظاهرة دائماً */
 .expense-log-info-btn,
 .settle-btn {
     width: 26px;
@@ -796,7 +796,6 @@ flex-shrink: 0;
 }
 .settle-btn:hover { transform: scale(1.15); box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3); }
 
-/* ✨ العملية المُسددة - خط شطب فقط بدون شارات */
 .expense-log-item.settled {
     opacity: 0.6;
 }
@@ -815,7 +814,6 @@ flex-shrink: 0;
     opacity: 0.5;
 }
 
-/* شارة "مُسددة" فقط في التفاصيل */
 .settled-tag {
     font-size: 0.7rem;
     background: var(--correct-btn-bg);
@@ -827,215 +825,49 @@ flex-shrink: 0;
     margin-right: 4px;
 }
 
-.balance-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: none; justify-content: center; align-items: center; z-index: 3000; padding: 20px; backdrop-filter: blur(5px); }
-.balance-modal.show { display: flex; }
-.balance-modal-content { background: var(--card-bg); border-radius: 18px; padding: 20px; max-width: 380px; width: 100%; box-shadow: 0 20px 60px var(--shadow-color); animation: slideUp 0.3s ease; }
-.balance-modal-content h3 { color: var(--text-primary); margin-bottom: 10px; text-align: center; font-size: 1.05rem; }
-.balance-input { width: 100%; padding: 11px; border: 2px solid var(--input-border); border-radius: 12px; font-size: 1.05rem; font-family: inherit; background: var(--input-bg); color: var(--text-primary); text-align: center; margin-bottom: 10px; font-weight: 700; }
-.balance-input:focus { outline: none; border-color: var(--bg-gradient-start); }
-.balance-modal-actions { display: flex; gap: 6px; }
-.balance-modal-actions button { flex: 1; padding: 10px; border: none; border-radius: 12px; font-weight: 700; cursor: pointer; font-family: inherit; transition: all 0.2s ease; font-size: 0.85rem; }
-.balance-modal-actions .confirm-btn { background: var(--correct-btn-bg); color: white; }
-.balance-modal-actions .cancel-modal-btn { background: var(--btn-secondary-bg); color: var(--text-secondary); }
-.balance-modal-actions button:hover { transform: translateY(-2px); }
-.details-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: none; justify-content: center; align-items: center; z-index: 3000; padding: 20px; backdrop-filter: blur(5px); }
-.details-modal.show { display: flex; }
-.details-modal-content { background: var(--card-bg); border-radius: 18px; padding: 18px; max-width: 400px; width: 100%; box-shadow: 0 20px 60px var(--shadow-color); animation: slideUp 0.3s ease; }
-.details-modal-content h3 { color: var(--text-primary); margin-bottom: 12px; text-align: center; font-size: 1rem; display: flex; align-items: center; justify-content: center; gap: 5px; }
+.balance-modal, .details-modal, .pin-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: none; justify-content: center; align-items: center; z-index: 3000; padding: 20px; backdrop-filter: blur(5px); }
+.balance-modal.show, .details-modal.show, .pin-modal.show { display: flex; }
+.balance-modal-content, .details-modal-content, .pin-modal-content { background: var(--card-bg); border-radius: 18px; padding: 20px; max-width: 380px; width: 100%; box-shadow: 0 20px 60px var(--shadow-color); animation: slideUp 0.3s ease; }
+.pin-modal-content { max-width: 340px; text-align: center; }
+.balance-modal-content h3, .details-modal-content h3, .pin-modal-content h3 { color: var(--text-primary); margin-bottom: 10px; text-align: center; font-size: 1.05rem; }
+.pin-modal-icon { font-size: 2.2rem; margin-bottom: 6px; }
+.pin-modal-content p { color: var(--text-secondary); font-size: 0.75rem; margin-bottom: 10px; }
+.balance-input, .pin-input { width: 100%; padding: 11px; border: 2px solid var(--input-border); border-radius: 12px; font-size: 1.05rem; font-family: inherit; background: var(--input-bg); color: var(--text-primary); text-align: center; margin-bottom: 10px; font-weight: 700; }
+.pin-input { font-size: 1.2rem; letter-spacing: 7px; }
+.balance-input:focus, .pin-input:focus { outline: none; border-color: var(--bg-gradient-start); }
+.balance-modal-actions, .pin-modal-actions { display: flex; gap: 6px; }
+.balance-modal-actions button, .pin-modal-actions button { flex: 1; padding: 10px; border: none; border-radius: 12px; font-weight: 700; cursor: pointer; font-family: inherit; transition: all 0.2s ease; font-size: 0.85rem; }
+.balance-modal-actions .confirm-btn, .pin-modal-actions .pin-confirm { background: var(--correct-btn-bg); color: white; }
+.balance-modal-actions .cancel-modal-btn, .pin-modal-actions .pin-cancel { background: var(--btn-secondary-bg); color: var(--text-secondary); }
+.balance-modal-actions button:hover, .pin-modal-actions button:hover { transform: translateY(-2px); }
+.pin-error { color: var(--wrong-btn-bg); font-size: 0.75rem; margin-bottom: 6px; min-height: 16px; font-weight: 600; }
+
 .details-table {
 width: 100%;
 border-collapse: collapse;
 margin-bottom: 12px;
 font-size: 0.75rem;
 }
-.details-table tr {
-border-bottom: 1px solid var(--input-border);
-}
-.details-table tr:last-child {
-border-bottom: none;
-}
-.details-table td {
-padding: 7px 6px;
-vertical-align: middle;
-}
-.details-table .detail-icon {
-width: 28px;
-text-align: center;
-font-size: 1rem;
-}
-.details-table .detail-label {
-color: var(--text-muted);
-font-weight: 600;
-font-size: 0.7rem;
-width: 30%;
-}
-.details-table .detail-value {
-color: var(--text-primary);
-font-weight: 700;
-font-size: 0.8rem;
-text-align: right;
-}
-.details-table .detail-value.amount-add {
-color: var(--correct-btn-bg);
-direction: ltr;
-text-align: left;
-}
-.details-table .detail-value.amount-spend {
-color: var(--wrong-btn-bg);
-direction: ltr;
-text-align: left;
-}
-.details-table .detail-value.type-add {
-color: var(--correct-btn-bg);
-}
-.details-table .detail-value.type-spend {
-color: var(--wrong-btn-bg);
-}
-.details-table .detail-value.cash-val {
-color: var(--cash-color);
-}
-.details-table .detail-value.electronic-val {
-color: var(--electronic-color);
-}
-.details-table .desc-row td {
-padding-top: 10px;
-}
-.details-table .desc-value {
-font-size: 0.85rem;
-font-weight: 700;
-color: var(--text-primary);
-word-break: break-word;
-}
+.details-table tr { border-bottom: 1px solid var(--input-border); }
+.details-table tr:last-child { border-bottom: none; }
+.details-table td { padding: 7px 6px; vertical-align: middle; }
+.details-table .detail-icon { width: 28px; text-align: center; font-size: 1rem; }
+.details-table .detail-label { color: var(--text-muted); font-weight: 600; font-size: 0.7rem; width: 30%; }
+.details-table .detail-value { color: var(--text-primary); font-weight: 700; font-size: 0.8rem; text-align: right; }
+.details-table .detail-value.amount-add { color: var(--correct-btn-bg); direction: ltr; text-align: left; }
+.details-table .detail-value.amount-spend { color: var(--wrong-btn-bg); direction: ltr; text-align: left; }
+.details-table .detail-value.type-add { color: var(--correct-btn-bg); }
+.details-table .detail-value.type-spend { color: var(--wrong-btn-bg); }
+.details-table .detail-value.cash-val { color: var(--cash-color); }
+.details-table .detail-value.electronic-val { color: var(--electronic-color); }
+.details-table .desc-row td { padding-top: 10px; }
+.details-table .desc-value { font-size: 0.85rem; font-weight: 700; color: var(--text-primary); word-break: break-word; }
 .details-modal-actions { display: flex; gap: 6px; margin-top: 10px; flex-wrap: wrap; }
 .details-modal-actions button { flex: 1; min-width: 80px; padding: 8px; border: none; border-radius: 10px; font-weight: 700; cursor: pointer; font-family: inherit; transition: all 0.2s ease; font-size: 0.75rem; }
 .details-modal-actions .repeat-modal-btn { background: var(--bg-gradient-start); color: white; }
 .details-modal-actions .delete-modal-btn { background: var(--delete-btn-bg); color: white; }
 .details-modal-actions .close-details-btn { background: var(--btn-secondary-bg); color: var(--text-secondary); }
 .details-modal-actions button:hover { transform: translateY(-2px); }
-.pin-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); display: none; justify-content: center; align-items: center; z-index: 4000; padding: 20px; backdrop-filter: blur(8px); }
-.pin-modal.show { display: flex; }
-.pin-modal-content { background: var(--card-bg); border-radius: 18px; padding: 22px 18px; max-width: 340px; width: 100%; box-shadow: 0 20px 60px var(--shadow-color); animation: slideUp 0.3s ease; text-align: center; }
-.pin-modal-icon { font-size: 2.2rem; margin-bottom: 6px; }
-.pin-modal-content h3 { color: var(--text-primary); margin-bottom: 5px; font-size: 1.05rem; }
-.pin-modal-content p { color: var(--text-secondary); font-size: 0.75rem; margin-bottom: 10px; }
-.pin-input { width: 100%; padding: 10px; border: 2px solid var(--input-border); border-radius: 12px; font-size: 1.2rem; font-family: inherit; background: var(--input-bg); color: var(--text-primary); text-align: center; margin-bottom: 10px; font-weight: 700; letter-spacing: 7px; }
-.pin-input:focus { outline: none; border-color: var(--bg-gradient-start); }
-.pin-error { color: var(--wrong-btn-bg); font-size: 0.75rem; margin-bottom: 6px; min-height: 16px; font-weight: 600; }
-.pin-modal-actions { display: flex; gap: 6px; }
-.pin-modal-actions button { flex: 1; padding: 10px; border: none; border-radius: 12px; font-weight: 700; cursor: pointer; font-family: inherit; transition: all 0.2s ease; font-size: 0.85rem; }
-.pin-modal-actions .pin-confirm { background: var(--correct-btn-bg); color: white; }
-.pin-modal-actions .pin-cancel { background: var(--btn-secondary-bg); color: var(--text-secondary); }
-.pin-modal-actions button:hover { transform: translateY(-2px); }
-@media (max-width: 600px) {
-.routine-task-split { grid-template-columns: 1fr; }
-.combined-visual { flex-direction: column; }
-.combined-bars { min-width: auto; width: 100%; }
-.wallet-balance { font-size: 0.85rem; }
-.wallet-icon { font-size: 1.2rem; }
-.wallet-label { font-size: 0.6rem; }
-.expense-form { grid-template-columns: 1fr; }
-.expense-form .full-width { grid-column: 1; }
-.details-table { font-size: 0.7rem; }
-.details-table .detail-value { font-size: 0.75rem; }
-.details-table .desc-value { font-size: 0.8rem; }
-}
-
-[data-theme="dark"] .mode-btn {
-color: #ffffff;
-border-color: #8892ff;
-}
-[data-theme="dark"] .mode-btn.active {
-background: #8892ff;
-color: #ffffff;
-}
-[data-theme="dark"] .mode-btn:hover {
-background: rgba(136, 146, 255, 0.2);
-}
-
-[data-theme="dark"] .timer {
-color: #8892ff;
-text-shadow: 0 2px 15px rgba(136, 146, 255, 0.5);
-}
-
-[data-theme="dark"] .timer-label,
-[data-theme="dark"] .btn,
-[data-theme="dark"] .btn-secondary,
-[data-theme="dark"] .tasks-header h2,
-[data-theme="dark"] .task-counter,
-[data-theme="dark"] .category-btn,
-[data-theme="dark"] .category-btn.active,
-[data-theme="dark"] .task-text,
-[data-theme="dark"] .brain-title,
-[data-theme="dark"] .brain-textarea,
-[data-theme="dark"] .form-title,
-[data-theme="dark"] .expense-input,
-[data-theme="dark"] .task-input,
-[data-theme="dark"] .balance-input,
-[data-theme="dark"] .pin-input,
-[data-theme="dark"] .expense-log-desc,
-[data-theme="dark"] .wallet-label,
-[data-theme="dark"] .modal-header h3,
-[data-theme="dark"] .report-section h4,
-[data-theme="dark"] .report-history-section h4,
-[data-theme="dark"] .combined-title,
-[data-theme="dark"] .split-title,
-[data-theme="dark"] .detail-section h5,
-[data-theme="dark"] .report-detail-box h3,
-[data-theme="dark"] .details-modal-content h3,
-[data-theme="dark"] .balance-modal-content h3,
-[data-theme="dark"] .pin-modal-content h3,
-[data-theme="dark"] .pin-modal-content p,
-[data-theme="dark"] .improvement-list li,
-[data-theme="dark"] .detail-stat-label,
-[data-theme="dark"] .detail-task-list li,
-[data-theme="dark"] .split-list li,
-[data-theme="dark"] .combined-bar-label,
-[data-theme="dark"] .combined-total,
-[data-theme="dark"] .report-history-date,
-[data-theme="dark"] .detail-value,
-[data-theme="dark"] .desc-value,
-[data-theme="dark"] .close-details-btn,
-[data-theme="dark"] .cancel-modal-btn,
-[data-theme="dark"] .pin-cancel,
-[data-theme="dark"] .detail-back-btn,
-[data-theme="dark"] .payment-btn,
-[data-theme="dark"] .op-btn,
-[data-theme="dark"] .empty-state,
-[data-theme="dark"] .brain-status,
-[data-theme="dark"] .report-group-label,
-[data-theme="dark"] .report-history-details,
-[data-theme="dark"] .report-history-empty,
-[data-theme="dark"] .report-date,
-[data-theme="dark"] .pin-error,
-[data-theme="dark"] .detail-stat-value,
-[data-theme="dark"] .split-percent,
-[data-theme="dark"] .circular-progress .progress-value,
-[data-theme="dark"] .combined-total .total-pct,
-[data-theme="dark"] .total-balance-label,
-[data-theme="dark"] .total-balance-value {
-color: #ffffff;
-}
-
-[data-theme="dark"] .quote-text {
-color: #ffffff;
-}
-
-[data-theme="dark"] .quote-author {
-color: #8892ff;
-}
-
-[data-theme="dark"] .new-quote-btn {
-color: #8892ff;
-border-color: #8892ff;
-}
-[data-theme="dark"] .new-quote-btn:hover {
-background: #8892ff;
-color: #ffffff;
-}
-
-/* ================================ */
-/* ✨ الميزات الجديدة - التحديد المتعدد */
-/* ================================ */
 
 .selection-mode-bar {
     background: linear-gradient(135deg, rgba(40, 167, 69, 0.15) 0%, rgba(40, 167, 69, 0.05) 100%);
@@ -1050,54 +882,12 @@ color: #ffffff;
     backdrop-filter: blur(10px);
 }
 .selection-mode-bar.show { display: flex; }
-.selection-mode-top {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 8px;
-}
-.selection-mode-info {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 0.85rem;
-    font-weight: 700;
-    color: var(--correct-btn-bg);
-}
-.selection-mode-info .selection-icon {
-    font-size: 1.2rem;
-}
-.selection-mode-info .selection-count {
-    background: var(--correct-btn-bg);
-    color: white;
-    padding: 2px 8px;
-    border-radius: 12px;
-    font-size: 0.75rem;
-    font-weight: 900;
-    min-width: 24px;
-    text-align: center;
-}
-.selection-mode-actions {
-    display: flex;
-    gap: 5px;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-.selection-btn {
-    padding: 7px 12px;
-    border: none;
-    border-radius: 8px;
-    font-size: 0.72rem;
-    font-weight: 700;
-    cursor: pointer;
-    font-family: inherit;
-    transition: all 0.2s ease;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    white-space: nowrap;
-}
+.selection-mode-top { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+.selection-mode-info { display: flex; align-items: center; gap: 6px; font-size: 0.85rem; font-weight: 700; color: var(--correct-btn-bg); }
+.selection-mode-info .selection-icon { font-size: 1.2rem; }
+.selection-mode-info .selection-count { background: var(--correct-btn-bg); color: white; padding: 2px 8px; border-radius: 12px; font-size: 0.75rem; font-weight: 900; min-width: 24px; text-align: center; }
+.selection-mode-actions { display: flex; gap: 5px; flex-wrap: wrap; justify-content: center; }
+.selection-btn { padding: 7px 12px; border: none; border-radius: 8px; font-size: 0.72rem; font-weight: 700; cursor: pointer; font-family: inherit; transition: all 0.2s ease; display: flex; align-items: center; gap: 4px; white-space: nowrap; }
 .selection-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
 .selection-btn:active { transform: scale(0.95); }
 .selection-btn.select-all { background: var(--correct-btn-bg); color: white; }
@@ -1106,86 +896,47 @@ color: #ffffff;
 .selection-btn.exit-mode { background: var(--wrong-btn-bg); color: white; }
 
 .expense-checkbox {
-    width: 22px;
-    height: 22px;
-    border: 2px solid var(--input-border);
-    border-radius: 6px;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    margin-left: 6px;
-    flex-shrink: 0;
-    transition: all 0.2s ease;
-    background: var(--input-bg);
-    color: transparent;
-    font-size: 0.8rem;
-    font-weight: 900;
-    cursor: pointer;
+    width: 22px; height: 22px; border: 2px solid var(--input-border); border-radius: 6px; display: none; align-items: center; justify-content: center; margin-left: 6px; flex-shrink: 0; transition: all 0.2s ease; background: var(--input-bg); color: transparent; font-size: 0.8rem; font-weight: 900; cursor: pointer;
 }
-.selection-mode-bar.show ~ .expense-log .expense-checkbox,
-body.selection-active .expense-checkbox {
-    display: flex;
-}
-.expense-checkbox.checked {
-    background: var(--correct-btn-bg);
-    border-color: var(--correct-btn-bg);
-    color: white;
-    animation: checkPop 0.3s ease;
-}
-@keyframes checkPop {
-    0% { transform: scale(0.5); }
-    50% { transform: scale(1.2); }
-    100% { transform: scale(1); }
-}
-
-.expense-log-item.selected {
-    background: var(--task-bg-correct);
-    border-right-width: 5px;
-    transform: translateX(-5px);
-    box-shadow: 0 4px 15px rgba(40, 167, 69, 0.25);
-}
-
-[data-theme="dark"] .selection-mode-bar {
-    background: linear-gradient(135deg, rgba(46, 204, 113, 0.2) 0%, rgba(46, 204, 113, 0.05) 100%);
-    border-color: #2ecc71;
-}
-[data-theme="dark"] .selection-mode-info {
-    color: #2ecc71;
-}
-[data-theme="dark"] .selection-mode-info .selection-count {
-    background: #2ecc71;
-}
-[data-theme="dark"] .settled-tag {
-    background: #2ecc71;
-}
-[data-theme="dark"] .expense-log-item.settled .expense-log-desc,
-[data-theme="dark"] .expense-log-item.settled .expense-log-amount {
-    text-decoration-color: #2ecc71;
-}
-
-@keyframes longPressPulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.02); }
-}
-.expense-log-item.long-press-active {
-    animation: longPressPulse 0.4s ease;
-    background: rgba(102, 126, 234, 0.1);
-}
-
-.expense-log-item.selectable {
-    padding-right: 6px;
-}
+.selection-mode-bar.show ~ .expense-log .expense-checkbox, body.selection-active .expense-checkbox { display: flex; }
+.expense-checkbox.checked { background: var(--correct-btn-bg); border-color: var(--correct-btn-bg); color: white; animation: checkPop 0.3s ease; }
+@keyframes checkPop { 0% { transform: scale(0.5); } 50% { transform: scale(1.2); } 100% { transform: scale(1); } }
+.expense-log-item.selected { background: var(--task-bg-correct); border-right-width: 5px; transform: translateX(-5px); box-shadow: 0 4px 15px rgba(40, 167, 69, 0.25); }
+[data-theme="dark"] .selection-mode-bar { background: linear-gradient(135deg, rgba(46, 204, 113, 0.2) 0%, rgba(46, 204, 113, 0.05) 100%); border-color: #2ecc71; }
+[data-theme="dark"] .selection-mode-info { color: #2ecc71; }
+[data-theme="dark"] .selection-mode-info .selection-count { background: #2ecc71; }
+[data-theme="dark"] .settled-tag { background: #2ecc71; }
+[data-theme="dark"] .expense-log-item.settled .expense-log-desc, [data-theme="dark"] .expense-log-item.settled .expense-log-amount { text-decoration-color: #2ecc71; }
+@keyframes longPressPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.02); } }
+.expense-log-item.long-press-active { animation: longPressPulse 0.4s ease; background: rgba(102, 126, 234, 0.1); }
+.expense-log-item.selectable { padding-right: 6px; }
 
 @media (max-width: 600px) {
-    .selection-mode-actions {
-        width: 100%;
-        justify-content: center;
-    }
-    .selection-btn {
-        padding: 6px 10px;
-        font-size: 0.68rem;
-    }
+.routine-task-split, .combined-visual, .combined-bars, .wallet-balance, .wallet-icon, .wallet-label, .expense-form, .expense-form .full-width, .details-table, .details-table .detail-value, .details-table .desc-value, .selection-mode-actions, .selection-btn { }
+.routine-task-split { grid-template-columns: 1fr; }
+.combined-visual { flex-direction: column; }
+.combined-bars { min-width: auto; width: 100%; }
+.wallet-balance { font-size: 0.85rem; }
+.wallet-icon { font-size: 1.2rem; }
+.wallet-label { font-size: 0.6rem; }
+.expense-form { grid-template-columns: 1fr; }
+.expense-form .full-width { grid-column: 1; }
+.details-table { font-size: 0.7rem; }
+.details-table .detail-value { font-size: 0.75rem; }
+.details-table .desc-value { font-size: 0.8rem; }
+.selection-mode-actions { width: 100%; justify-content: center; }
+.selection-btn { padding: 6px 10px; font-size: 0.68rem; }
 }
+
+[data-theme="dark"] .mode-btn { color: #ffffff; border-color: #8892ff; }
+[data-theme="dark"] .mode-btn.active { background: #8892ff; color: #ffffff; }
+[data-theme="dark"] .mode-btn:hover { background: rgba(136, 146, 255, 0.2); }
+[data-theme="dark"] .timer { color: #8892ff; text-shadow: 0 2px 15px rgba(136, 146, 255, 0.5); }
+[data-theme="dark"] .timer-label, [data-theme="dark"] .btn, [data-theme="dark"] .btn-secondary, [data-theme="dark"] .tasks-header h2, [data-theme="dark"] .task-counter, [data-theme="dark"] .category-btn, [data-theme="dark"] .category-btn.active, [data-theme="dark"] .task-text, [data-theme="dark"] .brain-title, [data-theme="dark"] .brain-textarea, [data-theme="dark"] .form-title, [data-theme="dark"] .expense-input, [data-theme="dark"] .task-input, [data-theme="dark"] .balance-input, [data-theme="dark"] .pin-input, [data-theme="dark"] .expense-log-desc, [data-theme="dark"] .wallet-label, [data-theme="dark"] .modal-header h3, [data-theme="dark"] .report-section h4, [data-theme="dark"] .report-history-section h4, [data-theme="dark"] .combined-title, [data-theme="dark"] .split-title, [data-theme="dark"] .detail-section h5, [data-theme="dark"] .report-detail-box h3, [data-theme="dark"] .details-modal-content h3, [data-theme="dark"] .balance-modal-content h3, [data-theme="dark"] .pin-modal-content h3, [data-theme="dark"] .pin-modal-content p, [data-theme="dark"] .improvement-list li, [data-theme="dark"] .detail-stat-label, [data-theme="dark"] .detail-task-list li, [data-theme="dark"] .split-list li, [data-theme="dark"] .combined-bar-label, [data-theme="dark"] .combined-total, [data-theme="dark"] .report-history-date, [data-theme="dark"] .detail-value, [data-theme="dark"] .desc-value, [data-theme="dark"] .close-details-btn, [data-theme="dark"] .cancel-modal-btn, [data-theme="dark"] .pin-cancel, [data-theme="dark"] .detail-back-btn, [data-theme="dark"] .payment-btn, [data-theme="dark"] .op-btn, [data-theme="dark"] .empty-state, [data-theme="dark"] .brain-status, [data-theme="dark"] .report-group-label, [data-theme="dark"] .report-history-details, [data-theme="dark"] .report-history-empty, [data-theme="dark"] .report-date, [data-theme="dark"] .pin-error, [data-theme="dark"] .detail-stat-value, [data-theme="dark"] .split-percent, [data-theme="dark"] .circular-progress .progress-value, [data-theme="dark"] .combined-total .total-pct, [data-theme="dark"] .total-balance-label, [data-theme="dark"] .total-balance-value { color: #ffffff; }
+[data-theme="dark"] .quote-text { color: #ffffff; }
+[data-theme="dark"] .quote-author { color: #8892ff; }
+[data-theme="dark"] .new-quote-btn { color: #8892ff; border-color: #8892ff; }
+[data-theme="dark"] .new-quote-btn:hover { background: #8892ff; color: #ffffff; }
 </style>
 </head>
 <body>
@@ -1291,6 +1042,7 @@ body.selection-active .expense-checkbox {
 Made by <a href="https://wa.me/201102594058" target="_blank">Ahmed Emad Farhoud</a> 💻✨
 </div>
 </div>
+
 <div class="snackbar" id="undoSnackbar">
 <span>🗑️ تم الحذف</span>
 <button onclick="undoDelete()">↩️ تراجع</button>
@@ -1299,6 +1051,7 @@ Made by <a href="https://wa.me/201102594058" target="_blank">Ahmed Emad Farhoud<
 <span>🗑️ تم حذف العملية</span>
 <button onclick="undoExpenseDelete()">↩️ استرجاع</button>
 </div>
+
 <div class="modal-overlay" id="expensesModal">
 <div class="modal">
 <div class="modal-header">
@@ -1391,6 +1144,42 @@ Made by <a href="https://wa.me/201102594058" target="_blank">Ahmed Emad Farhoud<
 </div>
 </div>
 </div>
+
+<!-- ✨ ميزة النسخ الاحتياطي -->
+<div class="modal-overlay" id="backupModal">
+    <div class="modal" style="max-width: 500px;">
+        <div class="modal-header">
+            <h3>🔐 النسخ الاحتياطي والاستعادة</h3>
+            <button class="modal-close" onclick="closeBackupModal()">✕</button>
+        </div>
+        <div style="padding: 10px 0;">
+            <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 12px; text-align: center;">
+                أدخل رمزاً مكون من 6 أرقام لإنشاء أو استعادة نسخة احتياطية.
+            </p>
+            <input type="text" class="expense-input full-width" id="backupCodeInput" maxlength="6" placeholder="أدخل الرمز المكون من 6 أرقام" inputmode="numeric" style="text-align: center; font-size: 1.2rem; letter-spacing: 5px; margin-bottom: 12px;">
+            
+            <div id="backupActionArea">
+                <button class="btn btn-primary full-width" onclick="prepareBackup()" style="margin-bottom: 8px;">💾 حفظ نسخة احتياطية جديدة</button>
+                <button class="btn btn-secondary full-width" onclick="prepareRestore()">📥 استعادة من نسخة احتياطية</button>
+            </div>
+
+            <div id="backupDataArea" style="display: none; margin-top: 12px;">
+                <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 6px;">انسخ هذا الكود الطويل واحفظه بأمان. ستحتاجه مع الرمز أعلاه للاستعادة على أي جهاز:</p>
+                <textarea id="backupDataString" class="brain-textarea" style="min-height: 80px; font-size: 0.7rem; direction: ltr;" readonly></textarea>
+                <button class="btn btn-primary full-width" onclick="copyBackupData()" style="margin-top: 8px;">📋 نسخ الكود</button>
+                <button class="btn btn-secondary full-width" onclick="resetBackupUI()" style="margin-top: 6px;">↩️ رجوع</button>
+            </div>
+
+            <div id="restoreDataArea" style="display: none; margin-top: 12px;">
+                <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 6px;">الصق الكود الطويل الذي نسخته سابقاً:</p>
+                <textarea id="restoreDataString" class="brain-textarea" style="min-height: 80px; font-size: 0.7rem; direction: ltr;" placeholder="الصق الكود هنا..."></textarea>
+                <button class="btn btn-primary full-width" onclick="executeRestore()" style="margin-top: 8px; background: var(--correct-btn-bg);">✅ استعادة البيانات</button>
+                <button class="btn btn-secondary full-width" onclick="resetBackupUI()" style="margin-top: 6px;">↩️ رجوع</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="balance-modal" id="balanceModal">
 <div class="balance-modal-content">
 <h3 id="balanceModalTitle">💵 تعديل رصيد الكاش</h3>
@@ -1534,6 +1323,7 @@ let balanceModalType = null;
 let expenseUndoStack = JSON.parse(localStorage.getItem('expenseUndoStack')) || [];
 let expenseUndoTimeout = null;
 let expensesPin = localStorage.getItem('expensesPin') || '';
+let backupPin = localStorage.getItem('backupPin') || '';
 let pinAction = null;
 let expenseSearchQuery = '';
 
@@ -1901,6 +1691,7 @@ document.getElementById('balanceModal').addEventListener('click', function(e) { 
 document.getElementById('detailsModal').addEventListener('click', function(e) { if (e.target === this) closeDetailsModal(); });
 document.getElementById('expensesModal').addEventListener('click', function(e) { if (e.target === this) closeExpensesModal(); });
 document.getElementById('pinModal').addEventListener('click', function(e) { if (e.target === this) closePinModal(); });
+document.getElementById('backupModal').addEventListener('click', function(e) { if (e.target === this) closeBackupModal(); });
 document.addEventListener('keydown', function(e) {
 if (e.key === 'Escape') {
 hideReport();
@@ -1909,6 +1700,7 @@ closeBalanceModal();
 closeDetailsModal();
 closeExpensesModal();
 closePinModal();
+closeBackupModal();
 exitSelectionMode();
 }
 });
@@ -2013,6 +1805,124 @@ document.querySelectorAll('.task-item').forEach(i => { i.classList.remove('drag-
 });
 });
 }
+
+// ✨ ميزة النسخ الاحتياطي برمز 6 أرقام مع حماية بكلمة مرور
+function handleHeaderLongPress() {
+    if (backupPin === '') {
+        pinAction = 'backup_create';
+        document.getElementById('pinModalTitle').textContent = '🔐 إنشاء رمز سري للنسخ الاحتياطي';
+        document.getElementById('pinModalDesc').textContent = 'اختر رمزاً من 4-6 أرقام لحماية بياناتك';
+        document.getElementById('pinConfirmBtn').textContent = '✅ إنشاء';
+    } else {
+        pinAction = 'backup_verify';
+        document.getElementById('pinModalTitle').textContent = '🔐 أدخل الرمز السري';
+        document.getElementById('pinModalDesc').textContent = 'للوصول إلى النسخ الاحتياطي';
+        document.getElementById('pinConfirmBtn').textContent = '✅ فتح';
+    }
+    document.getElementById('pinInput').value = '';
+    document.getElementById('pinError').textContent = '';
+    document.getElementById('pinModal').classList.add('show');
+    setTimeout(() => document.getElementById('pinInput').focus(), 100);
+}
+
+function openBackupModal() {
+    document.getElementById('backupModal').classList.add('show');
+    document.getElementById('backupCodeInput').value = '';
+    resetBackupUI();
+}
+function closeBackupModal() {
+    document.getElementById('backupModal').classList.remove('show');
+}
+function resetBackupUI() {
+    document.getElementById('backupActionArea').style.display = 'block';
+    document.getElementById('backupDataArea').style.display = 'none';
+    document.getElementById('restoreDataArea').style.display = 'none';
+    document.getElementById('backupCodeInput').disabled = false;
+}
+function generateBackupData() {
+    const backupObj = {
+        tasks, expenses, cashBalance, electronicBalance,
+        brainDump: document.getElementById('brainDump').value,
+        reportHistory, theme: localStorage.getItem('theme') || 'light',
+        timestamp: new Date().toISOString()
+    };
+    return btoa(unescape(encodeURIComponent(JSON.stringify(backupObj))));
+}
+function prepareBackup() {
+    const code = document.getElementById('backupCodeInput').value.trim();
+    if (!/^\d{6}$/.test(code)) {
+        alert('⚠️ يرجى إدخال رمز مكون من 6 أرقام بالضبط');
+        return;
+    }
+    const dataString = generateBackupData();
+    localStorage.setItem('backup_' + code, dataString);
+    document.getElementById('backupDataString').value = dataString;
+    document.getElementById('backupActionArea').style.display = 'none';
+    document.getElementById('backupDataArea').style.display = 'block';
+    document.getElementById('backupCodeInput').disabled = true;
+}
+function copyBackupData() {
+    const textarea = document.getElementById('backupDataString');
+    textarea.select();
+    document.execCommand('copy');
+    alert('✅ تم نسخ الكود بنجاح! احفظه في مكان آمن.');
+}
+function prepareRestore() {
+    const code = document.getElementById('backupCodeInput').value.trim();
+    if (!/^\d{6}$/.test(code)) {
+        alert('⚠️ يرجى إدخال رمز مكون من 6 أرقام بالضبط');
+        return;
+    }
+    const savedData = localStorage.getItem('backup_' + code);
+    if (!savedData) {
+        alert('⚠️ لا توجد نسخة احتياطية محفوظة محلياً بهذا الرمز. يرجى لصق الكود الطويل يدوياً للاستعادة من جهاز آخر.');
+    } else {
+        document.getElementById('restoreDataString').value = savedData;
+    }
+    document.getElementById('backupActionArea').style.display = 'none';
+    document.getElementById('restoreDataArea').style.display = 'block';
+    document.getElementById('backupCodeInput').disabled = true;
+}
+function executeRestore() {
+    const dataString = document.getElementById('restoreDataString').value.trim();
+    if (!dataString) {
+        alert('⚠️ يرجى لصق كود النسخ الاحتياطي');
+        return;
+    }
+    try {
+        const jsonStr = decodeURIComponent(escape(atob(dataString)));
+        const backupObj = JSON.parse(jsonStr);
+        if (!confirm('⚠️ هل أنت متأكد من استعادة هذه النسخة؟ سيتم استبدال جميع البيانات الحالية!')) return;
+        tasks = backupObj.tasks || [];
+        expenses = backupObj.expenses || [];
+        cashBalance = parseFloat(backupObj.cashBalance) || 0;
+        electronicBalance = parseFloat(backupObj.electronicBalance) || 0;
+        reportHistory = backupObj.reportHistory || [];
+        saveToStorage(); saveExpenses(); saveBalances(); saveReportHistory();
+        if (backupObj.brainDump) {
+            document.getElementById('brainDump').value = backupObj.brainDump;
+            localStorage.setItem('brainDump', backupObj.brainDump);
+        }
+        if (backupObj.theme) setTheme(backupObj.theme);
+        renderAllTasks(); renderExpenses(); closeBackupModal();
+        alert('✅ تم استعادة البيانات بنجاح!');
+        location.reload();
+    } catch (e) {
+        alert('❌ كود النسخ الاحتياطي غير صالح أو تالف.');
+    }
+}
+
+const headerTitle = document.querySelector('.header-title h1');
+let titlePressTimer;
+const startTitlePress = () => { titlePressTimer = setTimeout(() => { if (navigator.vibrate) navigator.vibrate(50); handleHeaderLongPress(); }, 800); };
+const cancelTitlePress = () => { clearTimeout(titlePressTimer); };
+headerTitle.addEventListener('touchstart', startTitlePress, { passive: true });
+headerTitle.addEventListener('touchend', cancelTitlePress);
+headerTitle.addEventListener('touchcancel', cancelTitlePress);
+headerTitle.addEventListener('mousedown', startTitlePress);
+headerTitle.addEventListener('mouseup', cancelTitlePress);
+headerTitle.addEventListener('mouseleave', cancelTitlePress);
+
 function openExpensesSection() {
 if (expensesPin === '') {
 pinAction = 'create';
@@ -2057,6 +1967,21 @@ closePinModal();
 showExpensesModal();
 } else {
 errorEl.textContent = '❌ الرقم السري غير صحيح';
+input.value = '';
+input.focus();
+if (navigator.vibrate) navigator.vibrate(200);
+}
+} else if (pinAction === 'backup_create') {
+backupPin = pin;
+try { localStorage.setItem('backupPin', pin); } catch(e) {}
+closePinModal();
+openBackupModal();
+} else if (pinAction === 'backup_verify') {
+if (pin === backupPin) {
+closePinModal();
+openBackupModal();
+} else {
+errorEl.textContent = '❌ الرمز السري غير صحيح';
 input.value = '';
 input.focus();
 if (navigator.vibrate) navigator.vibrate(200);
@@ -2642,7 +2567,6 @@ if (checkbox) {
     return;
 }
 
-/* ✨ النقر على العملية في وضع التحديد لتحديدها/إلغاء تحديدها */
 if (isSelectionMode) {
     const expenseItem = e.target.closest('.expense-log-item');
     if (expenseItem && !e.target.closest('.expense-log-info-btn') && !e.target.closest('.settle-btn') && !e.target.closest('.expense-checkbox')) {
@@ -2654,12 +2578,10 @@ if (isSelectionMode) {
     }
 }
 
-/* ✨ النقر على عملية خارج وضع التحديد - إذا كانت محددة مسبقاً، يمكن الرجوع لها */
 const expenseItem = e.target.closest('.expense-log-item');
 if (expenseItem && !e.target.closest('.expense-log-info-btn') && !e.target.closest('.settle-btn') && !e.target.closest('.expense-checkbox') && !isSelectionMode) {
     const opId = parseInt(expenseItem.dataset.opId);
     if (opId && selectedExpenseIds.includes(opId)) {
-        // إذا كانت العملية محددة مسبقاً، الدخول في وضع التحديد مع الحفاظ على التحديد السابق
         isSelectionMode = true;
         const bar = document.getElementById('selectionModeBar');
         bar.classList.add('show');
