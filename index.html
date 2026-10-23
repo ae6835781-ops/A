@@ -73,8 +73,6 @@ padding-top: env(safe-area-inset-top, 40px);
 --expense-bg: #28a745;
 --total-balance-bg: rgba(102, 126, 234, 0.1);
 --total-balance-border: #667eea;
---debt-owing-color: #dc3545;
---debt-owed-color: #28a745;
 }
 
 [data-theme="dark"] {
@@ -129,8 +127,6 @@ padding-top: env(safe-area-inset-top, 40px);
 --expense-bg: #8892ff;
 --total-balance-bg: rgba(136, 146, 255, 0.15);
 --total-balance-border: #8892ff;
---debt-owing-color: #e74c3c;
---debt-owed-color: #2ecc71;
 }
 
 [data-theme="sunset"] {
@@ -163,8 +159,6 @@ padding-top: env(safe-area-inset-top, 40px);
 --expense-bg: #ff6e7f;
 --total-balance-bg: rgba(255, 110, 127, 0.12);
 --total-balance-border: #ff6e7f;
---debt-owing-color: #ef4444;
---debt-owed-color: #10b981;
 }
 
 [data-theme="ocean"] {
@@ -197,8 +191,6 @@ padding-top: env(safe-area-inset-top, 40px);
 --expense-bg: #2193b0;
 --total-balance-bg: rgba(33, 147, 176, 0.12);
 --total-balance-border: #2193b0;
---debt-owing-color: #ef4444;
---debt-owed-color: #10b981;
 }
 
 [data-theme="sakura"] {
@@ -231,8 +223,6 @@ padding-top: env(safe-area-inset-top, 40px);
 --expense-bg: #ff9a9e;
 --total-balance-bg: rgba(255, 154, 158, 0.12);
 --total-balance-border: #ff9a9e;
---debt-owing-color: #e11d48;
---debt-owed-color: #16a34a;
 }
 
 [data-theme="forest"] {
@@ -265,8 +255,6 @@ padding-top: env(safe-area-inset-top, 40px);
 --expense-bg: #134e5e;
 --total-balance-bg: rgba(19, 78, 94, 0.12);
 --total-balance-border: #134e5e;
---debt-owing-color: #dc2626;
---debt-owed-color: #16a34a;
 }
 
 [data-theme="barbie"] {
@@ -321,8 +309,6 @@ padding-top: env(safe-area-inset-top, 40px);
 --expense-bg: #d81b60;
 --total-balance-bg: rgba(216, 27, 96, 0.12);
 --total-balance-border: #d81b60;
---debt-owing-color: #e11d48;
---debt-owed-color: #16a34a;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -377,7 +363,7 @@ align-items: center;
 gap: 10px;
 }
 .header-title { text-align: center; }
-.header h1 { color: var(--text-white); font-size: 1.9rem; font-weight: 900; text-shadow: 0 4px 15px rgba(0,0,0,0.3); margin: 0; cursor: pointer; user-select: none; -webkit-user-select: none; }
+.header h1 { color: var(--text-white); font-size: 1.9rem; font-weight: 900; text-shadow: 0 4px 15px rgba(0,0,0,0.3); margin: 0; }
 .header p { color: rgba(255,255,255,0.9); font-size: 0.9rem; margin: 3px 0 0 0; }
 .header-actions {
 display: flex;
@@ -1200,87 +1186,6 @@ body.selection-active .expense-checkbox {
         font-size: 0.68rem;
     }
 }
-
-/* ================================ */
-/* ✨ ميزة النسخ الاحتياطي */
-/* ================================ */
-
-.backup-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); display: none; justify-content: center; align-items: center; z-index: 5000; padding: 20px; backdrop-filter: blur(8px); }
-.backup-modal.show { display: flex; }
-.backup-modal-content { background: var(--card-bg); border-radius: 18px; padding: 22px 18px; max-width: 420px; width: 100%; box-shadow: 0 20px 60px var(--shadow-color); animation: slideUp 0.3s ease; text-align: center; }
-.backup-icon { font-size: 2.5rem; margin-bottom: 8px; }
-.backup-modal-content h3 { color: var(--text-primary); margin-bottom: 5px; font-size: 1.1rem; font-weight: 900; }
-.backup-modal-content p { color: var(--text-secondary); font-size: 0.8rem; margin-bottom: 12px; }
-.backup-code-display { width: 100%; min-height: 90px; padding: 12px; border: 2px dashed var(--bg-gradient-start); border-radius: 12px; font-size: 0.7rem; font-family: 'Courier New', monospace; background: var(--input-bg); color: var(--text-primary); text-align: left; margin-bottom: 10px; word-break: break-all; overflow-y: auto; max-height: 150px; }
-.backup-code-id { display: inline-block; padding: 6px 14px; background: var(--bg-gradient-start); color: white; border-radius: 20px; font-weight: 900; font-size: 1.1rem; margin-bottom: 10px; letter-spacing: 2px; font-family: 'Courier New', monospace; }
-.backup-modal-actions { display: flex; gap: 6px; flex-wrap: wrap; }
-.backup-modal-actions button { flex: 1; min-width: 100px; padding: 10px; border: none; border-radius: 12px; font-weight: 700; cursor: pointer; font-family: inherit; transition: all 0.2s ease; font-size: 0.8rem; display: flex; align-items: center; justify-content: center; gap: 4px; }
-.backup-btn-generate { background: var(--correct-btn-bg); color: white; }
-.backup-btn-restore { background: var(--bg-gradient-start); color: white; }
-.backup-btn-copy { background: var(--edit-btn-bg); color: white; }
-.backup-btn-close { background: var(--btn-secondary-bg); color: var(--text-secondary); }
-.backup-modal-actions button:hover { transform: translateY(-2px); box-shadow: 0 4px 12px var(--shadow-light); }
-.backup-restore-input { width: 100%; padding: 10px; border: 2px solid var(--input-border); border-radius: 12px; font-size: 0.8rem; font-family: 'Courier New', monospace; background: var(--input-bg); color: var(--text-primary); text-align: center; margin-bottom: 10px; }
-.backup-restore-input:focus { outline: none; border-color: var(--bg-gradient-start); }
-.backup-info { background: var(--card-bg-alt); padding: 8px; border-radius: 8px; margin-bottom: 10px; font-size: 0.7rem; color: var(--text-secondary); }
-
-/* ================================ */
-/* ✨ ميزة الديون */
-/* ================================ */
-
-.debts-section { background: var(--card-bg); border-radius: 15px; padding: 16px; margin-top: 15px; box-shadow: 0 10px 40px var(--shadow-color); animation: fadeInUp 1s ease 0.6s both; transition: background 0.4s ease, box-shadow 0.4s ease; }
-.debts-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px; }
-.debts-header h3 { color: var(--text-primary); font-size: 1.05rem; font-weight: 700; display: flex; align-items: center; gap: 6px; }
-.debts-summary { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px; }
-.debt-summary-card { padding: 10px; border-radius: 10px; text-align: center; }
-.debt-summary-card.owing { background: rgba(220, 53, 69, 0.1); border: 2px solid var(--debt-owing-color); }
-.debt-summary-card.owed { background: rgba(40, 167, 69, 0.1); border: 2px solid var(--debt-owed-color); }
-.debt-summary-label { font-size: 0.7rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 4px; }
-.debt-summary-value { font-size: 1rem; font-weight: 900; direction: ltr; }
-.debt-summary-card.owing .debt-summary-value { color: var(--debt-owing-color); }
-.debt-summary-card.owed .debt-summary-value { color: var(--debt-owed-color); }
-.debt-form-wrapper { background: var(--card-bg-alt); border-radius: 12px; padding: 10px; margin-bottom: 12px; border: 1px solid var(--input-border); }
-.debt-form { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; }
-.debt-form .full-width { grid-column: 1 / -1; }
-.debt-input { width: 100%; padding: 7px 9px; border: 2px solid var(--input-border); border-radius: 8px; font-size: 0.8rem; font-family: inherit; transition: all 0.3s ease; background: var(--input-bg); color: var(--text-primary); height: 34px; }
-.debt-input:focus { outline: none; border-color: var(--bg-gradient-start); box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1); }
-.debt-type-toggle { display: flex; background: var(--btn-secondary-bg); border-radius: 8px; padding: 2px; gap: 2px; width: 100%; }
-.debt-type-btn { flex: 1; padding: 6px 6px; border: none; border-radius: 6px; background: transparent; color: var(--text-secondary); font-size: 0.7rem; font-weight: 600; cursor: pointer; transition: all 0.2s ease; font-family: inherit; }
-.debt-type-btn.active.owing-active { background: var(--debt-owing-color); color: white; box-shadow: 0 2px 8px rgba(220, 53, 69, 0.4); }
-.debt-type-btn.active.owed-active { background: var(--debt-owed-color); color: white; box-shadow: 0 2px 8px rgba(40, 167, 69, 0.4); }
-.debts-log { list-style: none; min-height: 50px; }
-.debt-item { display: flex; align-items: center; padding: 10px; background: var(--task-bg); border-radius: 10px; margin-bottom: 6px; transition: all 0.3s ease; animation: slideIn 0.3s ease; border-right: 4px solid; gap: 8px; cursor: pointer; }
-.debt-item:hover { transform: translateX(-3px); box-shadow: 0 3px 10px var(--shadow-light); }
-.debt-item.owing { border-right-color: var(--debt-owing-color); }
-.debt-item.owed { border-right-color: var(--debt-owed-color); }
-.debt-item.settled { opacity: 0.5; }
-.debt-item.settled .debt-person, .debt-item.settled .debt-amount { text-decoration: line-through; }
-.debt-icon { font-size: 1.3rem; flex-shrink: 0; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: 50%; background: var(--card-bg); box-shadow: 0 2px 4px var(--shadow-light); }
-.debt-main { flex: 1; min-width: 0; }
-.debt-person { font-size: 0.85rem; font-weight: 700; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.debt-amount { font-size: 0.75rem; font-weight: 700; direction: ltr; margin-top: 2px; }
-.debt-item.owing .debt-amount { color: var(--debt-owing-color); }
-.debt-item.owed .debt-amount { color: var(--debt-owed-color); }
-.debt-remaining { font-size: 0.65rem; color: var(--text-muted); margin-top: 2px; }
-.debt-actions { display: flex; gap: 4px; flex-shrink: 0; }
-.debt-settle-btn, .debt-detail-btn { width: 28px; height: 28px; border: none; border-radius: 50%; cursor: pointer; font-size: 0.8rem; display: flex; align-items: center; justify-content: center; color: white; flex-shrink: 0; transition: all 0.2s ease; }
-.debt-settle-btn { background: var(--correct-btn-bg); }
-.debt-settle-btn:hover { transform: scale(1.15); }
-.debt-detail-btn { background: var(--bg-gradient-start); }
-.debt-detail-btn:hover { transform: scale(1.15); }
-.debt-detail-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); display: none; justify-content: center; align-items: center; z-index: 3500; padding: 20px; backdrop-filter: blur(5px); }
-.debt-detail-modal.show { display: flex; }
-.debt-detail-content { background: var(--card-bg); border-radius: 18px; padding: 18px; max-width: 400px; width: 100%; box-shadow: 0 20px 60px var(--shadow-color); animation: slideUp 0.3s ease; max-height: 85vh; overflow-y: auto; }
-.debt-detail-content h3 { color: var(--text-primary); margin-bottom: 12px; text-align: center; font-size: 1.05rem; display: flex; align-items: center; justify-content: center; gap: 5px; }
-.debt-payments-list { list-style: none; padding: 0; margin-bottom: 12px; max-height: 200px; overflow-y: auto; }
-.debt-payment-item { display: flex; justify-content: space-between; align-items: center; padding: 6px 8px; background: var(--task-bg); border-radius: 8px; margin-bottom: 3px; font-size: 0.75rem; }
-.debt-payment-amount { font-weight: 700; color: var(--correct-btn-bg); direction: ltr; }
-.debt-payment-date { color: var(--text-muted); font-size: 0.65rem; }
-.settle-form { display: flex; gap: 5px; margin-top: 10px; }
-.settle-form input { flex: 1; padding: 8px; border: 2px solid var(--input-border); border-radius: 8px; font-size: 0.85rem; font-family: inherit; background: var(--input-bg); color: var(--text-primary); }
-.settle-form input:focus { outline: none; border-color: var(--bg-gradient-start); }
-.settle-form button { padding: 8px 16px; background: var(--correct-btn-bg); color: white; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; font-family: inherit; transition: all 0.2s ease; white-space: nowrap; }
-.settle-form button:hover { transform: translateY(-2px); }
 </style>
 </head>
 <body>
@@ -1299,7 +1204,7 @@ body.selection-active .expense-checkbox {
 <div class="container">
 <div class="header">
 <div class="header-title">
-<h1 id="appTitle">📋 برنامج المهام اليومية</h1>
+<h1>📋 برنامج المهام اليومية</h1>
 <p>نظّم وقتك ومالك وحقق أهدافك</p>
 </div>
 <div class="header-actions">
@@ -1484,46 +1389,6 @@ Made by <a href="https://wa.me/201102594058" target="_blank">Ahmed Emad Farhoud<
 <div class="expense-log" id="expenseLog">
 <div class="empty-state"><div class="empty-state-icon">💰</div><p>لا توجد عمليات مسجلة بعد</p></div>
 </div>
-
-<div class="debts-section">
-<div class="debts-header">
-<h3>📊 الديون</h3>
-</div>
-<div class="debts-summary">
-<div class="debt-summary-card owing">
-<div class="debt-summary-label">💔 عليك (دين)</div>
-<div class="debt-summary-value" id="totalOwing">0.00 ج.م</div>
-</div>
-<div class="debt-summary-card owed">
-<div class="debt-summary-label">💚 لك (دين)</div>
-<div class="debt-summary-value" id="totalOwed">0.00 ج.م</div>
-</div>
-</div>
-<div class="debt-form-wrapper">
-<div class="form-title">
-<span>➕</span>
-<span>إضافة دين جديد</span>
-</div>
-<div class="debt-form">
-<input type="text" class="debt-input full-width" id="debtPerson" placeholder="اسم الشخص">
-<input type="number" class="debt-input full-width" id="debtAmount" placeholder="المبلغ">
-<div class="debt-type-toggle full-width">
-<button class="debt-type-btn active owing-active" id="btnOwing" data-type="owing">💔 عليك</button>
-<button class="debt-type-btn" id="btnOwed" data-type="owed">💚 لك</button>
-</div>
-<input type="text" class="debt-input full-width" id="debtNotes" placeholder="ملاحظات (اختياري)">
-<button class="btn btn-primary full-width" id="addDebtBtn" style="padding: 9px;">➕ إضافة الدين</button>
-</div>
-</div>
-<div class="form-title">
-<span>📋</span>
-<span>قائمة الديون</span>
-</div>
-<div class="debts-log" id="debtsLog">
-<div class="empty-state"><div class="empty-state-icon">📊</div><p>لا توجد ديون مسجلة بعد</p></div>
-</div>
-</div>
-
 </div>
 </div>
 <div class="balance-modal" id="balanceModal">
@@ -1576,46 +1441,6 @@ Made by <a href="https://wa.me/201102594058" target="_blank">Ahmed Emad Farhoud<
 <div class="report-date" id="reportDate"></div>
 </div>
 </div>
-
-<!-- Backup Modal -->
-<div class="backup-modal" id="backupModal">
-<div class="backup-modal-content">
-<div class="backup-icon">🔐</div>
-<h3>النسخ الاحتياطي السحابي</h3>
-<p>احفظ بياناتك واستعدها على أي جهاز</p>
-<div class="backup-info">
-💡 هذا الكود يحتوي على كل بياناتك (المهام، المصروفات، الديون، التقارير). احفظه في مكان آمن!
-</div>
-<div class="backup-code-id" id="backupCodeId">------</div>
-<div class="backup-code-display" id="backupCodeDisplay">اضغط "توليد كود جديد" لإنشاء كود النسخ الاحتياطي</div>
-<div class="backup-modal-actions">
-<button class="backup-btn-generate" onclick="generateBackupCode()">🔄 توليد كود جديد</button>
-<button class="backup-btn-copy" onclick="copyBackupCode()">📋 نسخ الكود</button>
-<button class="backup-btn-restore" onclick="showRestoreInput()">📥 استعادة</button>
-<button class="backup-btn-close" onclick="closeBackupModal()">✖️ إغلاق</button>
-</div>
-</div>
-</div>
-
-<!-- Restore Input Modal -->
-<div class="backup-modal" id="restoreModal">
-<div class="backup-modal-content">
-<div class="backup-icon">📥</div>
-<h3>استعادة البيانات</h3>
-<p>أدخل كود النسخ الاحتياطي لاستعادة بياناتك</p>
-<textarea class="backup-restore-input" id="restoreCodeInput" placeholder="الصق الكود هنا..." rows="4"></textarea>
-<div class="backup-modal-actions">
-<button class="backup-btn-restore" onclick="restoreFromBackupCode()">✅ استعادة</button>
-<button class="backup-btn-close" onclick="closeRestoreModal()">✖️ إلغاء</button>
-</div>
-</div>
-</div>
-
-<!-- Debt Detail Modal -->
-<div class="debt-detail-modal" id="debtDetailModal">
-<div class="debt-detail-content" id="debtDetailContent"></div>
-</div>
-
 <script>
 if ('serviceWorker' in navigator) {
 const swCode = `
@@ -1711,9 +1536,6 @@ let expenseUndoTimeout = null;
 let expensesPin = localStorage.getItem('expensesPin') || '';
 let pinAction = null;
 let expenseSearchQuery = '';
-let debts = JSON.parse(localStorage.getItem('userDebts')) || [];
-let currentDebtType = 'owing';
-let backupCode = localStorage.getItem('backupCode') || '';
 
 let isSelectionMode = false;
 let selectedExpenseIds = [];
@@ -1737,8 +1559,6 @@ localStorage.setItem('cashBalance', cashBalance.toString());
 localStorage.setItem('electronicBalance', electronicBalance.toString());
 } catch(e) {}
 }
-function saveDebts() { try { localStorage.setItem('userDebts', JSON.stringify(debts)); } catch(e) {} }
-
 function setCategory(cat) {
 currentCategory = cat;
 document.getElementById('btnRoutine').classList.toggle('active', cat === 'routine');
@@ -2081,9 +1901,6 @@ document.getElementById('balanceModal').addEventListener('click', function(e) { 
 document.getElementById('detailsModal').addEventListener('click', function(e) { if (e.target === this) closeDetailsModal(); });
 document.getElementById('expensesModal').addEventListener('click', function(e) { if (e.target === this) closeExpensesModal(); });
 document.getElementById('pinModal').addEventListener('click', function(e) { if (e.target === this) closePinModal(); });
-document.getElementById('backupModal').addEventListener('click', function(e) { if (e.target === this) closeBackupModal(); });
-document.getElementById('restoreModal').addEventListener('click', function(e) { if (e.target === this) closeRestoreModal(); });
-document.getElementById('debtDetailModal').addEventListener('click', function(e) { if (e.target === this) closeDebtDetailModal(); });
 document.addEventListener('keydown', function(e) {
 if (e.key === 'Escape') {
 hideReport();
@@ -2093,9 +1910,6 @@ closeDetailsModal();
 closeExpensesModal();
 closePinModal();
 exitSelectionMode();
-closeBackupModal();
-closeRestoreModal();
-closeDebtDetailModal();
 }
 });
 function renderTasksByCategory(cat, lid, cid, tid, pid, pctid, em, ei) {
@@ -2253,7 +2067,6 @@ function showExpensesModal() {
 document.getElementById('expensesModal').classList.add('show');
 document.body.style.overflow = 'hidden';
 renderExpenses();
-renderDebts();
 initWalletLongPress();
 initExpenseLongPress();
 }
@@ -2777,387 +2590,6 @@ e.stopPropagation();
 });
 });
 }
-
-// Backup functions
-function generateBackupCode() {
-    const data = {
-        tasks, expenses, cashBalance, electronicBalance,
-        reportHistory, brainDump: document.getElementById('brainDump').value,
-        theme: localStorage.getItem('theme'), debts
-    };
-    const json = JSON.stringify(data);
-    const encoded = btoa(unescape(encodeURIComponent(json)));
-    backupCode = encoded;
-    try { localStorage.setItem('backupCode', backupCode); } catch(e) {}
-    
-    const codeId = encoded.substring(0, 6).toUpperCase();
-    document.getElementById('backupCodeId').textContent = codeId;
-    document.getElementById('backupCodeDisplay').textContent = encoded;
-    
-    alert('✅ تم توليد كود النسخ الاحتياطي بنجاح!\nاحفظه في مكان آمن.');
-}
-
-function showRestoreInput() {
-    document.getElementById('restoreModal').classList.add('show');
-    setTimeout(() => document.getElementById('restoreCodeInput').focus(), 100);
-}
-
-function closeRestoreModal() {
-    document.getElementById('restoreModal').classList.remove('show');
-    document.getElementById('restoreCodeInput').value = '';
-}
-
-function restoreFromBackupCode() {
-    const code = document.getElementById('restoreCodeInput').value.trim();
-    if (!code) {
-        alert('⚠️ يرجى إدخال كود النسخ الاحتياطي');
-        return;
-    }
-    
-    try {
-        const json = decodeURIComponent(escape(atob(code)));
-        const data = JSON.parse(json);
-        
-        tasks = data.tasks || [];
-        expenses = data.expenses || [];
-        cashBalance = data.cashBalance || 0;
-        electronicBalance = data.electronicBalance || 0;
-        reportHistory = data.reportHistory || [];
-        debts = data.debts || [];
-        
-        saveToStorage();
-        saveExpenses();
-        saveBalances();
-        saveReportHistory();
-        saveDebts();
-        
-        if (data.brainDump) {
-            document.getElementById('brainDump').value = data.brainDump;
-            try { localStorage.setItem('brainDump', data.brainDump); } catch(e) {}
-        }
-        if (data.theme) {
-            setTheme(data.theme);
-        }
-        
-        renderAllTasks();
-        renderExpenses();
-        renderDebts();
-        initBrainDump();
-        
-        closeRestoreModal();
-        closeBackupModal();
-        
-        alert('✅ تم استعادة البيانات بنجاح!\nكل بياناتك الآن متاحة.');
-    } catch (e) {
-        alert('❌ الكود غير صالح أو تالف!\nتأكد من صحة الكود وحاول مرة أخرى.');
-    }
-}
-
-function copyBackupCode() {
-    if (!backupCode) {
-        alert('⚠️ يرجى توليد كود أولاً');
-        return;
-    }
-    
-    navigator.clipboard.writeText(backupCode).then(() => {
-        alert('✅ تم نسخ الكود بنجاح!\nاحفظه في مكان آمن (ملاحظة، واتساب، إلخ).');
-    }).catch(() => {
-        const ta = document.createElement('textarea');
-        ta.value = backupCode;
-        document.body.appendChild(ta);
-        ta.select();
-        document.execCommand('copy');
-        document.body.removeChild(ta);
-        alert('✅ تم نسخ الكود بنجاح!');
-    });
-}
-
-function openBackupModal() {
-    document.getElementById('backupModal').classList.add('show');
-    
-    if (backupCode) {
-        const codeId = backupCode.substring(0, 6).toUpperCase();
-        document.getElementById('backupCodeId').textContent = codeId;
-        document.getElementById('backupCodeDisplay').textContent = backupCode;
-    } else {
-        document.getElementById('backupCodeId').textContent = '------';
-        document.getElementById('backupCodeDisplay').textContent = 'اضغط "توليد كود جديد" لإنشاء كود النسخ الاحتياطي';
-    }
-}
-
-function closeBackupModal() {
-    document.getElementById('backupModal').classList.remove('show');
-}
-
-// Debt functions
-function setDebtType(type) {
-    currentDebtType = type;
-    const btnOwing = document.getElementById('btnOwing');
-    const btnOwed = document.getElementById('btnOwed');
-    btnOwing.classList.remove('active', 'owing-active', 'owed-active');
-    btnOwed.classList.remove('active', 'owing-active', 'owed-active');
-    if (type === 'owing') {
-        btnOwing.classList.add('active', 'owing-active');
-    } else {
-        btnOwed.classList.add('active', 'owed-active');
-    }
-}
-
-function addDebt() {
-    const person = document.getElementById('debtPerson').value.trim();
-    const amount = parseFloat(document.getElementById('debtAmount').value);
-    const notes = document.getElementById('debtNotes').value.trim();
-    
-    if (!person || isNaN(amount) || amount <= 0) {
-        alert('⚠️ يرجى ملء جميع الحقول المطلوبة (الاسم والمبلغ)');
-        return;
-    }
-    
-    const debt = {
-        id: Date.now(),
-        person,
-        amount,
-        remainingAmount: amount,
-        type: currentDebtType,
-        notes,
-        date: new Date().toLocaleDateString('ar-EG', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }),
-        time: new Date().toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit' }),
-        payments: []
-    };
-    
-    debts.push(debt);
-    saveDebts();
-    renderDebts();
-    
-    document.getElementById('debtPerson').value = '';
-    document.getElementById('debtAmount').value = '';
-    document.getElementById('debtNotes').value = '';
-    
-    alert('✅ تم إضافة الدين بنجاح!');
-}
-
-function deleteDebt(id) {
-    if (!confirm('هل أنت متأكد من حذف هذا الدين نهائياً؟')) return;
-    
-    const idx = debts.findIndex(d => d.id === id);
-    if (idx === -1) return;
-    
-    debts.splice(idx, 1);
-    saveDebts();
-    renderDebts();
-    closeDebtDetailModal();
-    
-    alert('✅ تم حذف الدين بنجاح!');
-}
-
-function settleDebt(id, amount) {
-    const debt = debts.find(d => d.id === id);
-    if (!debt) return;
-    
-    if (amount <= 0 || amount > debt.remainingAmount) {
-        alert('⚠️ المبلغ غير صحيح');
-        return;
-    }
-    
-    debt.remainingAmount -= amount;
-    debt.payments.push({
-        amount,
-        date: new Date().toLocaleDateString('ar-EG', { year: 'numeric', month: 'long', day: 'numeric' }),
-        time: new Date().toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit' })
-    });
-    
-    saveDebts();
-    renderDebts();
-    showDebtDetails(id);
-    
-    if (debt.remainingAmount === 0) {
-        alert('🎉 تم تسديد الدين بالكامل!');
-    } else {
-        alert('✅ تم تسجيل السداد بنجاح!');
-    }
-}
-
-function showDebtDetails(id) {
-    const debt = debts.find(d => d.id === id);
-    if (!debt) return;
-    
-    const isOwing = debt.type === 'owing';
-    const icon = isOwing ? '💔' : '💚';
-    const typeLabel = isOwing ? 'دين عليك' : 'دين لك';
-    const isSettled = debt.remainingAmount === 0;
-    
-    let paymentsHtml = '';
-    if (debt.payments && debt.payments.length > 0) {
-        paymentsHtml = debt.payments.map(p => `
-            <div class="debt-payment-item">
-                <span class="debt-payment-amount">-${p.amount.toFixed(2)} ج.م</span>
-                <span class="debt-payment-date">${p.date} · ${p.time}</span>
-            </div>
-        `).join('');
-    } else {
-        paymentsHtml = '<div style="text-align:center;color:var(--text-muted);font-size:0.75rem;padding:10px;">لا توجد سدادات بعد</div>';
-    }
-    
-    document.getElementById('debtDetailContent').innerHTML = `
-        <h3>${icon} ${debt.person}</h3>
-        <table class="details-table">
-            <tr>
-                <td class="detail-icon">${icon}</td>
-                <td class="detail-label">النوع</td>
-                <td class="detail-value ${isOwing ? 'type-spend' : 'type-add'}">${typeLabel}</td>
-            </tr>
-            <tr>
-                <td class="detail-icon">💰</td>
-                <td class="detail-label">المبلغ الأصلي</td>
-                <td class="detail-value amount-spend">${debt.amount.toFixed(2)} ج.م</td>
-            </tr>
-            <tr>
-                <td class="detail-icon">📊</td>
-                <td class="detail-label">المتبقي</td>
-                <td class="detail-value ${debt.remainingAmount === 0 ? 'type-add' : 'amount-spend'}">${debt.remainingAmount.toFixed(2)} ج.م</td>
-            </tr>
-            <tr>
-                <td class="detail-icon">📅</td>
-                <td class="detail-label">تاريخ الإنشاء</td>
-                <td class="detail-value">${debt.date}</td>
-            </tr>
-            <tr>
-                <td class="detail-icon">⏰</td>
-                <td class="detail-label">الوقت</td>
-                <td class="detail-value">${debt.time}</td>
-            </tr>
-            ${debt.notes ? `
-            <tr class="desc-row">
-                <td class="detail-icon">📝</td>
-                <td class="detail-label">ملاحظات</td>
-                <td class="detail-value desc-value">${debt.notes}</td>
-            </tr>
-            ` : ''}
-            <tr>
-                <td class="detail-icon">🏁</td>
-                <td class="detail-label">الحالة</td>
-                <td class="detail-value ${isSettled ? 'type-add' : 'type-spend'}">${isSettled ? '✅ مُسدد بالكامل' : '⏳ قيد السداد'}</td>
-            </tr>
-        </table>
-        
-        <div style="margin-top:12px;">
-            <div class="form-title">
-                <span>💸</span>
-                <span>سجل السدادات</span>
-            </div>
-            <div class="debt-payments-list">${paymentsHtml}</div>
-        </div>
-        
-        ${!isSettled ? `
-        <div style="margin-top:12px;">
-            <div class="form-title">
-                <span>💳</span>
-                <span>تسديد جزء من الدين</span>
-            </div>
-            <div class="settle-form">
-                <input type="number" id="settleAmount" placeholder="المبلغ (${debt.remainingAmount.toFixed(2)} كحد أقصى)" max="${debt.remainingAmount}">
-                <button onclick="handleSettleDebt(${debt.id})">💳 سداد</button>
-            </div>
-        </div>
-        ` : ''}
-        
-        <div class="details-modal-actions" style="margin-top:15px;">
-            <button class="delete-modal-btn" onclick="deleteDebt(${debt.id})">🗑️ حذف الدين</button>
-            <button class="close-details-btn" onclick="closeDebtDetailModal()">✖️ إغلاق</button>
-        </div>
-    `;
-    
-    document.getElementById('debtDetailModal').classList.add('show');
-}
-
-function handleSettleDebt(id) {
-    const amountInput = document.getElementById('settleAmount');
-    const amount = parseFloat(amountInput.value);
-    
-    if (isNaN(amount) || amount <= 0) {
-        alert('⚠️ يرجى إدخال مبلغ صحيح');
-        return;
-    }
-    
-    settleDebt(id, amount);
-}
-
-function closeDebtDetailModal() {
-    document.getElementById('debtDetailModal').classList.remove('show');
-}
-
-function renderDebts() {
-    const log = document.getElementById('debtsLog');
-    const totalOwing = debts.filter(d => d.type === 'owing').reduce((sum, d) => sum + d.remainingAmount, 0);
-    const totalOwed = debts.filter(d => d.type === 'owed').reduce((sum, d) => sum + d.remainingAmount, 0);
-    
-    document.getElementById('totalOwing').textContent = totalOwing.toFixed(2) + ' ج.م';
-    document.getElementById('totalOwed').textContent = totalOwed.toFixed(2) + ' ج.م';
-    
-    if (debts.length === 0) {
-        log.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📊</div><p>لا توجد ديون مسجلة بعد</p></div>';
-        return;
-    }
-    
-    const sorted = [...debts].reverse();
-    let html = '';
-    sorted.forEach(debt => {
-        const isOwing = debt.type === 'owing';
-        const icon = isOwing ? '💔' : '💚';
-        const isSettled = debt.remainingAmount === 0;
-        
-        html += `
-            <div class="debt-item ${debt.type} ${isSettled ? 'settled' : ''}" data-debt-id="${debt.id}" onclick="showDebtDetails(${debt.id})">
-                <div class="debt-icon">${icon}</div>
-                <div class="debt-main">
-                    <div class="debt-person">${debt.person}</div>
-                    <div class="debt-amount">${isOwing ? '-' : '+'}${debt.remainingAmount.toFixed(2)} ج.م</div>
-                    ${debt.remainingAmount < debt.amount ? `<div class="debt-remaining">المتبقي: ${debt.remainingAmount.toFixed(2)} من ${debt.amount.toFixed(2)} ج.م</div>` : ''}
-                </div>
-                <div class="debt-actions">
-                    <button class="debt-detail-btn" onclick="event.stopPropagation(); showDebtDetails(${debt.id})" title="التفاصيل">ℹ️</button>
-                </div>
-            </div>
-        `;
-    });
-    log.innerHTML = html;
-}
-
-// Long press on app title for backup
-function initAppTitleLongPress() {
-    const title = document.getElementById('appTitle');
-    let pressTimer = null;
-    let isLongPress = false;
-    
-    const startPress = (e) => {
-        isLongPress = false;
-        pressTimer = setTimeout(() => {
-            isLongPress = true;
-            openBackupModal();
-            if (navigator.vibrate) navigator.vibrate(50);
-        }, 1500);
-    };
-    
-    const endPress = () => { clearTimeout(pressTimer); };
-    const cancelPress = () => { clearTimeout(pressTimer); };
-    
-    title.addEventListener('touchstart', startPress, { passive: true });
-    title.addEventListener('touchend', endPress);
-    title.addEventListener('touchmove', cancelPress);
-    title.addEventListener('touchcancel', cancelPress);
-    
-    title.addEventListener('mousedown', startPress);
-    title.addEventListener('mouseup', endPress);
-    title.addEventListener('mouseleave', cancelPress);
-    
-    title.addEventListener('click', (e) => {
-        if (isLongPress) {
-            e.preventDefault();
-            e.stopPropagation();
-        }
-    });
-}
-
 document.addEventListener('click', function(e) {
 const correctBtn = e.target.closest('[data-correct-id]');
 if (correctBtn) { setTaskStatus(+correctBtn.dataset.correctId, 'correct', e); return; }
@@ -3209,14 +2641,6 @@ if (checkbox) {
     toggleExpenseSelection(+checkbox.dataset.checkboxId);
     return;
 }
-
-const debtTypeBtn = e.target.closest('[data-type]');
-if (debtTypeBtn) {
-    setDebtType(debtTypeBtn.dataset.type);
-    return;
-}
-
-if (e.target.id === 'addDebtBtn') { addDebt(); return; }
 
 /* ✨ النقر على العملية في وضع التحديد لتحديدها/إلغاء تحديدها */
 if (isSelectionMode) {
@@ -3324,8 +2748,6 @@ updateAllProgressColors();
 initBrainDump();
 setPaymentMethod('كاش');
 setOperationType('صرف');
-setDebtType('owing');
-initAppTitleLongPress();
 });
 document.getElementById('startBtn').addEventListener('click', startTimer);
 document.getElementById('pauseBtn').addEventListener('click', pauseTimer);
@@ -3334,9 +2756,6 @@ document.getElementById('taskInput').addEventListener('keypress', e => { if(e.ke
 document.getElementById('expenseDesc').addEventListener('keypress', e => { if(e.key==='Enter') addExpense(); });
 document.getElementById('expenseAmount').addEventListener('keypress', e => { if(e.key==='Enter') addExpense(); });
 document.getElementById('balanceInput').addEventListener('keypress', e => { if(e.key==='Enter') confirmBalanceChange(); });
-document.getElementById('debtPerson').addEventListener('keypress', e => { if(e.key==='Enter') addDebt(); });
-document.getElementById('debtAmount').addEventListener('keypress', e => { if(e.key==='Enter') addDebt(); });
-document.getElementById('debtNotes').addEventListener('keypress', e => { if(e.key==='Enter') addDebt(); });
 document.querySelectorAll('.mode-btn').forEach(btn => {
 btn.addEventListener('click', function() {
 document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
