@@ -4,40 +4,22 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="برنامج المهام">
-<meta name="theme-color" content="#667eea" id="themeColor">
-<meta name="application-name" content="برنامج المهام اليومية الاحترافي">
-<meta name="description" content="نظم وقتك ومالك وحقق اهدافك">
+<meta name="theme-color" content="#667eea">
 <title>برنامج المهام اليومية الاحترافي</title>
-<link rel="manifest" href="manifest.json">
-<link rel="apple-touch-icon" href="icon.png">
+<link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjoiYnJubmFtZyBhbG1oYXTigqkgYWx5d21pYSIsInNob3J0X25hbWUiOiJhbG1oYXTigqkgYWx5d21pYSIsInN0YXJ0X3VybCI6Ii8iLCJkaXNwbGF5Ijoic3RhbmRhbG9uZSIsImJhY2tncm91bmRfY29sb3IiOiIjNjY3ZWVhIiwidGhlbWVfY29sb3IiOiIjNjY3ZWVhIiwib3JpZW50YXRpb24iOiJwb3J0cmFpdCJ9">
 <style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
-html, body {
-  height: 100%;
-  width: 100%;
-  overflow: hidden;
-}
 body {
-  font-family: 'Segoe UI', 'Tahoma', 'Arial', 'Noto Sans Arabic', sans-serif;
-  background: var(--bg-primary);
-  position: relative;
-  transition: background 0.5s ease;
-  color: var(--text-primary);
-  -webkit-tap-highlight-color: transparent;
-  touch-action: manipulation;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-}
-@media (display-mode: standalone), (display-mode: fullscreen) {
-  body {
-    padding-top: 0 !important;
-  }
-  .container {
-    padding-top: max(10px, env(safe-area-inset-top, 10px)) !important;
-  }
+font-family: 'Segoe UI', 'Tahoma', 'Arial', 'Noto Sans Arabic', sans-serif;
+min-height: 100vh;
+overflow-x: hidden;
+background: var(--bg-primary);
+position: relative;
+transition: background 0.5s ease;
+color: var(--text-primary);
+-webkit-tap-highlight-color: transparent;
+touch-action: manipulation;
+padding-top: env(safe-area-inset-top, 40px);
 }
 :root {
 --bg-gradient-start: #667eea;
@@ -92,6 +74,7 @@ body {
 --total-balance-bg: rgba(102, 126, 234, 0.1);
 --total-balance-border: #667eea;
 }
+
 [data-theme="dark"] {
 --bg-gradient-start: #1a1a2e;
 --bg-gradient-end: #16213e;
@@ -145,6 +128,7 @@ body {
 --total-balance-bg: rgba(136, 146, 255, 0.15);
 --total-balance-border: #8892ff;
 }
+
 [data-theme="sunset"] {
 --bg-gradient-start: #ff6e7f;
 --bg-gradient-end: #bfe9ff;
@@ -176,6 +160,7 @@ body {
 --total-balance-bg: rgba(255, 110, 127, 0.12);
 --total-balance-border: #ff6e7f;
 }
+
 [data-theme="ocean"] {
 --bg-gradient-start: #2193b0;
 --bg-gradient-end: #6dd5ed;
@@ -207,6 +192,7 @@ body {
 --total-balance-bg: rgba(33, 147, 176, 0.12);
 --total-balance-border: #2193b0;
 }
+
 [data-theme="sakura"] {
 --bg-gradient-start: #ff9a9e;
 --bg-gradient-end: #fad0c4;
@@ -238,6 +224,7 @@ body {
 --total-balance-bg: rgba(255, 154, 158, 0.12);
 --total-balance-border: #ff9a9e;
 }
+
 [data-theme="forest"] {
 --bg-gradient-start: #134e5e;
 --bg-gradient-end: #71b280;
@@ -269,6 +256,7 @@ body {
 --total-balance-bg: rgba(19, 78, 94, 0.12);
 --total-balance-border: #134e5e;
 }
+
 [data-theme="barbie"] {
 --bg-gradient-start: #d81b60;
 --bg-gradient-end: #f48fb1;
@@ -322,6 +310,8 @@ body {
 --total-balance-bg: rgba(216, 27, 96, 0.12);
 --total-balance-border: #d81b60;
 }
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
 .bg-animation { position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: 0; overflow: hidden; pointer-events: none; }
 .floating-icon { position: absolute; font-size: 3rem; opacity: 0.1; animation: float 15s infinite ease-in-out; filter: drop-shadow(0 0 10px rgba(255,255,255,0.3)); transition: opacity 0.4s ease; user-select: none; }
 [data-theme="dark"] .floating-icon { opacity: 0.05; }
@@ -776,6 +766,7 @@ flex-shrink: 0;
 .expense-log-amount.add { color: var(--correct-btn-bg); }
 .expense-log-amount.spend { color: var(--wrong-btn-bg); }
 
+/* ✨ أزرار التفاصيل والتسديد ظاهرة دائماً */
 .expense-log-info-btn,
 .settle-btn {
     width: 26px;
@@ -805,6 +796,7 @@ flex-shrink: 0;
 }
 .settle-btn:hover { transform: scale(1.15); box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3); }
 
+/* ✨ العملية المُسددة - خط شطب فقط بدون شارات */
 .expense-log-item.settled {
     opacity: 0.6;
 }
@@ -823,6 +815,7 @@ flex-shrink: 0;
     opacity: 0.5;
 }
 
+/* شارة "مُسددة" فقط في التفاصيل */
 .settled-tag {
     font-size: 0.7rem;
     background: var(--correct-btn-bg);
@@ -1040,6 +1033,10 @@ background: #8892ff;
 color: #ffffff;
 }
 
+/* ================================ */
+/* ✨ الميزات الجديدة - التحديد المتعدد */
+/* ================================ */
+
 .selection-mode-bar {
     background: linear-gradient(135deg, rgba(40, 167, 69, 0.15) 0%, rgba(40, 167, 69, 0.05) 100%);
     border: 2px solid var(--correct-btn-bg);
@@ -1189,47 +1186,6 @@ body.selection-active .expense-checkbox {
         font-size: 0.68rem;
     }
 }
-
-.install-toast {
-    position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: var(--card-bg);
-    padding: 10px 16px;
-    border-radius: 50px;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-    z-index: 9999;
-    display: none;
-    align-items: center;
-    gap: 10px;
-    max-width: 90%;
-    backdrop-filter: blur(10px);
-    border: 2px solid var(--bg-gradient-start);
-    animation: toastIn 0.4s ease;
-}
-.install-toast.show { display: flex; }
-@keyframes toastIn {
-    from { transform: translateX(-50%) translateY(100px); opacity: 0; }
-    to { transform: translateX(-50%) translateY(0); opacity: 1; }
-}
-.install-toast-icon { font-size: 1.2rem; }
-.install-toast-text { font-weight: 700; color: var(--text-primary); font-size: 0.8rem; white-space: nowrap; }
-.install-toast-btn {
-    background: var(--bg-gradient-start);
-    color: white;
-    border: none;
-    padding: 6px 14px;
-    border-radius: 50px;
-    font-weight: 700;
-    cursor: pointer;
-    font-family: inherit;
-    font-size: 0.75rem;
-    white-space: nowrap;
-    transition: all 0.2s ease;
-}
-.install-toast-btn:hover { transform: scale(1.05); }
-.install-toast-btn:active { transform: scale(0.95); }
 </style>
 </head>
 <body>
@@ -1239,7 +1195,7 @@ body.selection-active .expense-checkbox {
 <div class="floating-icon biology-1">🧬</div><div class="floating-icon biology-2">🔬</div>
 <div class="floating-icon arabic-1">📖</div><div class="floating-icon arabic-2">✒️</div>
 <div class="floating-icon english-1">🔤</div><div class="floating-icon english-2">📚</div>
-<div class="floating-icon french-1">🇫</div><div class="floating-icon french-2"></div>
+<div class="floating-icon french-1">🇫</div><div class="floating-icon french-2">🥐</div>
 </div>
 <div class="waves">
 <div class="wave"></div>
@@ -1248,7 +1204,7 @@ body.selection-active .expense-checkbox {
 <div class="container">
 <div class="header">
 <div class="header-title">
-<h1> برنامج المهام اليومية</h1>
+<h1>📋 برنامج المهام اليومية</h1>
 <p>نظّم وقتك ومالك وحقق أهدافك</p>
 </div>
 <div class="header-actions">
@@ -1340,14 +1296,14 @@ Made by <a href="https://wa.me/201102594058" target="_blank">Ahmed Emad Farhoud<
 <button onclick="undoDelete()">↩️ تراجع</button>
 </div>
 <div class="snackbar" id="expenseUndoSnackbar">
-<span>️ تم حذف العملية</span>
+<span>🗑️ تم حذف العملية</span>
 <button onclick="undoExpenseDelete()">↩️ استرجاع</button>
 </div>
 <div class="modal-overlay" id="expensesModal">
 <div class="modal">
 <div class="modal-header">
-<h3> المصروفات</h3>
-<button class="modal-close" onclick="closeExpensesModal()"></button>
+<h3>💰 المصروفات</h3>
+<button class="modal-close" onclick="closeExpensesModal()">✕</button>
 </div>
 
 <div class="selection-mode-bar" id="selectionModeBar">
@@ -1368,11 +1324,11 @@ Made by <a href="https://wa.me/201102594058" target="_blank">Ahmed Emad Farhoud<
             <span>تحديد الكل</span>
         </button>
         <button class="selection-btn deselect-all" onclick="deselectAllExpenses()">
-            <span>️</span>
+            <span>◻️</span>
             <span>إلغاء التحديد</span>
         </button>
         <button class="selection-btn delete-selected" onclick="deleteSelectedExpenses()">
-            <span>️</span>
+            <span>🗑️</span>
             <span>حذف المحدد</span>
         </button>
     </div>
@@ -1401,18 +1357,18 @@ Made by <a href="https://wa.me/201102594058" target="_blank">Ahmed Emad Farhoud<
 </div>
 <div class="expense-form-wrapper">
 <div class="form-title">
-<span></span>
+<span>💸</span>
 <span>تسجيل عملية جديدة</span>
 </div>
 <div class="expense-form">
 <input type="text" class="expense-input full-width" id="expenseDesc" placeholder="وصف العملية">
 <input type="number" class="expense-input full-width" id="expenseAmount" placeholder="المبلغ">
 <div class="op-toggle full-width">
-<button class="op-btn active spend-active" id="btnSpend" data-op="صرف">💸 صرف</button>
-<button class="op-btn" id="btnAdd" data-op="إضافة">➕ إضافة</button>
+<button class="op-btn active spend-active" id="btnSpend" data-op="صرف"> صرف</button>
+<button class="op-btn" id="btnAdd" data-op="إضافة"> إضافة</button>
 </div>
 <div class="payment-toggle full-width">
-<button class="payment-btn active cash-active" id="btnCash" data-pay="كاش"> كاش</button>
+<button class="payment-btn active cash-active" id="btnCash" data-pay="كاش">💵 كاش</button>
 <button class="payment-btn" id="btnElectronic" data-pay="إلكتروني">💳 إلكتروني</button>
 </div>
 <button class="btn btn-primary full-width" id="addExpenseBtn" style="padding: 9px;">➕ تسجيل العملية</button>
@@ -1450,7 +1406,7 @@ Made by <a href="https://wa.me/201102594058" target="_blank">Ahmed Emad Farhoud<
 </div>
 <div class="pin-modal" id="pinModal">
 <div class="pin-modal-content">
-<div class="pin-modal-icon"></div>
+<div class="pin-modal-icon">🔐</div>
 <h3 id="pinModalTitle">أدخل الرقم السري</h3>
 <p id="pinModalDesc">للوصول إلى قسم المصروفات</p>
 <input type="password" class="pin-input" id="pinInput" maxlength="6" placeholder="••••" inputmode="numeric">
@@ -1481,97 +1437,41 @@ Made by <a href="https://wa.me/201102594058" target="_blank">Ahmed Emad Farhoud<
 </div>
 <button class="clear-all-history" id="clearAllHistoryBtn" onclick="clearAllHistory()" style="display:none;">🗑️ حذف كل السجل</button>
 </div>
-<button class="export-btn" id="exportBtn" onclick="exportReport()"> نسخ التقرير وبدء يوم جديد</button>
+<button class="export-btn" id="exportBtn" onclick="exportReport()">📋 نسخ التقرير وبدء يوم جديد</button>
 <div class="report-date" id="reportDate"></div>
 </div>
 </div>
-
-<div class="install-toast" id="installToast">
-    <div class="install-toast-icon">📱</div>
-    <div class="install-toast-text">ثبّت التطبيق</div>
-    <button class="install-toast-btn" onclick="installPWA()">تثبيت</button>
-</div>
-
 <script>
-// تسجيل Service Worker
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('sw.js')
-    .then(reg => console.log('✅ SW registered:', reg.scope))
-    .catch(err => console.log('❌ SW failed:', err));
-}
-
-// PWA Install
-let deferredPrompt;
-const installToast = document.getElementById('installToast');
-
-window.addEventListener('beforeinstallprompt', e => {
-  e.preventDefault();
-  deferredPrompt = e;
-  setTimeout(() => {
-    if (localStorage.getItem('installPromptDismissed') !== 'true') {
-      installToast.classList.add('show');
-      setTimeout(() => {
-        if (installToast.classList.contains('show')) {
-          installToast.classList.remove('show');
-        }
-      }, 8000);
-    }
-  }, 1500);
+const swCode = `
+const CACHE_NAME = 'tasks-app-v1';
+const urlsToCache = ['/'];
+self.addEventListener('install', event => {
+event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(urlsToCache)));
+self.skipWaiting();
 });
-
-window.addEventListener('appinstalled', () => {
-  installToast.classList.remove('show');
-  localStorage.setItem('appInstalled', 'true');
+self.addEventListener('fetch', event => {
+event.respondWith(caches.match(event.request).then(response => {
+if (response) return response;
+return fetch(event.request).catch(() => caches.match('/'));
+}));
 });
-
-function installPWA() {
-  if (deferredPrompt) {
-    deferredPrompt.prompt();
-    deferredPrompt.userChoice.then(choiceResult => {
-      if (choiceResult.outcome === 'accepted') {
-        console.log('✅ User accepted');
-      }
-      deferredPrompt = null;
-      installToast.classList.remove('show');
-    });
-  } else {
-    alert(' لتثبيت التطبيق:\n\nعلى Android Chrome:\n1. اضغط على النقاط الثلاث ⋮\n2. اختر "تثبيت التطبيق"\n\nعلى iPhone Safari:\n1. اضغط على زر المشاركة\n2. اختر "إضافة إلى الشاشة الرئيسية"');
-  }
-}
-
-function closeInstallToast() {
-  installToast.classList.remove('show');
-  localStorage.setItem('installPromptDismissed', 'true');
-}
-
-// تحديث لون شريط الحالة
-const themeColorMeta = document.getElementById('themeColor');
-const themeColors = {
-  '': '#667eea',
-  'light': '#667eea',
-  'dark': '#1a1a2e',
-  'sunset': '#ff9a56',
-  'ocean': '#2193b0',
-  'sakura': '#ff9a9e',
-  'forest': '#134e5e',
-  'barbie': '#d81b60'
-};
-
-function updateThemeColor() {
-  const currentTheme = document.documentElement.getAttribute('data-theme') || '';
-  const color = themeColors[currentTheme] || themeColors[''];
-  if (themeColorMeta) themeColorMeta.setAttribute('content', color);
-}
-
-const htmlObserver = new MutationObserver((mutations) => {
-  mutations.forEach((mutation) => {
-    if (mutation.type === 'attributes' && mutation.attributeName === 'data-theme') {
-      updateThemeColor();
-    }
-  });
+self.addEventListener('activate', event => {
+const cacheWhitelist = [CACHE_NAME];
+event.waitUntil(caches.keys().then(cacheNames => {
+return Promise.all(cacheNames.map(cacheName => {
+if (cacheWhitelist.indexOf(cacheName) === -1) return caches.delete(cacheName);
+}));
+}));
+self.clients.claim();
 });
-htmlObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
-
+`;
+const blob = new Blob([swCode], { type: 'application/javascript' });
+const swUrl = URL.createObjectURL(blob);
+window.addEventListener('load', () => {
+navigator.serviceWorker.register(swUrl).then(reg => console.log('✅ Service Worker registered')).catch(err => console.log('❌ Service Worker registration failed'));
+});
+}
 const themeOrder = ['light', 'dark', 'sunset', 'ocean', 'sakura', 'forest', 'barbie'];
 const themeIcons = {
 light: '☀️', dark: '🌙', sunset: '🌅',
@@ -1592,7 +1492,6 @@ localStorage.setItem('theme', themeValue);
 document.getElementById('themeIcon').textContent = themeIcons[themeValue] || '🎨';
 document.getElementById('themeText').textContent = themeNames[themeValue] || 'المظهر';
 updateAllProgressColors();
-updateThemeColor();
 }
 function cycleTheme() {
 const current = localStorage.getItem('theme') || 'light';
@@ -1863,7 +1762,7 @@ document.getElementById('reportDetailContent').innerHTML = `
 </div>
 <div class="detail-section"><h5>🔄 روتينك - الي اتعمل (${r.routineCompleted})</h5><ul class="detail-task-list">${rComp}</ul></div>
 <div class="detail-section"><h5>🔄 روتينك - الي متعملش (${r.routineIncomplete})</h5><ul class="detail-task-list">${rInc}</ul></div>
-<div class="detail-section"><h5> مهامك - الي اتعمل (${r.taskCompleted})</h5><ul class="detail-task-list">${tComp}</ul></div>
+<div class="detail-section"><h5>📋 مهامك - الي اتعمل (${r.taskCompleted})</h5><ul class="detail-task-list">${tComp}</ul></div>
 <div class="detail-section"><h5>📋 مهامك - الي متعملش (${r.taskIncomplete})</h5><ul class="detail-task-list">${tInc}</ul></div>
 <button class="detail-back-btn" onclick="closeReportDetail()">↩️ رجوع</button>
 `;
@@ -1931,7 +1830,7 @@ const combinedHTML = `
 <div class="combined-bar-track"><div class="combined-bar-fill routine" style="width: ${rp}%; background-color: var(--routine-border);"></div></div>
 </div>
 <div class="combined-bar-item">
-<div class="combined-bar-label"><span> المهام</span><span style="color: var(--task-border);">${gp}%</span></div>
+<div class="combined-bar-label"><span>📋 المهام</span><span style="color: var(--task-border);">${gp}%</span></div>
 <div class="combined-bar-track"><div class="combined-bar-fill tasks" style="width: ${gp}%; background-color: var(--task-border);"></div></div>
 </div>
 </div>
@@ -1940,7 +1839,7 @@ const combinedHTML = `
 `;
 document.getElementById('reportCombined').innerHTML = combinedHTML;
 const imp = [];
-if (rn > 0) imp.push(` لديك ${rn} عنصر روتين لم تُنجز بعد`);
+if (rn > 0) imp.push(`📌 لديك ${rn} عنصر روتين لم تُنجز بعد`);
 if (gn > 0) imp.push(`📌 لديك ${gn} مهمة يومية لم تُنجز`);
 if (tt > 0 && simpleAvg < 50) imp.push('💡 ابدأ بمهام صغيرة لبناء الزخم');
 if (imp.length === 0 && tt > 0) imp.push('✨ حافظ على هذا المستوى الرائع!');
@@ -1984,11 +1883,11 @@ const rDoneList = rt.filter(t => t.status === 'correct').map(t => `  ✅ ${t.tex
 const rUndoneList = rt.filter(t => t.status !== 'correct').map(t => `  ⏳ ${t.text}`).join('\n');
 const tDoneList = rg.filter(t => t.status === 'correct').map(t => `  ✅ ${t.text}`).join('\n');
 const tUndoneList = rg.filter(t => t.status !== 'correct').map(t => `  ⏳ ${t.text}`).join('\n');
-const text = `📊 تقرير المهام اليومية\n📅 التاريخ: ${nd}\n\n═══════════════════════\n🔄 الروتين اليومي (${rp}%)\n═══════════════════════\n✅ الي اتعمل:\n${rDoneList || '  لا يوجد'}\n\n⏳ الي متعملش:\n${rUndoneList || '  لا يوجد'}\n\n═══════════════════════\n المهام اليومية (${gp}%)\n═══════════════════════\n✅ الي اتعمل:\n${tDoneList || '  لا يوجد'}\n\n⏳ الي متعملش:\n${tUndoneList || '  لا يوجد'}\n\n═══════════════════════\n الأداء الكلي\n═══════════════════════\n🔵 المتوسط الحسابي: ${simpleAvg}%\n⚡ المتوسط المرجح (روتين 60% + مهام 40%): ${tp}%\n🏆 التقييم: ${gi.grade}\n\n💡 نصائح:\n${gi.tips.map(t => `  ${t}`).join('\n')}\n\n═══════════════════════\n✅ تم حفظ هذا التقرير تلقائياً\n✅ الروتين ثابت (بيبدأ يوم جديد من غير حذف)\n✅ المهام الصحيحة اتحذفت، والباقي بصفحة نظيفة\n\nMade by Ahmed Emad Farhoud 💻✨`;
+const text = `📊 تقرير المهام اليومية\n📅 التاريخ: ${nd}\n\n═══════════════════════\n🔄 الروتين اليومي (${rp}%)\n═══════════════════════\n✅ الي اتعمل:\n${rDoneList || '  لا يوجد'}\n\n⏳ الي متعملش:\n${rUndoneList || '  لا يوجد'}\n\n═══════════════════════\n📋 المهام اليومية (${gp}%)\n═══════════════════════\n✅ الي اتعمل:\n${tDoneList || '  لا يوجد'}\n\n⏳ الي متعملش:\n${tUndoneList || '  لا يوجد'}\n\n═══════════════════════\n📊 الأداء الكلي\n═══════════════════════\n🔵 المتوسط الحسابي: ${simpleAvg}%\n⚡ المتوسط المرجح (روتين 60% + مهام 40%): ${tp}%\n🏆 التقييم: ${gi.grade}\n\n💡 نصائح:\n${gi.tips.map(t => `  ${t}`).join('\n')}\n\n═══════════════════════\n✅ تم حفظ هذا التقرير تلقائياً\n✅ الروتين ثابت (بيبدأ يوم جديد من غير حذف)\n✅ المهام الصحيحة اتحذفت، والباقي بصفحة نظيفة\n\nMade by Ahmed Emad Farhoud 💻✨`;
 const doReset = () => {
 resetDayAfterReport();
 hideReport();
-alert('✅ تم نسخ التقرير بنجاح!\n✅ تم حفظ التقرير في السجل 📚\n✅ الروتين ثابت ومبدأش من جديد \n✅ المهام الصحيحة اتحذفت، والباقي بصفحة نظيفة ✨');
+alert('✅ تم نسخ التقرير بنجاح!\n✅ تم حفظ التقرير في السجل 📚\n✅ الروتين ثابت ومبدأش من جديد 🔄\n✅ المهام الصحيحة اتحذفت، والباقي بصفحة نظيفة ✨');
 };
 navigator.clipboard.writeText(text).then(doReset).catch(() => {
 const ta = document.createElement('textarea');
@@ -2033,7 +1932,7 @@ return `<li class="task-item ${task.status==='correct'?'correct':''} ${task.stat
 <div class="task-actions">
 <button class="action-btn correct-btn" data-correct-id="${task.id}" title="صحيح">✓</button>
 <button class="action-btn wrong-btn" data-wrong-id="${task.id}" title="خطأ">✗</button>
-<button class="action-btn delete-btn" data-delete-id="${task.id}" title="حذف">️</button>
+<button class="action-btn delete-btn" data-delete-id="${task.id}" title="حذف">🗑️</button>
 </div>
 </li>`;
 }).join('');
@@ -2144,7 +2043,7 @@ const input = document.getElementById('pinInput');
 const pin = input.value.trim();
 const errorEl = document.getElementById('pinError');
 if (pin.length < 4) {
-errorEl.textContent = '️ الرقم السري يجب أن يكون 4 أرقام على الأقل';
+errorEl.textContent = '⚠️ الرقم السري يجب أن يكون 4 أرقام على الأقل';
 return;
 }
 if (pinAction === 'create') {
@@ -2327,17 +2226,17 @@ content.innerHTML = `
 <h3>📋 تفاصيل العملية</h3>
 <table class="details-table">
 <tr class="desc-row">
-<td class="detail-icon">${isAdd ? '' : '💸'}</td>
+<td class="detail-icon">${isAdd ? '➕' : '💸'}</td>
 <td class="detail-label">الوصف</td>
 <td class="detail-value desc-value" colspan="1">${op.desc}</td>
 </tr>
 <tr>
-<td class="detail-icon">${isAdd ? '' : '💔'}</td>
+<td class="detail-icon">${isAdd ? '💚' : '💔'}</td>
 <td class="detail-label">النوع</td>
-<td class="detail-value ${isAdd ? 'type-add' : 'type-spend'}">${isAdd ? ' إضافة' : '💸 صرف'}</td>
+<td class="detail-value ${isAdd ? 'type-add' : 'type-spend'}">${isAdd ? '➕ إضافة' : '💸 صرف'}</td>
 </tr>
 <tr>
-<td class="detail-icon">${isCash ? '💵' : ''}</td>
+<td class="detail-icon">${isCash ? '💵' : '💳'}</td>
 <td class="detail-label">طريقة الدفع</td>
 <td class="detail-value ${isCash ? 'cash-val' : 'electronic-val'}">${isCash ? '💵 كاش' : '💳 إلكتروني'}</td>
 </tr>
@@ -2352,7 +2251,7 @@ content.innerHTML = `
 <td class="detail-value">${op.time}</td>
 </tr>
 <tr>
-<td class="detail-icon"></td>
+<td class="detail-icon">📅</td>
 <td class="detail-label">التاريخ</td>
 <td class="detail-value">${op.date}</td>
 </tr>
@@ -2363,7 +2262,7 @@ ${op.settled ? `
 <td class="detail-value type-add"><span class="settled-tag">✅ مُسددة</span></td>
 </tr>
 <tr>
-<td class="detail-icon"></td>
+<td class="detail-icon">📅</td>
 <td class="detail-label">تاريخ التسديد</td>
 <td class="detail-value">${settledDateStr || 'غير محدد'}</td>
 </tr>
@@ -2634,7 +2533,7 @@ let html = '';
 sorted.forEach((op) => {
 const isAdd = op.type === 'إضافة';
 const isCash = op.paymentMethod === 'كاش';
-const icon = isAdd ? (isCash ? '' : '💳') : (isCash ? '💸' : '💳');
+const icon = isAdd ? (isCash ? '💵' : '💳') : (isCash ? '💸' : '💳');
 const isSelected = selectedExpenseIds.includes(op.id);
 const isSettled = op.settled === true;
 
@@ -2743,6 +2642,7 @@ if (checkbox) {
     return;
 }
 
+/* ✨ النقر على العملية في وضع التحديد لتحديدها/إلغاء تحديدها */
 if (isSelectionMode) {
     const expenseItem = e.target.closest('.expense-log-item');
     if (expenseItem && !e.target.closest('.expense-log-info-btn') && !e.target.closest('.settle-btn') && !e.target.closest('.expense-checkbox')) {
@@ -2754,10 +2654,12 @@ if (isSelectionMode) {
     }
 }
 
+/* ✨ النقر على عملية خارج وضع التحديد - إذا كانت محددة مسبقاً، يمكن الرجوع لها */
 const expenseItem = e.target.closest('.expense-log-item');
 if (expenseItem && !e.target.closest('.expense-log-info-btn') && !e.target.closest('.settle-btn') && !e.target.closest('.expense-checkbox') && !isSelectionMode) {
     const opId = parseInt(expenseItem.dataset.opId);
     if (opId && selectedExpenseIds.includes(opId)) {
+        // إذا كانت العملية محددة مسبقاً، الدخول في وضع التحديد مع الحفاظ على التحديد السابق
         isSelectionMode = true;
         const bar = document.getElementById('selectionModeBar');
         bar.classList.add('show');
@@ -2805,214 +2707,36 @@ function pauseTimer() { clearInterval(timerInterval); isRunning = false; documen
 function resetTimer() { clearInterval(timerInterval); isRunning = false; timeLeft = modes[currentMode]; updateTimerDisplay(); document.getElementById('startBtn').textContent = '▶️ ابدأ'; }
 function newQuote() { const q = quotes[Math.floor(Math.random()*quotes.length)]; document.getElementById('quoteText').textContent = q.text; document.getElementById('quoteAuthor').textContent = `- ${q.author}`; }
 const quotes = [
-{text:"النجاح ليس صدفة، بل هو نتيجة المثابرة والتفاني",author:"مثل عربي"},
-{text:"من جد وجد ومن زرع حصد",author:"حكمة عربية"},
-{text:"العلم نور والجهل ظلام",author:"مثل عربي"},
-{text:"التعليم هو السلاح الأقوى لتغيير العالم",author:"نيلسون مانديلا"},
-{text:"لا تؤجل عمل اليوم إلى الغد",author:"مثل عربي"},
-{text:"الصبر مفتاح الفرج",author:"مثل عربي"},
-{text:"من صبر ظفر",author:"مثل عربي"},
-{text:"الوقت كالسيف إن لم تقطعه قطعك",author:"مثل عربي"},
-{text:"في الاتحاد قوة",author:"مثل عربي"},
-{text:"من طلب العلا سهر الليالي",author:"أبو الطيب المتنبي"},
-{text:"لا تحقرن من المعروف شيئاً",author:"حديث شريف"},
-{text:"اليد العليا خير من اليد السفلى",author:"حديث شريف"},
-{text:"النجاح ليس نهاية المطاف، والفشل ليس قاتلاً",author:"حكمة عربية"},
-{text:"الإصرار هو مفتاح تحقيق الأحلام",author:"حكمة عربية"},
-{text:"النجاح يبدأ بخطوة صغيرة",author:"حكمة عربية"},
-{text:"لا تنتظر الفرصة، بل اصنعها",author:"حكمة عربية"},
-{text:"الإيمان بقدرتك هو نصف الطريق للنجاح",author:"حكمة عربية"},
-{text:"كل تحدٍ هو فرصة للنمو",author:"حكمة عربية"},
-{text:"من عرف نفسه فقد عرف ربه",author:"حكمة عربية"},
-{text:"الهمة العالية سر النجاح",author:"حكمة عربية"},
-{text:"الادخار ليس حرماناً، بل هو شراء لحرية مستقبلك",author:"حكمة مالية"},
-{text:"لا تدخر ما يتبقى بعد الإنفاق، بل أنفق ما يتبقى بعد الادخار",author:"وارن بافيت"},
-{text:"الميزانية هي إخبار أموالك إلى أين تذهب بدلاً من التساؤل أين ذهبت",author:"حكمة مالية"},
-{text:"الثروة ليست في كثرة المال، بل في قلة الاحتياج",author:"حكمة عربية"},
-{text:"من يزرع المال يحصد الحرية",author:"حكمة مالية"},
-{text:"كن سيد أموالك ولا تكن عبداً لها",author:"حكمة مالية"},
-{text:"ثق بنفسك، فأنت أقوى مما تتخيل",author:"حكمة معاصرة"},
-{text:"النجاح هو رحلة، وليس وجهة",author:"حكمة معاصرة"},
-{text:"لا يوجد فشل حقيقي إلا في التوقف عن المحاولة",author:"حكمة معاصرة"},
-{text:"كن التغيير الذي تريد أن تراه في العالم",author:"مهاتما غاندي"},
-{text:"العلم في الصغر كالنقش في الحجر",author:"حكمة عربية"},
-{text:"اطلبوا العلم ولو في الصين",author:"حكمة صينية"},
-{text:"خير جليس في الزمان كتاب",author:"المتنبي"},
-{text:"العقل السليم في الجسم السليم",author:"حكمة لاتينية"},
-{text:"من سار على الدرب وصل",author:"مثل عربي"},
-{text:"الجار قبل الدار",author:"مثل عربي"},
-{text:"رب أخ لك لم تلده أمك",author:"مثل عربي"},
-{text:"الصديق وقت الضيق",author:"مثل عربي"},
-{text:"إذا هبّت رياحك فاغتنمها",author:"حكمة عربية"},
-{text:"لكل داء دواء يُستطب به",author:"المتنبي"},
-{text:"وإذا كانت النفوس كباراً تعبت في مرادها الأجسام",author:"المتنبي"},
-{text:"على قدر أهل العزم تأتي العزائم",author:"المتنبي"},
-{text:"تعلّم فليس المرء يولد عالماً",author:"الإمام الشافعي"},
-{text:"من طلب العُلا سهر الليالي",author:"المتنبي"},
-{text:"الأمل هو الحلم الذي يستيقظ",author:"حكمة"},
-{text:"الحياة قصيرة لكن الأعمال الصالحة تطيل العمر",author:"حكمة"},
-{text:"لا يحزن إن الله معنا",author:"القرآن الكريم"},
-{text:"إن مع العسر يسراً",author:"القرآن الكريم"},
-{text:"واستعينوا بالصبر والصلاة",author:"القرآن الكريم"},
-{text:"وقل ربي زدني علماً",author:"القرآن الكريم"},
-{text:"اقرأ باسم ربك الذي خلق",author:"القرآن الكريم"},
-{text:"القراءة غذاء الروح",author:"حكمة"},
-{text:"الكتاب خير جليس",author:"حكمة"},
-{text:"منقرأ كمن عاش ألف حياة",author:"حكمة"},
-{text:"القلم أقوى من السيف",author:"حكمة"},
-{text:"الكتابة هي رسم الفكر",author:"حكمة"},
-{text:"الفكر قبل العمل",author:"حكمة"},
-{text:"التخطيط نصف النجاح",author:"حكمة"},
-{text:"الوقت هو الحياة",author:"حكمة"},
-{text:"لا تضيع وقتك في ما لا ينفع",author:"حكمة"},
-{text:"استثمر وقتك wisely",author:"حكمة"},
-{text:"كل دقيقة لها قيمتها",author:"حكمة"},
-{text:"الوقت لا يعود",author:"حكمة"},
-{text:"اغتنم خمساً قبل خمس",author:"حديث شريف"},
-{text:"شبابك قبل هرمك",author:"حديث شريف"},
-{text:"صحتك قبل سقمك",author:"حديث شريف"},
-{text:"غناك قبل فقرك",author:"حديث شريف"},
-{text:"فراغك قبل شغلك",author:"حديث شريف"},
-{text:"حياتك قبل موتك",author:"حديث شريف"},
-{text:"العمل عبادة",author:"حكمة إسلامية"},
-{text:"يد العليا خير من اليد السفلى",author:"حديث شريف"},
-{text:"المؤمن القوي خير من المؤمن الضعيف",author:"حديث شريف"},
-{text:"ما نقص مال من صدقة",author:"حديث شريف"},
-{text:"تبسمك في وجه أخيك صدقة",author:"حديث شريف"},
-{text:"خيركم من تعلم العلم وعلمه",author:"حديث شريف"},
-{text:"اطلبوا العلم من المهد إلى اللحد",author:"حكمة"},
-{text:"العلم يرفع بيتاً لا عماد له",author:"حكمة"},
-{text:"بالعلم تُبنى الأمم",author:"حكمة"},
-{text:"العلم نور",author:"حكمة"},
-{text:"من سلك طريقاً يلتمس فيه علماً سهّل الله له طريقاً إلى الجنة",author:"حديث شريف"},
-{text:"إنما الأعمال بالنيات",author:"حديث شريف"},
-{text:"من حسن إسلام المرء تركه ما لا يعنيه",author:"حديث شريف"},
-{text:"لا ضرر ولا ضرار",author:"حديث شريف"},
-{text:"المسلم من سلم المسلمون من لسانه ويده",author:"حديث شريف"},
-{text:"الدين النصيحة",author:"حديث شريف"},
-{text:"اتق الله حيثما كنت",author:"حديث شريف"},
-{text:"اتبع السيئة الحسنة تمحها",author:"حديث شريف"},
-{text:"خالق الناس بخلق حسن",author:"حديث شريف"},
-{text:"بر الوالدين من أعظم الطاعات",author:"حكمة إسلامية"},
-{text:"الجنة تحت أقدام الأمهات",author:"حديث شريف"},
-{text:"من رضي بما قسم الله له أغناه الله",author:"حكمة"},
-{text:"القناعة كنز لا يفنى",author:"حكمة"},
-{text:"الرضا بما قسم الله راحة البال",author:"حكمة"},
-{text:"من توكل على الله كفاه",author:"حكمة"},
-{text:"الصبر على البلاء أجر عظيم",author:"حكمة"},
-{text:"بعد العسر يسر",author:"حكمة"},
-{text:"كل شيء بقدر",author:"حكمة"},
-{text:"ما أصابك لم يكن ليخطئك",author:"حكمة"},
-{text:"الحمد لله على كل حال",author:"حكمة"},
-{text:"سبحان الله وبحمده",author:"ذكر"},
-{text:"لا إله إلا الله",author:"ذكر"},
-{text:"الله أكبر",author:"ذكر"},
-{text:"استغفر الله",author:"ذكر"},
-{text:"سبحان الله وبحمده سبحان الله العظيم",author:"ذكر"},
-{text:"لا حول ولا قوة إلا بالله",author:"ذكر"},
-{text:"حسبي الله ونعم الوكيل",author:"ذكر"},
-{text:"اللهم صل على محمد",author:"صلاة على النبي"},
-{text:"الأمل لا يموت",author:"حكمة"},
-{text:"كل يوم هو فرصة جديدة",author:"حكمة"},
-{text:"ابدأ من حيث أنت",author:"حكمة"},
-{text:"لا تقارن نفسك بالآخرين",author:"حكمة"},
-{text:"كن أفضل نسخة من نفسك",author:"حكمة"},
-{text:"النجاح قرار",author:"حكمة"},
-{text:"الفشل بداية النجاح",author:"حكمة"},
-{text:"لا تستسلم أبداً",author:"حكمة"},
-{text:"الإرادة تصنع المعجزات",author:"حكمة"},
-{text:"الحلم يتحقق بالعمل",author:"حكمة"},
-{text:"كن إيجابياً دائماً",author:"حكمة"},
-{text:"الحياة جميلة فاستمتع بها",author:"حكمة"},
-{text:"ابتسم فالغد أجمل",author:"حكمة"},
-{text:"الصحة تاج على رؤوس الأصحاء",author:"حكمة"},
-{text:"العافية نعمة عظيمة",author:"حكمة"},
-{text:"احمد الله على كل نعمة",author:"حكمة"},
-{text:"الامتنان يفتح أبواب الخير",author:"حكمة"},
-{text:"كن ممتناً لما لديك",author:"حكمة"},
-{text:"الشكر يزيد النعم",author:"حكمة"},
-{text:"الصدق منجاة",author:"حكمة"},
-{text:"الأمانة صفة المؤمن",author:"حكمة"},
-{text:"الوفاء بالعهد",author:"حكمة"},
-{text:"العدل أساس الملك",author:"حكمة"},
-{text:"الإحسان يرفع صاحبه",author:"حكمة"},
-{text:"التواضع يرفع المرء",author:"حكمة"},
-{text:"الحلم سيد الأخلاق",author:"حكمة"},
-{text:"الكرم من شيم الكرام",author:"حكمة"},
-{text:"الشجاعة ليست غياب الخوف",author:"حكمة"},
-{text:"الصبر مفتاح الفرج",author:"حكمة"},
-{text:"التسامح شجاعة",author:"حكمة"},
-{text:"الرحمة سمة الإنسانية",author:"حكمة"},
-{text:"المحبة تجمع القلوب",author:"حكمة"},
-{text:"الأخوة نعمة",author:"حكمة"},
-{text:"الصداقة كنز",author:"حكمة"},
-{text:"الأسرة هي الأساس",author:"حكمة"},
-{text:"البيت السعيد يبدأ بك",author:"حكمة"},
-{text:"الزوجة الصالحة كنز",author:"حكمة"},
-{text:"البركة في البكور",author:"حكمة"},
-{text:"بكر في طلب الرزق",author:"حكمة"},
-{text:"التوكل على الله",author:"حكمة"},
-{text:"الأخذ بالأسباب",author:"حكمة"},
-{text:"الاجتهاد طريق النجاح",author:"حكمة"},
-{text:"الاستمرارية سر الإنجاز",author:"حكمة"},
-{text:"النظام نصف الغنى",author:"حكمة"},
-{text:"التنظيم يوفر الوقت",author:"حكمة"},
-{text:"خطط ليومك مسبقاً",author:"حكمة"},
-{text:"الأولويات أولاً",author:"حكمة"},
-{text:"ركز على ما يهم",author:"حكمة"},
-{text:"تخلص من المشتتات",author:"حكمة"},
-{text:"الانضباط الذاتي قوة",author:"حكمة"},
-{text:"التطوير المستمر",author:"حكمة"},
-{text:"تعلم شيئاً جديداً كل يوم",author:"حكمة"},
-{text:"القراءة تصنع الفرق",author:"حكمة"},
-{text:"المعرفة قوة",author:"حكمة"},
-{text:"التفكير الإيجابي يغير الحياة",author:"حكمة"},
-{text:"كن ممتناً كل يوم",author:"حكمة"},
-{text:"السعادة اختيار",author:"حكمة"},
-{text:"اختر السعادة دائماً",author:"حكمة"},
-{text:"الحياة قصيرة فاستغلها",author:"حكمة"},
-{text:"لا تؤجل عمل اليوم إلى الغد",author:"حكمة"},
-{text:"ابدأ الآن ولا تنتظر",author:"حكمة"},
-{text:"كل خطوة تقربك من هدفك",author:"حكمة"},
-{text:"لا تخف من الفشل",author:"حكمة"},
-{text:"الفشل درس وليس نهاية",author:"حكمة"},
-{text:"قم بعد كل سقوط",author:"حكمة"},
-{text:"الإصرار يصنع الفرق",author:"حكمة"},
-{text:"لا شيء مستحيل مع الإرادة",author:"حكمة"},
-{text:"أنت أقوى مما تتخيل",author:"حكمة"},
-{text:"ثق في قدراتك",author:"حكمة"},
-{text:"أنت تستحق الأفضل",author:"حكمة"},
-{text:"كن فخوراً بنفسك",author:"حكمة"},
-{text:"احتفل بإنجازاتك الصغيرة",author:"حكمة"},
-{text:"كل تقدم مهما كان صغيراً هو تقدم",author:"حكمة"},
-{text:"لا تقارن بدايتك بموسم حصاد الآخرين",author:"حكمة"},
-{text:"لكل إنسان طريقه الخاص",author:"حكمة"},
-{text:"امشِ بوتيرتك الخاصة",author:"حكمة"},
-{text:"الصبر على النجاح طويل",author:"حكمة"},
-{text:"النجاح يحتاج وقتاً",author:"حكمة"},
-{text:"لا تستعجل النتائج",author:"حكمة"},
-{text:"الثمار تأتي في وقتها",author:"حكمة"},
-{text:"ازرع اليوم لتحصد غداً",author:"حكمة"},
-{text:"العمل اليوم راحة الغد",author:"حكمة"},
-{text:"التضحية اليوم نجاح الغد",author:"حكمة"},
-{text:"كل تعب له ثمرته",author:"حكمة"},
-{text:"بعد التعب راحة",author:"حكمة"},
-{text:"إن الله لا يضيع أجر من أحسن عملاً",author:"القرآن الكريم"},
-{text:"والعصر إن الإنسان لفي خسر",author:"القرآن الكريم"},
-{text:"إلا الذين آمنوا وعملوا الصالحات",author:"القرآن الكريم"},
-{text:"وتواصوا بالحق وتواصوا بالصبر",author:"القرآن الكريم"},
-{text:"وقل اعملوا فسيرى الله عملكم",author:"القرآن الكريم"},
-{text:"إن الله مع الذين اتقوا والذين هم محسنون",author:"القرآن الكريم"},
-{text:"ومن يتق الله يجعل له مخرجاً",author:"القرآن الكريم"},
-{text:"ويرزقه من حيث لا يحتسب",author:"القرآن الكريم"},
-{text:"ومن يتوكل على الله فهو حسبه",author:"القرآن الكريم"},
-{text:"إن الله بالغ أمره",author:"القرآن الكريم"},
-{text:"قد جعل الله لكل شيء قدراً",author:"القرآن الكريم"},
-{text:"ولنبلونكم بشيء من الخوف والجوع",author:"القرآن الكريم"},
-{text:"وبشر الصابرين",author:"القرآن الكريم"},
-{text:"الذين إذا أصابتهم مصيبة قالوا إنا لله وإنا إليه راجعون",author:"القرآن الكريم"},
-{text:"أولئك عليهم صلوات من ربهم ورحمة",author:"القرآن الكريم"},
-{text:"وأولئك هم المهتدون",author:"القرآن الكريم"}
+{ text: "النجاح ليس صدفة، بل هو نتيجة المثابرة والتفاني", author: "مثل عربي" },
+{ text: "من جد وجد ومن زرع حصد", author: "حكمة عربية" },
+{ text: "العلم نور والجهل ظلام", author: "مثل عربي" },
+{ text: "التعليم هو السلاح الأقوى لتغيير العالم", author: "نيلسون مانديلا" },
+{ text: "لا تؤجل عمل اليوم إلى الغد", author: "مثل عربي" },
+{ text: "الصبر مفتاح الفرج", author: "مثل عربي" },
+{ text: "من صبر ظفر", author: "مثل عربي" },
+{ text: "الوقت كالسيف إن لم تقطعه قطعك", author: "مثل عربي" },
+{ text: "في الاتحاد قوة", author: "مثل عربي" },
+{ text: "من طلب العلا سهر الليالي", author: "أبو الطيب المتنبي" },
+{ text: "لا تحقرن من المعروف شيئاً", author: "حديث شريف" },
+{ text: "اليد العليا خير من اليد السفلى", author: "حديث شريف" },
+{ text: "النجاح ليس نهاية المطاف، والفشل ليس قاتلاً", author: "حكمة عربية" },
+{ text: "الإصرار هو مفتاح تحقيق الأحلام", author: "حكمة عربية" },
+{ text: "النجاح يبدأ بخطوة صغيرة", author: "حكمة عربية" },
+{ text: "لا تنتظر الفرصة، بل اصنعها", author: "حكمة عربية" },
+{ text: "الإيمان بقدرتك هو نصف الطريق للنجاح", author: "حكمة عربية" },
+{ text: "كل تحدٍ هو فرصة للنمو", author: "حكمة عربية" },
+{ text: "من عرف نفسه فقد عرف ربه", author: "حكمة عربية" },
+{ text: "الهمة العالية سر النجاح", author: "حكمة عربية" },
+{ text: "الادخار ليس حرماناً، بل هو شراء لحرية مستقبلك", author: "حكمة مالية" },
+{ text: "لا تدخر ما يتبقى بعد الإنفاق، بل أنفق ما يتبقى بعد الادخار", author: "وارن بافيت" },
+{ text: "الميزانية هي إخبار أموالك إلى أين تذهب بدلاً من التساؤل أين ذهبت", author: "حكمة مالية" },
+{ text: "الثروة ليست في كثرة المال، بل في قلة الاحتياج", author: "حكمة عربية" },
+{ text: "من يزرع المال يحصد الحرية", author: "حكمة مالية" },
+{ text: "كن سيد أموالك ولا تكن عبداً لها", author: "حكمة مالية" },
+{ text: "ثق بنفسك، فأنت أقوى مما تتخيل", author: "حكمة معاصرة" },
+{ text: "النجاح هو رحلة، وليس وجهة", author: "حكمة معاصرة" },
+{ text: "لا يوجد فشل حقيقي إلا في التوقف عن المحاولة", author: "حكمة معاصرة" },
+{ text: "كن التغيير الذي تريد أن تراه في العالم", author: "مهاتما غاندي" }
 ];
 document.addEventListener('DOMContentLoaded', () => {
 const savedTheme = localStorage.getItem('theme') || 'light';
@@ -3021,7 +2745,6 @@ renderAllTasks();
 updateTimerDisplay();
 newQuote();
 updateAllProgressColors();
-updateThemeColor();
 initBrainDump();
 setPaymentMethod('كاش');
 setOperationType('صرف');
