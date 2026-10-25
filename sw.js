@@ -1,22 +1,30 @@
-{
-  "name": "برنامج المهام اليومية الاحترافي",
-  "short_name": "المهام اليومية",
-  "description": "نظم وقتك ومالك وحقق اهدافك",
-  "start_url": "./index.html",
-  "scope": "./",
-  "display": "standalone",
-  "orientation": "portrait",
-  "background_color": "#667eea",
-  "theme_color": "#667eea",
-  "dir": "rtl",
-  "lang": "ar",
-  "categories": ["productivity", "utilities"],
-  "icons": [
-    {
-      "src": "icon.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
-    }
-  ]
-}
+const CACHE_NAME = 'tasks-app-v3';
+const urlsToCache = [
+  './',
+  './index.html',
+  './manifest.json',
+  './icon.png'
+];
+
+self.addEventListener('install', event => {
+  event.waitUntil(
+    caches.open(CACHE_NAME)
+      .then(cache => cache.addAll(urlsToCache))
+      .then(() => self.skipWaiting())
+  );
+});
+
+self.addEventListener('activate', event => {
+  event.waitUntil(
+    caches.keys().then(names => 
+      Promise.all(names.filter(n => n !== CACHE_NAME).map(n => caches.delete(n)))
+    ).then(() => self.clients.claim())
+  );
+});
+
+self.addEventListener('fetch', event => {
+  event.respondWith(
+    caches.match(event.request)
+      .then(r => r || fetch(event.request))
+  );
+});
