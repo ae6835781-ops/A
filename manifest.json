@@ -1,6 +1,7 @@
 {
   "name": "برنامج المهام اليومية الاحترافي",
-  "short_name": "برنامج المهام اليومية الاحترافي",
+  "short_name": "المهام اليومية",
+  "description": "نظم وقتك ومالك وحقق اهدافك",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
@@ -9,6 +10,7 @@
   "theme_color": "#667eea",
   "dir": "rtl",
   "lang": "ar",
+  "categories": ["productivity", "utilities"],
   "icons": [
     {
       "src": "icon.png",
