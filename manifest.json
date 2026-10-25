@@ -3,12 +3,14 @@
   "short_name": "المهام اليومية",
   "description": "نظّم وقتك ومالك وحقق أهدافك",
   "start_url": "./index.html",
+  "scope": "./",
   "display": "standalone",
+  "orientation": "portrait",
   "background_color": "#667eea",
   "theme_color": "#667eea",
-  "orientation": "portrait",
   "dir": "rtl",
   "lang": "ar",
+  "categories": ["productivity", "utilities"],
   "icons": [
     {
       "src": "icon.png",
