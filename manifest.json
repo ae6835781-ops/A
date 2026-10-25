@@ -1,0 +1,20 @@
+{
+  "name": "برنامج المهام اليومية الاحترافي",
+  "short_name": "المهام اليومية",
+  "description": "نظّم وقتك ومالك وحقق أهدافك",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#667eea",
+  "theme_color": "#667eea",
+  "orientation": "portrait",
+  "dir": "rtl",
+  "lang": "ar",
+  "icons": [
+    {
+      "src": "icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
