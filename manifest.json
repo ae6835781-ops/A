@@ -1,7 +1,7 @@
 {
   "name": "برنامج المهام اليومية الاحترافي",
   "short_name": "المهام اليومية",
-  "description": "نظّم وقتك ومالك وحقق أهدافك",
+  "description": "نظم وقتك ومالك وحقق اهدافك",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
