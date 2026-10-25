@@ -1,6 +1,6 @@
 {
   "name": "برنامج المهام اليومية الاحترافي",
-  "short_name": "المهام اليومية",
+  "short_name": "برنامج المهام اليومية الاحترافي",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
