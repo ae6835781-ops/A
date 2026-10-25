@@ -590,7 +590,7 @@ touch-action: pan-y;
 .split-list li { padding: 2px 12px 2px 0; position: relative; font-size: 0.7rem; color: var(--text-secondary); margin-bottom: 1px; }
 .split-list li::before { position: absolute; right: 0; }
 .split-list li.done::before { content: "✅"; }
-.split-list li.undone::before { content: "⏳"; }
+.split-list li.undone::before { content: ""; }
 .wallet-grid {
 display: grid;
 grid-template-columns: 1fr 1fr;
@@ -1192,81 +1192,11 @@ body.selection-active .expense-checkbox {
         font-size: 0.68rem;
     }
 }
-
-/* ✨ شريط التثبيت في الأسفل - تم الإصلاح */
-.install-prompt {
-    position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%) translateY(100px);
-    background: var(--card-bg);
-    padding: 12px 16px;
-    border-radius: 12px;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-    z-index: 5000;
-    display: none;
-    align-items: center;
-    gap: 12px;
-    max-width: 90%;
-    min-width: 280px;
-    backdrop-filter: blur(10px);
-    border: 2px solid var(--bg-gradient-start);
-    animation: slideUp 0.4s ease forwards;
-}
-.install-prompt.show {
-    display: flex;
-}
-.install-prompt-icon {
-    font-size: 1.5rem;
-}
-.install-prompt-text {
-    flex: 1;
-}
-.install-prompt-title {
-    font-weight: 700;
-    color: var(--text-primary);
-    font-size: 0.85rem;
-    margin-bottom: 2px;
-}
-.install-prompt-desc {
-    font-size: 0.7rem;
-    color: var(--text-secondary);
-    line-height: 1.2;
-}
-.install-prompt-actions {
-    display: flex;
-    gap: 8px;
-}
-.install-btn {
-    padding: 8px 16px;
-    border: none;
-    border-radius: 8px;
-    font-weight: 700;
-    cursor: pointer;
-    font-family: inherit;
-    font-size: 0.75rem;
-    white-space: nowrap;
-    transition: all 0.2s ease;
-}
-.install-btn-primary {
-    background: var(--bg-gradient-start);
-    color: white;
-}
-.install-btn-primary:hover {
-    transform: scale(1.05);
-}
-.install-btn-secondary {
-    background: var(--btn-secondary-bg);
-    color: var(--text-secondary);
-}
-.install-btn-secondary:hover {
-    background: var(--btn-secondary-bg-hover);
-}
 </style>
 </head>
 <body>
 <div class="bg-animation">
-<div class="floating-icon physics-1">️</div><div class="floating-icon physics-2">🔭</div>
+<div class="floating-icon physics-1">⚛️</div><div class="floating-icon physics-2">🔭</div>
 <div class="floating-icon chemistry-1">⚗️</div><div class="floating-icon chemistry-2"></div>
 <div class="floating-icon biology-1">🧬</div><div class="floating-icon biology-2">🔬</div>
 <div class="floating-icon arabic-1">📖</div><div class="floating-icon arabic-2">✒️</div>
@@ -1306,7 +1236,7 @@ body.selection-active .expense-checkbox {
 </div>
 <div class="timer-display">
 <div class="timer" id="timer">25:00</div>
-<div class="timer-label">⏱ الوقت المتبقي</div>
+<div class="timer-label"> الوقت المتبقي</div>
 </div>
 <div class="timer-controls">
 <button class="btn btn-primary" id="startBtn">▶️ ابدأ</button>
@@ -1342,7 +1272,7 @@ body.selection-active .expense-checkbox {
 <div class="add-task-form">
 <input type="text" class="task-input" id="taskInput" placeholder="أضف مهمة جديدة...">
 <div class="category-toggle">
-<button class="category-btn active" id="btnRoutine" onclick="setCategory('routine')"> روتين</button>
+<button class="category-btn active" id="btnRoutine" onclick="setCategory('routine')">🔄 روتين</button>
 <button class="category-btn" id="btnTask" onclick="setCategory('task')">📋 مهمة</button>
 </div>
 <button class="btn btn-primary" onclick="addTask()">➕ إضافة</button>
@@ -1444,7 +1374,7 @@ Made by <a href="https://wa.me/201102594058" target="_blank">Ahmed Emad Farhoud<
 <button class="op-btn" id="btnAdd" data-op="إضافة">➕ إضافة</button>
 </div>
 <div class="payment-toggle full-width">
-<button class="payment-btn active cash-active" id="btnCash" data-pay="كاش">💵 كاش</button>
+<button class="payment-btn active cash-active" id="btnCash" data-pay="كاش"> كاش</button>
 <button class="payment-btn" id="btnElectronic" data-pay="إلكتروني">💳 إلكتروني</button>
 </div>
 <button class="btn btn-primary full-width" id="addExpenseBtn" style="padding: 9px;">➕ تسجيل العملية</button>
@@ -1500,14 +1430,14 @@ Made by <a href="https://wa.me/201102594058" target="_blank">Ahmed Emad Farhoud<
 <div class="modal" id="reportContent">
 <div class="modal-header">
 <h3>📊 تقرير الأداء اليومي</h3>
-<button class="modal-close" onclick="hideReport()">✕</button>
+<button class="modal-close" onclick="hideReport()"></button>
 </div>
 <div class="routine-task-split" id="reportSplit"></div>
 <div class="combined-section" id="reportCombined"></div>
 <div class="report-section"><h4>🎯 مجالات للتحسين</h4><ul class="improvement-list" id="reportImprovements"><li>جاري تحليل البيانات...</li></ul></div>
 <div class="report-section"><h4>💡 نصائح للتطوير</h4><ul class="improvement-list" id="reportTips"><li>استمر في المثابرة، كل خطوة تحسب لك!</li></ul></div>
 <div class="report-history-section">
-<h4> سجل التقارير <span style="font-size:0.65rem;color:var(--text-muted);font-weight:400;">(اضغط للتفاصيل)</span></h4>
+<h4>📚 سجل التقارير <span style="font-size:0.65rem;color:var(--text-muted);font-weight:400;">(اضغط للتفاصيل)</span></h4>
 <div class="report-history-list" id="reportHistoryList">
 <div class="report-history-empty">لا توجد تقارير محفوظة بعد</div>
 </div>
@@ -1516,19 +1446,6 @@ Made by <a href="https://wa.me/201102594058" target="_blank">Ahmed Emad Farhoud<
 <button class="export-btn" id="exportBtn" onclick="exportReport()">📋 نسخ التقرير وبدء يوم جديد</button>
 <div class="report-date" id="reportDate"></div>
 </div>
-</div>
-
-<!--  شريط التثبيت في الأسفل -->
-<div class="install-prompt" id="installPrompt">
-    <div class="install-prompt-icon">📱</div>
-    <div class="install-prompt-text">
-        <div class="install-prompt-title">ثبّت التطبيق</div>
-        <div class="install-prompt-desc">على الشاشة الرئيسية</div>
-    </div>
-    <div class="install-prompt-actions">
-        <button class="install-btn install-btn-primary" onclick="installPWA()">تثبيت</button>
-        <button class="install-btn install-btn-secondary" onclick="closeInstallPrompt()">لاحقاً</button>
-    </div>
 </div>
 
 <script>
@@ -1564,56 +1481,30 @@ navigator.serviceWorker.register(swUrl).then(reg => console.log('✅ Service Wor
 });
 }
 
-// PWA Install Prompt - تم الإصلاح
-let deferredPrompt;
-const installPrompt = document.getElementById('installPrompt');
-
-window.addEventListener('beforeinstallprompt', e => {
-e.preventDefault();
-deferredPrompt = e;
-// تأخير بسيط عشان الصفحة تخلص loading
-setTimeout(() => {
-if (localStorage.getItem('installPromptDismissed') !== 'true') {
-installPrompt.classList.add('show');
-// إخفاء تلقائي بعد 8 ثواني
-setTimeout(() => {
-if (installPrompt.classList.contains('show')) {
-installPrompt.classList.remove('show');
+// تغيير لون الـ theme-color ديناميكياً حسب الثيم
+function updateThemeColor() {
+const theme = localStorage.getItem('theme') || 'light';
+const themeColors = {
+'light': '#667eea',
+'dark': '#1a1a2e',
+'sunset': '#ff9a56',
+'ocean': '#2193b0',
+'sakura': '#ff9a9e',
+'forest': '#134e5e',
+'barbie': '#d81b60'
+};
+const color = themeColors[theme] || '#667eea';
+// تحديث meta tag
+const themeColorMeta = document.querySelector('meta[name="theme-color"]');
+if (themeColorMeta) {
+themeColorMeta.setAttribute('content', color);
 }
-}, 8000);
-}
-}, 1500);
-});
-
-window.addEventListener('appinstalled', () => {
-installPrompt.classList.remove('show');
-localStorage.setItem('appInstalled', 'true');
-});
-
-function installPWA() {
-if (deferredPrompt) {
-deferredPrompt.prompt();
-deferredPrompt.userChoice.then(choiceResult => {
-if (choiceResult.outcome === 'accepted') {
-console.log('✅ User accepted');
-}
-deferredPrompt = null;
-installPrompt.classList.remove('show');
-});
-} else {
-alert('📱 لتثبيت التطبيق:\n\nعلى Android Chrome:\n1. اضغط على النقاط الثلاث ⋮\n2. اختر "تثبيت التطبيق"\n\nعلى iPhone Safari:\n1. اضغط على زر المشاركة\n2. اختر "إضافة إلى الشاشة الرئيسية"');
-}
-}
-
-function closeInstallPrompt() {
-installPrompt.classList.remove('show');
-localStorage.setItem('installPromptDismissed', 'true');
 }
 
 const themeOrder = ['light', 'dark', 'sunset', 'ocean', 'sakura', 'forest', 'barbie'];
 const themeIcons = {
-light: '☀️', dark: '🌙', sunset: '🌅',
-ocean: '🌊', sakura: '🌸', forest: '🌳', barbie: ''
+light: '☀️', dark: '🌙', sunset: '',
+ocean: '🌊', sakura: '🌸', forest: '', barbie: '💖'
 };
 const themeNames = {
 light: 'فاتح', dark: 'داكن', sunset: 'غروب',
@@ -1630,6 +1521,7 @@ localStorage.setItem('theme', themeValue);
 document.getElementById('themeIcon').textContent = themeIcons[themeValue] || '🎨';
 document.getElementById('themeText').textContent = themeNames[themeValue] || 'المظهر';
 updateAllProgressColors();
+updateThemeColor(); // تحديث لون الـ status bar
 }
 function cycleTheme() {
 const current = localStorage.getItem('theme') || 'light';
@@ -1815,7 +1707,7 @@ if (pct >= 40) return 'var(--pct-average)';
 return 'var(--pct-weak)';
 }
 function getGrade(pct) {
-if (pct >= 90) return { grade: 'ممتاز 🌟', class: 'grade-excellent', color: '#28a745', tips: ['أنت نموذج يُحتذى به!', 'استمر في هذا المستوى الرائع', 'شارك خبراتك مع الآخرين'] };
+if (pct >= 90) return { grade: 'ممتاز ', class: 'grade-excellent', color: '#28a745', tips: ['أنت نموذج يُحتذى به!', 'استمر في هذا المستوى الرائع', 'شارك خبراتك مع الآخرين'] };
 if (pct >= 75) return { grade: 'جيد جداً 👍', class: 'grade-good', color: '#17a2b8', tips: ['أداؤك رائع، حاول الوصول للممتاز', 'ركز على المهام المتبقية', 'حافظ على هذا الزخم'] };
 if (pct >= 50) return { grade: 'جيد 👌', class: 'grade-average', color: '#ffc107', tips: ['أنت على الطريق الصحيح', 'حاول زيادة تركيزك على الروتين', 'حدد أولوياتك بشكل أفضل'] };
 return { grade: 'يحتاج تحسين 💪', class: 'grade-weak', color: '#dc3545', tips: ['لا تيأس، كل بداية صعبة', 'ابدأ بمهام صغيرة وسهلة', 'خصص وقتاً محدداً لكل مهمة'] };
@@ -1853,7 +1745,7 @@ if (currentGroup.length > 0) groups.push(currentGroup);
 let html = '';
 groups.forEach((group, gIdx) => {
 if (gIdx > 0) {
-html += `<div class="report-group-divider"><span class="report-group-label">️ فاصل 5 أيام</span></div>`;
+html += `<div class="report-group-divider"><span class="report-group-label">⏸️ فاصل 5 أيام</span></div>`;
 }
 group.forEach(report => {
 const realIdx = reportHistory.indexOf(report);
@@ -1894,7 +1786,7 @@ document.getElementById('reportDetailContent').innerHTML = `
 <div style="text-align:center;margin-bottom:10px;"><span class="grade-badge" style="background:${gi.color};color:white;">${r.date}</span></div>
 <div class="detail-stats">
 <div class="detail-stat-card"><div class="detail-stat-value">${r.totalPercent}%</div><div class="detail-stat-label">النسبة الكلية</div></div>
-<div class="detail-stat-card"><div class="detail-stat-value" style="color:var(--routine-border);">${r.routinePercent}%</div><div class="detail-stat-label"> الروتين</div></div>
+<div class="detail-stat-card"><div class="detail-stat-value" style="color:var(--routine-border);">${r.routinePercent}%</div><div class="detail-stat-label">🔄 الروتين</div></div>
 <div class="detail-stat-card"><div class="detail-stat-value" style="color:var(--task-border);">${r.taskPercent}%</div><div class="detail-stat-label">📋 المهام</div></div>
 <div class="detail-stat-card"><div class="detail-stat-value">${r.totalTasks}</div><div class="detail-stat-label">إجمالي المهام</div></div>
 </div>
@@ -1953,7 +1845,7 @@ const circumference = 2 * Math.PI * 50;
 const offset = circumference - (simpleAvg / 100) * circumference;
 const pctColor = getPctColor(simpleAvg);
 const combinedHTML = `
-<div class="combined-title"> الأداء الكلي المتكامل</div>
+<div class="combined-title">📊 الأداء الكلي المتكامل</div>
 <div class="combined-visual">
 <div class="circular-progress">
 <svg viewBox="0 0 120 120">
@@ -1968,7 +1860,7 @@ const combinedHTML = `
 <div class="combined-bar-track"><div class="combined-bar-fill routine" style="width: ${rp}%; background-color: var(--routine-border);"></div></div>
 </div>
 <div class="combined-bar-item">
-<div class="combined-bar-label"><span> المهام</span><span style="color: var(--task-border);">${gp}%</span></div>
+<div class="combined-bar-label"><span>📋 المهام</span><span style="color: var(--task-border);">${gp}%</span></div>
 <div class="combined-bar-track"><div class="combined-bar-fill tasks" style="width: ${gp}%; background-color: var(--task-border);"></div></div>
 </div>
 </div>
@@ -2018,10 +1910,10 @@ taskIncompleteList: rg.filter(t => t.status !== 'correct').map(t => t.text)
 });
 saveReportHistory();
 const rDoneList = rt.filter(t => t.status === 'correct').map(t => `  ✅ ${t.text}`).join('\n');
-const rUndoneList = rt.filter(t => t.status !== 'correct').map(t => `  ⏳ ${t.text}`).join('\n');
+const rUndoneList = rt.filter(t => t.status !== 'correct').map(t => `   ${t.text}`).join('\n');
 const tDoneList = rg.filter(t => t.status === 'correct').map(t => `  ✅ ${t.text}`).join('\n');
-const tUndoneList = rg.filter(t => t.status !== 'correct').map(t => `  ⏳ ${t.text}`).join('\n');
-const text = `📊 تقرير المهام اليومية\n📅 التاريخ: ${nd}\n\n═══════════════════════\n🔄 الروتين اليومي (${rp}%)\n═══════════════════════\n✅ الي اتعمل:\n${rDoneList || '  لا يوجد'}\n\n الي متعملش:\n${rUndoneList || '  لا يوجد'}\n\n═══════════════════════\n📋 المهام اليومية (${gp}%)\n═══════════════════════\n✅ الي اتعمل:\n${tDoneList || '  لا يوجد'}\n\n⏳ الي متعملش:\n${tUndoneList || '  لا يوجد'}\n\n═══════════════════════\n📊 الأداء الكلي\n═══════════════════════\n🔵 المتوسط الحسابي: ${simpleAvg}%\n المتوسط المرجح (روتين 60% + مهام 40%): ${tp}%\n🏆 التقييم: ${gi.grade}\n\n💡 نصائح:\n${gi.tips.map(t => `  ${t}`).join('\n')}\n\n═══════════════════════\n✅ تم حفظ هذا التقرير تلقائياً\n✅ الروتين ثابت (بيبدأ يوم جديد من غير حذف)\n✅ المهام الصحيحة اتحذفت، والباقي بصفحة نظيفة\n\nMade by Ahmed Emad Farhoud 💻✨`;
+const tUndoneList = rg.filter(t => t.status !== 'correct').map(t => `   ${t.text}`).join('\n');
+const text = `📊 تقرير المهام اليومية\n📅 التاريخ: ${nd}\n\n═══════════════════════\n🔄 الروتين اليومي (${rp}%)\n═══════════════════════\n✅ الي اتعمل:\n${rDoneList || '  لا يوجد'}\n\n⏳ الي متعملش:\n${rUndoneList || '  لا يوجد'}\n\n═══════════════════════\n📋 المهام اليومية (${gp}%)\n═══════════════════════\n✅ الي اتعمل:\n${tDoneList || '  لا يوجد'}\n\n⏳ الي متعملش:\n${tUndoneList || '  لا يوجد'}\n\n═══════════════════════\n📊 الأداء الكلي\n═══════════════════════\n المتوسط الحسابي: ${simpleAvg}%\n⚡ المتوسط المرجح (روتين 60% + مهام 40%): ${tp}%\n🏆 التقييم: ${gi.grade}\n\n💡 نصائح:\n${gi.tips.map(t => `  ${t}`).join('\n')}\n\n═══════════════════════\n✅ تم حفظ هذا التقرير تلقائياً\n✅ الروتين ثابت (بيبدأ يوم جديد من غير حذف)\n✅ المهام الصحيحة اتحذفت، والباقي بصفحة نظيفة\n\nMade by Ahmed Emad Farhoud 💻✨`;
 const doReset = () => {
 resetDayAfterReport();
 hideReport();
@@ -2070,7 +1962,7 @@ return `<li class="task-item ${task.status==='correct'?'correct':''} ${task.stat
 <div class="task-actions">
 <button class="action-btn correct-btn" data-correct-id="${task.id}" title="صحيح">✓</button>
 <button class="action-btn wrong-btn" data-wrong-id="${task.id}" title="خطأ">✗</button>
-<button class="action-btn delete-btn" data-delete-id="${task.id}" title="حذف">️</button>
+<button class="action-btn delete-btn" data-delete-id="${task.id}" title="حذف">🗑️</button>
 </div>
 </li>`;
 }).join('');
@@ -2369,7 +2261,7 @@ content.innerHTML = `
 <td class="detail-value desc-value" colspan="1">${op.desc}</td>
 </tr>
 <tr>
-<td class="detail-icon">${isAdd ? '' : '💔'}</td>
+<td class="detail-icon">${isAdd ? '💚' : '💔'}</td>
 <td class="detail-label">النوع</td>
 <td class="detail-value ${isAdd ? 'type-add' : 'type-spend'}">${isAdd ? '➕ إضافة' : '💸 صرف'}</td>
 </tr>
@@ -2384,7 +2276,7 @@ content.innerHTML = `
 <td class="detail-value ${isAdd ? 'amount-add' : 'amount-spend'}">${isAdd ? '+' : '-'}${op.amount.toFixed(2)} ج.م</td>
 </tr>
 <tr>
-<td class="detail-icon"></td>
+<td class="detail-icon">⏰</td>
 <td class="detail-label">الوقت</td>
 <td class="detail-value">${op.time}</td>
 </tr>
@@ -2409,7 +2301,7 @@ ${op.settled ? `
 <div class="details-modal-actions">
 <button class="repeat-modal-btn" data-repeat-id="${op.id}">🔄 تكرار</button>
 <button class="delete-modal-btn" data-delete-op-id="${op.id}">🗑️ حذف</button>
-<button class="close-details-btn" id="closeDetailsBtn">️ إغلاق</button>
+<button class="close-details-btn" id="closeDetailsBtn">✖️ إغلاق</button>
 </div>
 `;
 document.getElementById('detailsModal').classList.add('show');
@@ -2886,6 +2778,7 @@ updateAllProgressColors();
 initBrainDump();
 setPaymentMethod('كاش');
 setOperationType('صرف');
+updateThemeColor(); // تحديث لون الـ status bar عند التحميل
 });
 document.getElementById('startBtn').addEventListener('click', startTimer);
 document.getElementById('pauseBtn').addEventListener('click', pauseTimer);
