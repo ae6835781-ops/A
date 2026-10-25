@@ -1,8 +1,9 @@
-const CACHE_NAME = 'tasks-app-v1';
+const CACHE_NAME = 'tasks-app-v2';
 const urlsToCache = [
   './',
   './index.html',
-  './manifest.json'
+  './manifest.json',
+  './icon.png'
 ];
 
 self.addEventListener('install', event => {
