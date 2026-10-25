@@ -40,11 +40,11 @@ body{font-family:'Segoe UI','Tahoma','Arial',sans-serif;min-height:100vh;overflo
 .header h1{color:var(--text-white);font-size:1.9rem;font-weight:900;text-shadow:0 4px 15px rgba(0,0,0,.3);margin:0}
 .header p{color:rgba(255,255,255,.9);font-size:.9rem;margin:3px 0 0}
 .header-actions{display:flex;gap:8px;align-items:center;flex-wrap:nowrap;justify-content:center}
-.header-btn{background:rgba(255,255,255,.2);border:2px solid rgba(255,255,255,.4);border-radius:50px;padding:6px 14px;cursor:pointer;display:flex;align-items:center;gap:5px;color:var(--text-white);font-weight:600;font-family:inherit;transition:background .3s ease,transform .2s ease;backdrop-filter:blur(5px);font-size:.85rem;white-space:nowrap}
-.header-btn:hover{background:rgba(255,255,255,.3);transform:translateY(-2px)}
+.header-btn{background:rgba(255,255,255,.15);border:2px solid rgba(255,255,255,.3);border-radius:12px;padding:8px 16px;cursor:pointer;display:flex;align-items:center;gap:6px;color:var(--text-white);font-weight:600;font-family:inherit;transition:all .3s ease;backdrop-filter:blur(10px);font-size:.85rem;white-space:nowrap}
+.header-btn:hover{background:rgba(255,255,255,.25);transform:translateY(-2px)}
 .header-btn:active{transform:scale(.95)}
-.header-btn .icon{font-size:1.15rem}
-.install-btn-header{background:linear-gradient(135deg,#28a745 0%,#20c997 100%)!important;border:2px solid rgba(255,255,255,.6)!important;animation:pulse 2s infinite}
+.header-btn .icon{font-size:1.1rem}
+.install-btn-header{background:linear-gradient(135deg,#28a745 0%,#20c997 100%)!important;border:2px solid rgba(255,255,255,.5)!important;animation:pulse 2s infinite}
 @keyframes pulse{0%,100%{transform:scale(1);box-shadow:0 0 0 0 rgba(40,167,69,.7)}50%{transform:scale(1.05);box-shadow:0 0 0 10px rgba(40,167,69,0)}}
 .timer-section{background:var(--card-bg);border-radius:15px;padding:16px;margin-bottom:16px;box-shadow:0 10px 40px var(--shadow-color);backdrop-filter:blur(10px);animation:fadeInUp 1s ease;transition:background .4s ease,box-shadow .4s ease}
 .timer-display{text-align:center;margin-bottom:12px}
@@ -354,16 +354,20 @@ body{font-family:'Segoe UI','Tahoma','Arial',sans-serif;min-height:100vh;overflo
 .expense-log-item.long-press-active{animation:longPressPulse .4s ease;background:rgba(102,126,234,.1)}
 .expense-log-item.selectable{padding-right:6px}
 @media (max-width:600px){.selection-mode-actions{width:100%;justify-content:center}.selection-btn{padding:6px 10px;font-size:.68rem}}
-.install-prompt{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--card-bg);padding:15px 20px;border-radius:15px;box-shadow:0 10px 40px var(--shadow-color);z-index:5000;display:none;align-items:center;gap:15px;max-width:90%;animation:slideUp .3s ease}
-.install-prompt.show{display:flex}
-.install-prompt-icon{font-size:2rem}
-.install-prompt-text{flex:1}
-.install-prompt-title{font-weight:700;color:var(--text-primary);font-size:.9rem;margin-bottom:3px}
-.install-prompt-desc{font-size:.75rem;color:var(--text-secondary)}
-.install-prompt-actions{display:flex;gap:8px}
-.install-btn{padding:8px 16px;border:none;border-radius:8px;font-weight:700;cursor:pointer;font-family:inherit;font-size:.8rem}
-.install-btn-primary{background:var(--bg-primary);color:#fff}
-.install-btn-secondary{background:var(--btn-secondary-bg);color:var(--text-secondary)}
+
+/* رسالة التثبيت البسيطة */
+.install-toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--card-bg);padding:12px 16px;border-radius:16px;box-shadow:0 8px 32px rgba(0,0,0,.2);z-index:5000;display:none;align-items:center;gap:12px;max-width:92%;min-width:280px;backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.1);animation:toastSlideUp .4s ease}
+.install-toast.show{display:flex}
+@keyframes toastSlideUp{from{transform:translateX(-50%) translateY(100px);opacity:0}to{transform:translateX(-50%) translateY(0);opacity:1}}
+.install-toast-icon{font-size:1.5rem;flex-shrink:0}
+.install-toast-content{flex:1;min-width:0}
+.install-toast-title{font-weight:700;color:var(--text-primary);font-size:.85rem;margin-bottom:2px}
+.install-toast-desc{font-size:.7rem;color:var(--text-secondary);line-height:1.3}
+.install-toast-btn{background:var(--bg-gradient-start);color:#fff;border:none;padding:8px 14px;border-radius:10px;font-weight:700;cursor:pointer;font-family:inherit;font-size:.75rem;white-space:nowrap;transition:all .2s ease}
+.install-toast-btn:hover{transform:scale(1.05)}
+.install-toast-btn:active{transform:scale(.95)}
+.install-toast-close{position:absolute;top:-8px;right:-8px;width:22px;height:22px;border-radius:50%;background:var(--delete-btn-bg);color:#fff;border:2px solid var(--card-bg);cursor:pointer;font-size:.7rem;display:flex;align-items:center;justify-content:center;transition:all .2s ease}
+.install-toast-close:hover{transform:scale(1.1)}
 </style>
 </head>
 <body>
@@ -383,10 +387,6 @@ body{font-family:'Segoe UI','Tahoma','Arial',sans-serif;min-height:100vh;overflo
 <p>نظّم وقتك ومالك وحقق أهدافك</p>
 </div>
 <div class="header-actions">
-<button class="header-btn install-btn-header" id="installHeaderBtn" onclick="installPWA()" style="display:none;">
-<span class="icon">📱</span>
-<span>تثبيت التطبيق</span>
-</button>
 <button class="header-btn" id="reportBtn" onclick="showReport()">
 <span class="icon">📊</span>
 <span>التقرير</span>
@@ -394,6 +394,10 @@ body{font-family:'Segoe UI','Tahoma','Arial',sans-serif;min-height:100vh;overflo
 <button class="header-btn" id="expensesBtn" onclick="openExpensesSection()">
 <span class="icon">💰</span>
 <span>المصروفات</span>
+</button>
+<button class="header-btn install-btn-header" id="installHeaderBtn" onclick="installPWA()" style="display:none;">
+<span class="icon">📱</span>
+<span>تثبيت</span>
 </button>
 <button class="header-btn" id="themeSelectorBtn" onclick="cycleTheme()">
 <span class="icon" id="themeIcon">☀️</span>
@@ -409,7 +413,7 @@ body{font-family:'Segoe UI','Tahoma','Arial',sans-serif;min-height:100vh;overflo
 </div>
 <div class="timer-display">
 <div class="timer" id="timer">25:00</div>
-<div class="timer-label">⏱ الوقت المتبقي</div>
+<div class="timer-label"> الوقت المتبقي</div>
 </div>
 <div class="timer-controls">
 <button class="btn btn-primary" id="startBtn">▶️ ابدأ</button>
@@ -424,7 +428,7 @@ body{font-family:'Segoe UI','Tahoma','Arial',sans-serif;min-height:100vh;overflo
 </div>
 <div class="tasks-section" id="routineSection">
 <div class="tasks-header">
-<h2>🔄 روتينك اليومي</h2>
+<h2> روتينك اليومي</h2>
 <div class="task-counter"><span id="routineCompleted">0</span> / <span id="routineTotal">0</span> منجزة</div>
 </div>
 <ul class="tasks-list" id="routineList">
@@ -446,12 +450,12 @@ body{font-family:'Segoe UI','Tahoma','Arial',sans-serif;min-height:100vh;overflo
 <input type="text" class="task-input" id="taskInput" placeholder="أضف مهمة جديدة...">
 <div class="category-toggle">
 <button class="category-btn active" id="btnRoutine" onclick="setCategory('routine')">🔄 روتين</button>
-<button class="category-btn" id="btnTask" onclick="setCategory('task')">📋 مهمة</button>
+<button class="category-btn" id="btnTask" onclick="setCategory('task')"> مهمة</button>
 </div>
-<button class="btn btn-primary" onclick="addTask()">➕ إضافة</button>
+<button class="btn btn-primary" onclick="addTask()"> إضافة</button>
 </div>
 <ul class="tasks-list" id="taskList">
-<div class="empty-state"><div class="empty-state-icon">📝</div><p>لا توجد مهام بعد. أضف مهمتك الأولى!</p></div>
+<div class="empty-state"><div class="empty-state-icon"></div><p>لا توجد مهام بعد. أضف مهمتك الأولى!</p></div>
 </ul>
 <div style="margin-top:6px;display:flex;justify-content:space-between;align-items:center;">
 <span style="font-size:.65rem;color:var(--text-secondary);">نسبة إنجاز المهام</span>
@@ -539,8 +543,8 @@ Made by <a href="https://wa.me/201102594058" target="_blank">Ahmed Emad Farhoud<
 <input type="text" class="expense-input full-width" id="expenseDesc" placeholder="وصف العملية">
 <input type="number" class="expense-input full-width" id="expenseAmount" placeholder="المبلغ">
 <div class="op-toggle full-width">
-<button class="op-btn active spend-active" id="btnSpend" data-op="صرف"> صرف</button>
-<button class="op-btn" id="btnAdd" data-op="إضافة"> إضافة</button>
+<button class="op-btn active spend-active" id="btnSpend" data-op="صرف">💸 صرف</button>
+<button class="op-btn" id="btnAdd" data-op="إضافة">➕ إضافة</button>
 </div>
 <div class="payment-toggle full-width">
 <button class="payment-btn active cash-active" id="btnCash" data-pay="كاش">💵 كاش</button>
@@ -596,7 +600,7 @@ Made by <a href="https://wa.me/201102594058" target="_blank">Ahmed Emad Farhoud<
 <div class="modal-overlay" id="reportModal">
 <div class="modal" id="reportContent">
 <div class="modal-header">
-<h3>📊 تقرير الأداء اليومي</h3>
+<h3> تقرير الأداء اليومي</h3>
 <button class="modal-close" onclick="hideReport()">✕</button>
 </div>
 <div class="routine-task-split" id="reportSplit"></div>
@@ -608,22 +612,22 @@ Made by <a href="https://wa.me/201102594058" target="_blank">Ahmed Emad Farhoud<
 <div class="report-history-list" id="reportHistoryList">
 <div class="report-history-empty">لا توجد تقارير محفوظة بعد</div>
 </div>
-<button class="clear-all-history" id="clearAllHistoryBtn" onclick="clearAllHistory()" style="display:none;">🗑️ حذف كل السجل</button>
+<button class="clear-all-history" id="clearAllHistoryBtn" onclick="clearAllHistory()" style="display:none;">️ حذف كل السجل</button>
 </div>
 <button class="export-btn" id="exportBtn" onclick="exportReport()">📋 نسخ التقرير وبدء يوم جديد</button>
 <div class="report-date" id="reportDate"></div>
 </div>
 </div>
-<div class="install-prompt" id="installPrompt">
-<div class="install-prompt-icon">📱</div>
-<div class="install-prompt-text">
-<div class="install-prompt-title">ثبّت التطبيق على جهازك</div>
-<div class="install-prompt-desc">اضغط "تثبيت" لتثبيت البرنامج على الشاشة الرئيسية</div>
+
+<!-- رسالة التثبيت البسيطة -->
+<div class="install-toast" id="installToast">
+<button class="install-toast-close" onclick="closeInstallToast()">✕</button>
+<div class="install-toast-icon">📱</div>
+<div class="install-toast-content">
+<div class="install-toast-title">ثبّت التطبيق</div>
+<div class="install-toast-desc">اضغط لتثبيته على الشاشة الرئيسية</div>
 </div>
-<div class="install-prompt-actions">
-<button class="install-btn install-btn-primary" onclick="installPWA()">تثبيت</button>
-<button class="install-btn install-btn-secondary" onclick="closeInstallPrompt()">لاحقاً</button>
-</div>
+<button class="install-toast-btn" onclick="installPWA()">تثبيت</button>
 </div>
 
 <script>
@@ -636,7 +640,7 @@ navigator.serviceWorker.register('sw.js')
 
 // PWA Install
 let deferredPrompt;
-const installPrompt=document.getElementById('installPrompt');
+const installToast=document.getElementById('installToast');
 const installHeaderBtn=document.getElementById('installHeaderBtn');
 
 window.addEventListener('beforeinstallprompt',e=>{
@@ -645,16 +649,20 @@ deferredPrompt=e;
 installHeaderBtn.style.display='flex';
 setTimeout(()=>{
 if(localStorage.getItem('installPromptDismissed')!=='true'){
-installPrompt.classList.add('show');
+installToast.classList.add('show');
+setTimeout(()=>{
+if(installToast.classList.contains('show')){
+installToast.classList.remove('show');
 }
-},1000);
+},8000);
+}
+},1500);
 });
 
 window.addEventListener('appinstalled',()=>{
-installPrompt.classList.remove('show');
+installToast.classList.remove('show');
 installHeaderBtn.style.display='none';
 localStorage.setItem('appInstalled','true');
-alert('✅ تم تثبيت التطبيق بنجاح!');
 });
 
 function installPWA(){
@@ -665,16 +673,16 @@ if(choiceResult.outcome==='accepted'){
 console.log('✅ User accepted');
 }
 deferredPrompt=null;
-installPrompt.classList.remove('show');
+installToast.classList.remove('show');
 installHeaderBtn.style.display='none';
 });
 }else{
-alert(' لتثبيت التطبيق:\n\nعلى Android Chrome:\n1. اضغط على النقاط الثلاث ⋮\n2. اختر "تثبيت التطبيق" أو "إضافة إلى الشاشة الرئيسية"\n\nعلى iPhone Safari:\n1. اضغط على زر المشاركة\n2. اختر "إضافة إلى الشاشة الرئيسية"');
+alert('📱 لتثبيت التطبيق:\n\nعلى Android Chrome:\n1. اضغط على النقاط الثلاث ⋮\n2. اختر "تثبيت التطبيق"\n\nعلى iPhone Safari:\n1. اضغط على زر المشاركة\n2. اختر "إضافة إلى الشاشة الرئيسية"');
 }
 }
 
-function closeInstallPrompt(){
-installPrompt.classList.remove('show');
+function closeInstallToast(){
+installToast.classList.remove('show');
 localStorage.setItem('installPromptDismissed','true');
 }
 
@@ -683,7 +691,7 @@ installHeaderBtn.style.display='none';
 }
 
 const themeOrder=['light','dark','sunset','ocean','sakura','forest','barbie'];
-const themeIcons={light:'☀️',dark:'🌙',sunset:'🌅',ocean:'🌊',sakura:'',forest:'🌳',barbie:'💖'};
+const themeIcons={light:'☀️',dark:'',sunset:'🌅',ocean:'🌊',sakura:'🌸',forest:'🌳',barbie:'💖'};
 const themeNames={light:'فاتح',dark:'داكن',sunset:'غروب',ocean:'محيط',sakura:'ساكورا',forest:'غابة',barbie:'باربي'};
 function setTheme(themeValue){
 const html=document.documentElement;
@@ -904,7 +912,7 @@ const realIdx=reportHistory.indexOf(report);
 const gi=getGrade(report.totalPercent);
 html+=`<div class="report-history-item" data-report-idx="${realIdx}">
 <div class="report-history-info">
-<div class="report-history-date"> ${report.date}</div>
+<div class="report-history-date">📅 ${report.date}</div>
 <div class="report-history-details">روتين: ${report.routinePercent}% · مهام: ${report.taskPercent}% · كلي: ${report.totalPercent}%</div>
 </div>
 <span class="report-history-grade" style="background:${gi.color};">${report.totalPercent}%</span>
@@ -941,7 +949,7 @@ document.getElementById('reportDetailContent').innerHTML=`
 <div class="detail-section"><h5>🔄 روتينك - الي اتعمل (${r.routineCompleted})</h5><ul class="detail-task-list">${rComp}</ul></div>
 <div class="detail-section"><h5>🔄 روتينك - الي متعملش (${r.routineIncomplete})</h5><ul class="detail-task-list">${rInc}</ul></div>
 <div class="detail-section"><h5>📋 مهامك - الي اتعمل (${r.taskCompleted})</h5><ul class="detail-task-list">${tComp}</ul></div>
-<div class="detail-section"><h5> مهامك - الي متعملش (${r.taskIncomplete})</h5><ul class="detail-task-list">${tInc}</ul></div>
+<div class="detail-section"><h5>📋 مهامك - الي متعملش (${r.taskIncomplete})</h5><ul class="detail-task-list">${tInc}</ul></div>
 <button class="detail-back-btn" onclick="closeReportDetail()">↩️ رجوع</button>
 `;
 document.getElementById('reportDetailModal').classList.add('show');
@@ -977,7 +985,7 @@ const splitHTML=`
 ${rc>0?rt.filter(t=>t.status==='correct').map(t=>`<li class="done">${t.text}</li>`).join(''):'<li style="color:var(--text-muted);">لم يُنجز شيء</li>'}
 ${rn>0?rt.filter(t=>t.status!=='correct').map(t=>`<li class="undone">${t.text}</li>`).join(''):''}
 </ul>
-<div style="margin-top:5px;font-size:.65rem;color:var(--text-muted);">✅ ${rc} منجزة ·  ${rn} غير منجزة</div>
+<div style="margin-top:5px;font-size:.65rem;color:var(--text-muted);">✅ ${rc} منجزة · ⏳ ${rn} غير منجزة</div>
 </div>
 <div class="split-card task-card">
 <div class="split-header"><span class="split-title">📋 المهام اليومية</span><span class="split-percent" style="color:var(--task-border);">${gp}%</span></div>
@@ -1008,7 +1016,7 @@ const combinedHTML=`
 <div class="combined-bar-track"><div class="combined-bar-fill routine" style="width:${rp}%;background-color:var(--routine-border);"></div></div>
 </div>
 <div class="combined-bar-item">
-<div class="combined-bar-label"><span> المهام</span><span style="color:var(--task-border);">${gp}%</span></div>
+<div class="combined-bar-label"><span>📋 المهام</span><span style="color:var(--task-border);">${gp}%</span></div>
 <div class="combined-bar-track"><div class="combined-bar-fill tasks" style="width:${gp}%;background-color:var(--task-border);"></div></div>
 </div>
 </div>
@@ -1017,11 +1025,11 @@ const combinedHTML=`
 `;
 document.getElementById('reportCombined').innerHTML=combinedHTML;
 const imp=[];
-if(rn>0)imp.push(` لديك ${rn} عنصر روتين لم تُنجز بعد`);
-if(gn>0)imp.push(`📌 لديك ${gn} مهمة يومية لم تُنجز`);
+if(rn>0)imp.push(`📌 لديك ${rn} عنصر روتين لم تُنجز بعد`);
+if(gn>0)imp.push(` لديك ${gn} مهمة يومية لم تُنجز`);
 if(tt>0&&simpleAvg<50)imp.push('💡 ابدأ بمهام صغيرة لبناء الزخم');
 if(imp.length===0&&tt>0)imp.push('✨ حافظ على هذا المستوى الرائع!');
-if(tt===0)imp.push(' أضف مهامك الأولى وابدأ رحلة الإنجاز');
+if(tt===0)imp.push('🚀 أضف مهامك الأولى وابدأ رحلة الإنجاز');
 document.getElementById('reportImprovements').innerHTML=imp.map(i=>`<li>${i}</li>`).join('');
 document.getElementById('reportTips').innerHTML=gi.tips.map(t=>`<li>${t}</li>`).join('');
 const now=new Date();
@@ -1051,14 +1059,14 @@ const nd=`${now.getFullYear()}/${String(now.getMonth()+1).padStart(2,'0')}/${Str
 reportHistory.push({date:nd,routinePercent:rp,taskPercent:gp,totalPercent:simpleAvg,weightedPercent:tp,grade:gi.grade,totalTasks:tt,routineTotal:rtT,taskTotal:rgT,routineCompleted:rc,routineIncomplete:rn,taskCompleted:gc,taskIncomplete:gn,routineCompletedList:rt.filter(t=>t.status==='correct').map(t=>t.text),routineIncompleteList:rt.filter(t=>t.status!=='correct').map(t=>t.text),taskCompletedList:rg.filter(t=>t.status==='correct').map(t=>t.text),taskIncompleteList:rg.filter(t=>t.status!=='correct').map(t=>t.text)});
 saveReportHistory();
 const rDoneList=rt.filter(t=>t.status==='correct').map(t=>`  ✅ ${t.text}`).join('\n');
-const rUndoneList=rt.filter(t=>t.status!=='correct').map(t=>`   ${t.text}`).join('\n');
+const rUndoneList=rt.filter(t=>t.status!=='correct').map(t=>`  ⏳ ${t.text}`).join('\n');
 const tDoneList=rg.filter(t=>t.status==='correct').map(t=>`  ✅ ${t.text}`).join('\n');
 const tUndoneList=rg.filter(t=>t.status!=='correct').map(t=>`  ⏳ ${t.text}`).join('\n');
 const text=`📊 تقرير المهام اليومية\n📅 التاريخ: ${nd}\n\n═══════════════════════\n🔄 الروتين اليومي (${rp}%)\n═══════════════════════\n✅ الي اتعمل:\n${rDoneList||'  لا يوجد'}\n\n⏳ الي متعملش:\n${rUndoneList||'  لا يوجد'}\n\n═══════════════════════\n📋 المهام اليومية (${gp}%)\n═══════════════════════\n✅ الي اتعمل:\n${tDoneList||'  لا يوجد'}\n\n⏳ الي متعملش:\n${tUndoneList||'  لا يوجد'}\n\n═══════════════════════\n📊 الأداء الكلي\n═══════════════════════\n🔵 المتوسط الحسابي: ${simpleAvg}%\n⚡ المتوسط المرجح (روتين 60% + مهام 40%): ${tp}%\n🏆 التقييم: ${gi.grade}\n\n💡 نصائح:\n${gi.tips.map(t=>`  ${t}`).join('\n')}\n\n═══════════════════════\n✅ تم حفظ هذا التقرير تلقائياً\n✅ الروتين ثابت (بيبدأ يوم جديد من غير حذف)\n✅ المهام الصحيحة اتحذفت، والباقي بصفحة نظيفة\n\nMade by Ahmed Emad Farhoud 💻✨`;
 const doReset=()=>{
 resetDayAfterReport();
 hideReport();
-alert('✅ تم نسخ التقرير بنجاح!\n✅ تم حفظ التقرير في السجل 📚\n✅ الروتين ثابت ومبدأش من جديد 🔄\n✅ المهام الصحيحة اتحذفت، والباقي بصفحة نظيفة ✨');
+alert('✅ تم نسخ التقرير بنجاح!\n✅ تم حفظ التقرير في السجل 📚\n✅ الروتين ثابت ومبدأش من جديد 🔄\n✅ المهام الصحيحة اتحذفت، والباقي بصفحة نظيفة ');
 };
 navigator.clipboard.writeText(text).then(doReset).catch(()=>{
 const ta=document.createElement('textarea');
@@ -1181,7 +1189,7 @@ document.querySelectorAll('.task-item').forEach(i=>{i.classList.remove('drag-ove
 function openExpensesSection(){
 if(expensesPin===''){
 pinAction='create';
-document.getElementById('pinModalTitle').textContent='🔐 إنشاء رقم سري';
+document.getElementById('pinModalTitle').textContent=' إنشاء رقم سري';
 document.getElementById('pinModalDesc').textContent='اختر رقم سري من 4-6 أرقام لحماية المصروفات';
 document.getElementById('pinInput').value='';
 document.getElementById('pinError').textContent='';
@@ -1190,7 +1198,7 @@ document.getElementById('pinModal').classList.add('show');
 setTimeout(()=>document.getElementById('pinInput').focus(),100);
 }else{
 pinAction='verify';
-document.getElementById('pinModalTitle').textContent='🔐 أدخل الرقم السري';
+document.getElementById('pinModalTitle').textContent=' أدخل الرقم السري';
 document.getElementById('pinModalDesc').textContent='للوصول إلى قسم المصروفات';
 document.getElementById('pinInput').value='';
 document.getElementById('pinError').textContent='';
@@ -1248,7 +1256,7 @@ const modal=document.getElementById('balanceModal');
 const title=document.getElementById('balanceModalTitle');
 const input=document.getElementById('balanceInput');
 if(type==='كاش'){title.textContent='💵 تعديل رصيد الكاش';input.value=cashBalance}
-else{title.textContent=' تعديل رصيد الإلكتروني';input.value=electronicBalance}
+else{title.textContent='💳 تعديل رصيد الإلكتروني';input.value=electronicBalance}
 modal.classList.add('show');
 setTimeout(()=>input.focus(),100);
 }
@@ -1256,7 +1264,7 @@ function closeBalanceModal(){document.getElementById('balanceModal').classList.r
 function confirmBalanceChange(){
 const input=document.getElementById('balanceInput');
 const val=parseFloat(input.value);
-if(isNaN(val)||val<0){alert('⚠️ يرجى إدخال رقم صحيح');return}
+if(isNaN(val)||val<0){alert('️ يرجى إدخال رقم صحيح');return}
 if(balanceModalType==='كاش'){cashBalance=val}else{electronicBalance=val}
 saveBalances();renderExpenses();closeBalanceModal();
 }
@@ -1330,7 +1338,7 @@ content.innerHTML=`
 <td class="detail-value ${isAdd?'type-add':'type-spend'}">${isAdd?'➕ إضافة':'💸 صرف'}</td>
 </tr>
 <tr>
-<td class="detail-icon">${isCash?'💵':''}</td>
+<td class="detail-icon">${isCash?'💵':'💳'}</td>
 <td class="detail-label">طريقة الدفع</td>
 <td class="detail-value ${isCash?'cash-val':'electronic-val'}">${isCash?'💵 كاش':'💳 إلكتروني'}</td>
 </tr>
@@ -1340,12 +1348,12 @@ content.innerHTML=`
 <td class="detail-value ${isAdd?'amount-add':'amount-spend'}">${isAdd?'+':'-'}${op.amount.toFixed(2)} ج.م</td>
 </tr>
 <tr>
-<td class="detail-icon"></td>
+<td class="detail-icon">⏰</td>
 <td class="detail-label">الوقت</td>
 <td class="detail-value">${op.time}</td>
 </tr>
 <tr>
-<td class="detail-icon">📅</td>
+<td class="detail-icon"></td>
 <td class="detail-label">التاريخ</td>
 <td class="detail-value">${op.date}</td>
 </tr>
@@ -1356,7 +1364,7 @@ ${op.settled?`
 <td class="detail-value type-add"><span class="settled-tag">✅ مُسددة</span></td>
 </tr>
 <tr>
-<td class="detail-icon">📅</td>
+<td class="detail-icon"></td>
 <td class="detail-label">تاريخ التسديد</td>
 <td class="detail-value">${settledDateStr||'غير محدد'}</td>
 </tr>
@@ -1519,7 +1527,7 @@ let html='';
 sorted.forEach((op)=>{
 const isAdd=op.type==='إضافة';
 const isCash=op.paymentMethod==='كاش';
-const icon=isAdd?(isCash?'':'💳'):(isCash?'💸':'💳');
+const icon=isAdd?(isCash?'💵':'💳'):(isCash?'💸':'💳');
 const isSelected=selectedExpenseIds.includes(op.id);
 const isSettled=op.settled===true;
 html+=`
