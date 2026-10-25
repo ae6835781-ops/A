@@ -361,6 +361,8 @@ display: flex;
 flex-direction: column;
 align-items: center;
 gap: 10px;
+position: relative;
+z-index: 20;
 }
 .header-title { text-align: center; }
 .header h1 { color: var(--text-white); font-size: 1.9rem; font-weight: 900; text-shadow: 0 4px 15px rgba(0,0,0,0.3); margin: 0; }
@@ -371,6 +373,8 @@ gap: 8px;
 align-items: center;
 flex-wrap: nowrap;
 justify-content: center;
+position: relative;
+z-index: 20;
 }
 .header-btn {
 background: rgba(255,255,255,0.2);
@@ -388,6 +392,8 @@ transition: background 0.3s ease, transform 0.2s ease;
 backdrop-filter: blur(5px);
 font-size: 0.85rem;
 white-space: nowrap;
+position: relative;
+z-index: 20;
 }
 .header-btn:hover { background: rgba(255,255,255,0.3); transform: translateY(-2px); }
 .header-btn:active { transform: scale(0.95); }
@@ -1187,7 +1193,7 @@ body.selection-active .expense-checkbox {
     }
 }
 
-/* ✨ شريط التثبيت في الأسفل */
+/* ✨ شريط التثبيت في الأسفل - تم الإصلاح */
 .install-prompt {
     position: fixed;
     bottom: 20px;
@@ -1205,7 +1211,7 @@ body.selection-active .expense-checkbox {
     min-width: 280px;
     backdrop-filter: blur(10px);
     border: 2px solid var(--bg-gradient-start);
-    animation: slideUp 0.4s ease;
+    animation: slideUp 0.4s ease forwards;
 }
 .install-prompt.show {
     display: flex;
@@ -1260,12 +1266,12 @@ body.selection-active .expense-checkbox {
 </head>
 <body>
 <div class="bg-animation">
-<div class="floating-icon physics-1">⚛️</div><div class="floating-icon physics-2">🔭</div>
-<div class="floating-icon chemistry-1">️</div><div class="floating-icon chemistry-2">🧪</div>
-<div class="floating-icon biology-1">🧬</div><div class="floating-icon biology-2"></div>
+<div class="floating-icon physics-1">️</div><div class="floating-icon physics-2">🔭</div>
+<div class="floating-icon chemistry-1">⚗️</div><div class="floating-icon chemistry-2"></div>
+<div class="floating-icon biology-1">🧬</div><div class="floating-icon biology-2">🔬</div>
 <div class="floating-icon arabic-1">📖</div><div class="floating-icon arabic-2">✒️</div>
-<div class="floating-icon english-1">🔤</div><div class="floating-icon english-2">📚</div>
-<div class="floating-icon french-1">🇫</div><div class="floating-icon french-2"></div>
+<div class="floating-icon english-1">🔤</div><div class="floating-icon english-2"></div>
+<div class="floating-icon french-1">🇫</div><div class="floating-icon french-2">🥐</div>
 </div>
 <div class="waves">
 <div class="wave"></div>
@@ -1274,7 +1280,7 @@ body.selection-active .expense-checkbox {
 <div class="container">
 <div class="header">
 <div class="header-title">
-<h1> برنامج المهام اليومية</h1>
+<h1>📋 برنامج المهام اليومية</h1>
 <p>نظّم وقتك ومالك وحقق أهدافك</p>
 </div>
 <div class="header-actions">
@@ -1300,7 +1306,7 @@ body.selection-active .expense-checkbox {
 </div>
 <div class="timer-display">
 <div class="timer" id="timer">25:00</div>
-<div class="timer-label"> الوقت المتبقي</div>
+<div class="timer-label">⏱ الوقت المتبقي</div>
 </div>
 <div class="timer-controls">
 <button class="btn btn-primary" id="startBtn">▶️ ابدأ</button>
@@ -1336,7 +1342,7 @@ body.selection-active .expense-checkbox {
 <div class="add-task-form">
 <input type="text" class="task-input" id="taskInput" placeholder="أضف مهمة جديدة...">
 <div class="category-toggle">
-<button class="category-btn active" id="btnRoutine" onclick="setCategory('routine')">🔄 روتين</button>
+<button class="category-btn active" id="btnRoutine" onclick="setCategory('routine')"> روتين</button>
 <button class="category-btn" id="btnTask" onclick="setCategory('task')">📋 مهمة</button>
 </div>
 <button class="btn btn-primary" onclick="addTask()">➕ إضافة</button>
@@ -1394,7 +1400,7 @@ Made by <a href="https://wa.me/201102594058" target="_blank">Ahmed Emad Farhoud<
             <span>تحديد الكل</span>
         </button>
         <button class="selection-btn deselect-all" onclick="deselectAllExpenses()">
-            <span>️</span>
+            <span>◻️</span>
             <span>إلغاء التحديد</span>
         </button>
         <button class="selection-btn delete-selected" onclick="deleteSelectedExpenses()">
@@ -1406,7 +1412,7 @@ Made by <a href="https://wa.me/201102594058" target="_blank">Ahmed Emad Farhoud<
 
 <div class="wallet-grid">
 <div class="wallet-card cash-wallet" data-wallet="كاش">
-<div class="wallet-icon">💵</div>
+<div class="wallet-icon"></div>
 <div class="wallet-label">رصيد الكاش</div>
 <div class="wallet-balance" id="cashBalance">0.00 ج.م</div>
 </div>
@@ -1423,7 +1429,7 @@ Made by <a href="https://wa.me/201102594058" target="_blank">Ahmed Emad Farhoud<
 </div>
 
 <div style="text-align: center; font-size: 0.6rem; color: var(--text-muted); margin-bottom: 8px;">
- اضغط مطولاً على البطاقة للتعديل
+👆 اضغط مطولاً على البطاقة للتعديل
 </div>
 <div class="expense-form-wrapper">
 <div class="form-title">
@@ -1434,8 +1440,8 @@ Made by <a href="https://wa.me/201102594058" target="_blank">Ahmed Emad Farhoud<
 <input type="text" class="expense-input full-width" id="expenseDesc" placeholder="وصف العملية">
 <input type="number" class="expense-input full-width" id="expenseAmount" placeholder="المبلغ">
 <div class="op-toggle full-width">
-<button class="op-btn active spend-active" id="btnSpend" data-op="صرف"> صرف</button>
-<button class="op-btn" id="btnAdd" data-op="إضافة"> إضافة</button>
+<button class="op-btn active spend-active" id="btnSpend" data-op="صرف">💸 صرف</button>
+<button class="op-btn" id="btnAdd" data-op="إضافة">➕ إضافة</button>
 </div>
 <div class="payment-toggle full-width">
 <button class="payment-btn active cash-active" id="btnCash" data-pay="كاش">💵 كاش</button>
@@ -1501,13 +1507,13 @@ Made by <a href="https://wa.me/201102594058" target="_blank">Ahmed Emad Farhoud<
 <div class="report-section"><h4>🎯 مجالات للتحسين</h4><ul class="improvement-list" id="reportImprovements"><li>جاري تحليل البيانات...</li></ul></div>
 <div class="report-section"><h4>💡 نصائح للتطوير</h4><ul class="improvement-list" id="reportTips"><li>استمر في المثابرة، كل خطوة تحسب لك!</li></ul></div>
 <div class="report-history-section">
-<h4>📚 سجل التقارير <span style="font-size:0.65rem;color:var(--text-muted);font-weight:400;">(اضغط للتفاصيل)</span></h4>
+<h4> سجل التقارير <span style="font-size:0.65rem;color:var(--text-muted);font-weight:400;">(اضغط للتفاصيل)</span></h4>
 <div class="report-history-list" id="reportHistoryList">
 <div class="report-history-empty">لا توجد تقارير محفوظة بعد</div>
 </div>
 <button class="clear-all-history" id="clearAllHistoryBtn" onclick="clearAllHistory()" style="display:none;">🗑️ حذف كل السجل</button>
 </div>
-<button class="export-btn" id="exportBtn" onclick="exportReport()"> نسخ التقرير وبدء يوم جديد</button>
+<button class="export-btn" id="exportBtn" onclick="exportReport()">📋 نسخ التقرير وبدء يوم جديد</button>
 <div class="report-date" id="reportDate"></div>
 </div>
 </div>
@@ -1558,16 +1564,23 @@ navigator.serviceWorker.register(swUrl).then(reg => console.log('✅ Service Wor
 });
 }
 
-// PWA Install Prompt
+// PWA Install Prompt - تم الإصلاح
 let deferredPrompt;
 const installPrompt = document.getElementById('installPrompt');
 
 window.addEventListener('beforeinstallprompt', e => {
 e.preventDefault();
 deferredPrompt = e;
+// تأخير بسيط عشان الصفحة تخلص loading
 setTimeout(() => {
 if (localStorage.getItem('installPromptDismissed') !== 'true') {
 installPrompt.classList.add('show');
+// إخفاء تلقائي بعد 8 ثواني
+setTimeout(() => {
+if (installPrompt.classList.contains('show')) {
+installPrompt.classList.remove('show');
+}
+}, 8000);
 }
 }, 1500);
 });
@@ -1587,6 +1600,8 @@ console.log('✅ User accepted');
 deferredPrompt = null;
 installPrompt.classList.remove('show');
 });
+} else {
+alert('📱 لتثبيت التطبيق:\n\nعلى Android Chrome:\n1. اضغط على النقاط الثلاث ⋮\n2. اختر "تثبيت التطبيق"\n\nعلى iPhone Safari:\n1. اضغط على زر المشاركة\n2. اختر "إضافة إلى الشاشة الرئيسية"');
 }
 }
 
@@ -1598,7 +1613,7 @@ localStorage.setItem('installPromptDismissed', 'true');
 const themeOrder = ['light', 'dark', 'sunset', 'ocean', 'sakura', 'forest', 'barbie'];
 const themeIcons = {
 light: '☀️', dark: '🌙', sunset: '🌅',
-ocean: '🌊', sakura: '🌸', forest: '', barbie: '💖'
+ocean: '🌊', sakura: '🌸', forest: '🌳', barbie: ''
 };
 const themeNames = {
 light: 'فاتح', dark: 'داكن', sunset: 'غروب',
@@ -1670,7 +1685,7 @@ try {
 localStorage.setItem('brainDump', document.getElementById('brainDump').value);
 const st = document.getElementById('brainStatus');
 st.textContent = '✅ تم الحفظ'; st.classList.add('saved');
-setTimeout(() => { st.textContent = ' يُحفظ تلقائياً'; st.classList.remove('saved'); }, 2000);
+setTimeout(() => { st.textContent = '💾 يُحفظ تلقائياً'; st.classList.remove('saved'); }, 2000);
 } catch(e) {}
 }
 function saveReportHistory() { try { localStorage.setItem('reportHistory', JSON.stringify(reportHistory)); } catch(e) {} }
@@ -1838,7 +1853,7 @@ if (currentGroup.length > 0) groups.push(currentGroup);
 let html = '';
 groups.forEach((group, gIdx) => {
 if (gIdx > 0) {
-html += `<div class="report-group-divider"><span class="report-group-label">⏸️ فاصل 5 أيام</span></div>`;
+html += `<div class="report-group-divider"><span class="report-group-label">️ فاصل 5 أيام</span></div>`;
 }
 group.forEach(report => {
 const realIdx = reportHistory.indexOf(report);
@@ -1879,14 +1894,14 @@ document.getElementById('reportDetailContent').innerHTML = `
 <div style="text-align:center;margin-bottom:10px;"><span class="grade-badge" style="background:${gi.color};color:white;">${r.date}</span></div>
 <div class="detail-stats">
 <div class="detail-stat-card"><div class="detail-stat-value">${r.totalPercent}%</div><div class="detail-stat-label">النسبة الكلية</div></div>
-<div class="detail-stat-card"><div class="detail-stat-value" style="color:var(--routine-border);">${r.routinePercent}%</div><div class="detail-stat-label">🔄 الروتين</div></div>
+<div class="detail-stat-card"><div class="detail-stat-value" style="color:var(--routine-border);">${r.routinePercent}%</div><div class="detail-stat-label"> الروتين</div></div>
 <div class="detail-stat-card"><div class="detail-stat-value" style="color:var(--task-border);">${r.taskPercent}%</div><div class="detail-stat-label">📋 المهام</div></div>
 <div class="detail-stat-card"><div class="detail-stat-value">${r.totalTasks}</div><div class="detail-stat-label">إجمالي المهام</div></div>
 </div>
 <div class="detail-section"><h5>🔄 روتينك - الي اتعمل (${r.routineCompleted})</h5><ul class="detail-task-list">${rComp}</ul></div>
 <div class="detail-section"><h5>🔄 روتينك - الي متعملش (${r.routineIncomplete})</h5><ul class="detail-task-list">${rInc}</ul></div>
 <div class="detail-section"><h5>📋 مهامك - الي اتعمل (${r.taskCompleted})</h5><ul class="detail-task-list">${tComp}</ul></div>
-<div class="detail-section"><h5> مهامك - الي متعملش (${r.taskIncomplete})</h5><ul class="detail-task-list">${tInc}</ul></div>
+<div class="detail-section"><h5>📋 مهامك - الي متعملش (${r.taskIncomplete})</h5><ul class="detail-task-list">${tInc}</ul></div>
 <button class="detail-back-btn" onclick="closeReportDetail()">↩️ رجوع</button>
 `;
 document.getElementById('reportDetailModal').classList.add('show');
@@ -2055,7 +2070,7 @@ return `<li class="task-item ${task.status==='correct'?'correct':''} ${task.stat
 <div class="task-actions">
 <button class="action-btn correct-btn" data-correct-id="${task.id}" title="صحيح">✓</button>
 <button class="action-btn wrong-btn" data-wrong-id="${task.id}" title="خطأ">✗</button>
-<button class="action-btn delete-btn" data-delete-id="${task.id}" title="حذف">🗑️</button>
+<button class="action-btn delete-btn" data-delete-id="${task.id}" title="حذف">️</button>
 </div>
 </li>`;
 }).join('');
@@ -2070,7 +2085,7 @@ document.getElementById(pctid).textContent = p + '%';
 }
 function renderAllTasks() {
 renderTasksByCategory('routine', 'routineList', 'routineCompleted', 'routineTotal', 'routineProgressBar', 'routineProgressPercent', 'لا توجد روتينيات بعد. أضف روتينك الأول!', '🔄');
-renderTasksByCategory('task', 'taskList', 'taskCompleted', 'taskTotal', 'taskProgressBar', 'taskProgressPercent', 'لا توجد مهام بعد. أضف مهمتك الأولى!', '📝');
+renderTasksByCategory('task', 'taskList', 'taskCompleted', 'taskTotal', 'taskProgressBar', 'taskProgressPercent', 'لا توجد مهام بعد. أضف مهمتك الأولى!', '');
 initMobileTap(); initTouchDrag(); updateAllProgressColors();
 }
 function updateAllProgressColors() {
@@ -2354,12 +2369,12 @@ content.innerHTML = `
 <td class="detail-value desc-value" colspan="1">${op.desc}</td>
 </tr>
 <tr>
-<td class="detail-icon">${isAdd ? '💚' : '💔'}</td>
+<td class="detail-icon">${isAdd ? '' : '💔'}</td>
 <td class="detail-label">النوع</td>
 <td class="detail-value ${isAdd ? 'type-add' : 'type-spend'}">${isAdd ? '➕ إضافة' : '💸 صرف'}</td>
 </tr>
 <tr>
-<td class="detail-icon">${isCash ? '' : '💳'}</td>
+<td class="detail-icon">${isCash ? '💵' : '💳'}</td>
 <td class="detail-label">طريقة الدفع</td>
 <td class="detail-value ${isCash ? 'cash-val' : 'electronic-val'}">${isCash ? '💵 كاش' : '💳 إلكتروني'}</td>
 </tr>
@@ -2369,7 +2384,7 @@ content.innerHTML = `
 <td class="detail-value ${isAdd ? 'amount-add' : 'amount-spend'}">${isAdd ? '+' : '-'}${op.amount.toFixed(2)} ج.م</td>
 </tr>
 <tr>
-<td class="detail-icon">⏰</td>
+<td class="detail-icon"></td>
 <td class="detail-label">الوقت</td>
 <td class="detail-value">${op.time}</td>
 </tr>
@@ -2385,7 +2400,7 @@ ${op.settled ? `
 <td class="detail-value type-add"><span class="settled-tag">✅ مُسددة</span></td>
 </tr>
 <tr>
-<td class="detail-icon"></td>
+<td class="detail-icon">📅</td>
 <td class="detail-label">تاريخ التسديد</td>
 <td class="detail-value">${settledDateStr || 'غير محدد'}</td>
 </tr>
@@ -2394,7 +2409,7 @@ ${op.settled ? `
 <div class="details-modal-actions">
 <button class="repeat-modal-btn" data-repeat-id="${op.id}">🔄 تكرار</button>
 <button class="delete-modal-btn" data-delete-op-id="${op.id}">🗑️ حذف</button>
-<button class="close-details-btn" id="closeDetailsBtn">✖️ إغلاق</button>
+<button class="close-details-btn" id="closeDetailsBtn">️ إغلاق</button>
 </div>
 `;
 document.getElementById('detailsModal').classList.add('show');
@@ -2765,7 +2780,7 @@ if (checkbox) {
     return;
 }
 
-/*  النقر على العملية في وضع التحديد لتحديدها/إلغاء تحديدها */
+/* ✨ النقر على العملية في وضع التحديد لتحديدها/إلغاء تحديدها */
 if (isSelectionMode) {
     const expenseItem = e.target.closest('.expense-log-item');
     if (expenseItem && !e.target.closest('.expense-log-info-btn') && !e.target.closest('.settle-btn') && !e.target.closest('.expense-checkbox')) {
