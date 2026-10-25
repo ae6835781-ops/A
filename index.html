@@ -7,7 +7,8 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="theme-color" content="#667eea">
 <title>برنامج المهام اليومية الاحترافي</title>
-<link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjoiYnJubmFtZyBhbG1oYXTigqkgYWx5d21pYSIsInNob3J0X25hbWUiOiJhbG1oYXTigqkgYWx5d21pYSIsInN0YXJ0X3VybCI6Ii8iLCJkaXNwbGF5Ijoic3RhbmRhbG9uZSIsImJhY2tncm91bmRfY29sb3IiOiIjNjY3ZWVhIiwidGhlbWVfY29sb3IiOiIjNjY3ZWVhIiwib3JpZW50YXRpb24iOiJwb3J0cmFpdCJ9">
+<!-- تم تحديث رابط الـ Manifest لملف خارجي لضمان التثبيت على جميع الأجهزة -->
+<link rel="manifest" href="manifest.json">
 <style>
 body {
 font-family: 'Segoe UI', 'Tahoma', 'Arial', 'Noto Sans Arabic', sans-serif;
@@ -766,7 +767,6 @@ flex-shrink: 0;
 .expense-log-amount.add { color: var(--correct-btn-bg); }
 .expense-log-amount.spend { color: var(--wrong-btn-bg); }
 
-/* ✨ أزرار التفاصيل والتسديد ظاهرة دائماً */
 .expense-log-info-btn,
 .settle-btn {
     width: 26px;
@@ -796,7 +796,6 @@ flex-shrink: 0;
 }
 .settle-btn:hover { transform: scale(1.15); box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3); }
 
-/* ✨ العملية المُسددة - خط شطب فقط بدون شارات */
 .expense-log-item.settled {
     opacity: 0.6;
 }
@@ -815,7 +814,6 @@ flex-shrink: 0;
     opacity: 0.5;
 }
 
-/* شارة "مُسددة" فقط في التفاصيل */
 .settled-tag {
     font-size: 0.7rem;
     background: var(--correct-btn-bg);
@@ -1032,10 +1030,6 @@ border-color: #8892ff;
 background: #8892ff;
 color: #ffffff;
 }
-
-/* ================================ */
-/* ✨ الميزات الجديدة - التحديد المتعدد */
-/* ================================ */
 
 .selection-mode-bar {
     background: linear-gradient(135deg, rgba(40, 167, 69, 0.15) 0%, rgba(40, 167, 69, 0.05) 100%);
@@ -1441,37 +1435,17 @@ Made by <a href="https://wa.me/201102594058" target="_blank">Ahmed Emad Farhoud<
 <div class="report-date" id="reportDate"></div>
 </div>
 </div>
+
 <script>
+// ✅ تم تحديث تسجيل الـ Service Worker ليشير لملف خارجي لضمان العمل الأوفلاين بشكل موثوق
 if ('serviceWorker' in navigator) {
-const swCode = `
-const CACHE_NAME = 'tasks-app-v1';
-const urlsToCache = ['/'];
-self.addEventListener('install', event => {
-event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(urlsToCache)));
-self.skipWaiting();
-});
-self.addEventListener('fetch', event => {
-event.respondWith(caches.match(event.request).then(response => {
-if (response) return response;
-return fetch(event.request).catch(() => caches.match('/'));
-}));
-});
-self.addEventListener('activate', event => {
-const cacheWhitelist = [CACHE_NAME];
-event.waitUntil(caches.keys().then(cacheNames => {
-return Promise.all(cacheNames.map(cacheName => {
-if (cacheWhitelist.indexOf(cacheName) === -1) return caches.delete(cacheName);
-}));
-}));
-self.clients.claim();
-});
-`;
-const blob = new Blob([swCode], { type: 'application/javascript' });
-const swUrl = URL.createObjectURL(blob);
-window.addEventListener('load', () => {
-navigator.serviceWorker.register(swUrl).then(reg => console.log('✅ Service Worker registered')).catch(err => console.log('❌ Service Worker registration failed'));
-});
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js')
+      .then(reg => console.log('✅ Service Worker registered'))
+      .catch(err => console.log('❌ Service Worker registration failed', err));
+  });
 }
+
 const themeOrder = ['light', 'dark', 'sunset', 'ocean', 'sakura', 'forest', 'barbie'];
 const themeIcons = {
 light: '☀️', dark: '🌙', sunset: '🌅',
@@ -2642,7 +2616,6 @@ if (checkbox) {
     return;
 }
 
-/* ✨ النقر على العملية في وضع التحديد لتحديدها/إلغاء تحديدها */
 if (isSelectionMode) {
     const expenseItem = e.target.closest('.expense-log-item');
     if (expenseItem && !e.target.closest('.expense-log-info-btn') && !e.target.closest('.settle-btn') && !e.target.closest('.expense-checkbox')) {
@@ -2654,12 +2627,10 @@ if (isSelectionMode) {
     }
 }
 
-/* ✨ النقر على عملية خارج وضع التحديد - إذا كانت محددة مسبقاً، يمكن الرجوع لها */
 const expenseItem = e.target.closest('.expense-log-item');
 if (expenseItem && !e.target.closest('.expense-log-info-btn') && !e.target.closest('.settle-btn') && !e.target.closest('.expense-checkbox') && !isSelectionMode) {
     const opId = parseInt(expenseItem.dataset.opId);
     if (opId && selectedExpenseIds.includes(opId)) {
-        // إذا كانت العملية محددة مسبقاً، الدخول في وضع التحديد مع الحفاظ على التحديد السابق
         isSelectionMode = true;
         const bar = document.getElementById('selectionModeBar');
         bar.classList.add('show');
