@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -10,17 +10,18 @@
 <meta name="theme-color" content="#667eea">
 <meta name="application-name" content="برنامج المهام اليومية الاحترافي">
 <meta name="description" content="نظّم وقتك ومالك وحقق أهدافك">
-<link rel="manifest" href='data:application/manifest+json;charset=utf-8,{"name":"برنامج المهام اليومية الاحترافي","short_name":"المهام اليومية","description":"نظّم وقتك ومالك وحقق أهدافك","start_url":"./","display":"standalone","background_color":"%23667eea","theme_color":"%23667eea","orientation":"portrait","dir":"rtl","lang":"ar","icons":[{"src":"data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23667eea%22 rx=%2220%22/><text x=%2250%22 y=%2265%22 font-size=%2250%22 text-anchor=%22middle%22>📋</text></svg>","sizes":"192x192","type":"image/svg+xml"}]}'>
 <title>برنامج المهام اليومية الاحترافي</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon.png">
 <style>
-body{font-family:'Segoe UI','Tahoma','Arial','Noto Sans Arabic',sans-serif;min-height:100vh;overflow-x:hidden;background:var(--bg-primary);position:relative;transition:background .5s ease;color:var(--text-primary);-webkit-tap-highlight-color:transparent;touch-action:manipulation;padding-top:env(safe-area-inset-top,40px)}
-:root{--bg-gradient-start:#667eea;--bg-gradient-end:#764ba2;--bg-primary:linear-gradient(135deg,var(--bg-gradient-start) 0%,var(--bg-gradient-end) 100%);--card-bg:rgba(255,255,255,.95);--card-bg-alt:rgba(255,255,255,.85);--text-primary:#333;--text-secondary:#555;--text-muted:#777;--text-white:#fff;--input-bg:#fff;--input-border:#e0e0e0;--task-bg:#f8f9fa;--task-bg-correct:#d4edda;--task-bg-wrong:#f8d7da;--progress-bg:#e0e0e0;--shadow-color:rgba(0,0,0,.3);--shadow-light:rgba(0,0,0,.1);--btn-secondary-bg:#f0f0f0;--btn-secondary-bg-hover:#e0e0e0;--delete-btn-bg:#ff4757;--delete-btn-bg-hover:#ff3344;--correct-btn-bg:#28a745;--correct-btn-bg-hover:#218838;--wrong-btn-bg:#dc3545;--wrong-btn-bg-hover:#c82333;--edit-btn-bg:#17a2b8;--edit-btn-bg-hover:#138496;--undo-btn-bg:#6c757d;--undo-btn-bg-hover:#5a6268;--snackbar-bg:#333;--routine-border:#667eea;--task-border:#764ba2;--empty-state-opacity:.5;--drag-handle-color:#aaa;--neon-glow:rgba(102,126,234,.6);--progress-text-color:#667eea;--report-excellent:#28a745;--report-good:#17a2b8;--report-average:#ffc107;--report-weak:#dc3545;--pct-excellent:#28a745;--pct-good:#17a2b8;--pct-average:#ffc107;--pct-weak:#dc3545;--cash-color:#28a745;--cash-bg:#d4edda;--electronic-color:#17a2b8;--electronic-bg:#d1ecf1;--expense-bg:#28a745;--total-balance-bg:rgba(102,126,234,.1);--total-balance-border:#667eea}
-[data-theme="dark"]{--bg-gradient-start:#1a1a2e;--bg-gradient-end:#16213e;--bg-primary:linear-gradient(135deg,#1a1a2e 0%,#16213e 100%);--card-bg:rgba(30,30,50,.95);--card-bg-alt:rgba(40,40,70,.9);--text-primary:#f0f0f0;--text-secondary:#ccc;--text-muted:#aaa;--text-white:#fff;--input-bg:#2a2a4a;--input-border:#444;--task-bg:#252545;--task-bg-correct:#1e5631;--task-bg-wrong:#5c1e2a;--progress-bg:#3a3a5a;--shadow-color:rgba(0,0,0,.5);--shadow-light:rgba(0,0,0,.2);--btn-secondary-bg:#3a3a5a;--btn-secondary-bg-hover:#4a4a6a;--delete-btn-bg:#dc3545;--delete-btn-bg-hover:#c82333;--correct-btn-bg:#2ecc71;--correct-btn-bg-hover:#27ae60;--wrong-btn-bg:#e74c3c;--wrong-btn-bg-hover:#c0392b;--edit-btn-bg:#20c997;--edit-btn-bg-hover:#1ea67d;--undo-btn-bg:#6c757d;--undo-btn-bg-hover:#5a6268;--snackbar-bg:#444;--routine-border:#8892ff;--task-border:#a894ff;--empty-state-opacity:.3;--drag-handle-color:#666;--neon-glow:rgba(136,146,255,.7);--progress-text-color:#8892ff;--report-excellent:#2ecc71;--report-good:#20c997;--report-average:#f39c12;--report-weak:#e74c3c;--pct-excellent:#2ecc71;--pct-good:#20c997;--pct-average:#f39c12;--pct-weak:#e74c3c;--cash-color:#2ecc71;--cash-bg:rgba(46,204,113,.15);--electronic-color:#3498db;--electronic-bg:rgba(52,152,219,.15);--expense-bg:#8892ff;--total-balance-bg:rgba(136,146,255,.15);--total-balance-border:#8892ff}
-[data-theme="sunset"]{--bg-gradient-start:#ff6e7f;--bg-gradient-end:#bfe9ff;--bg-primary:linear-gradient(135deg,#ff9a56 0%,#ff6e7f 50%,#bfe9ff 100%);--card-bg:rgba(255,250,245,.95);--card-bg-alt:rgba(255,245,235,.9);--text-primary:#3d2c2c;--text-secondary:#5a3c3c;--text-muted:#8a6060;--input-bg:#fffaf5;--input-border:#ffd4b8;--task-bg:#fff5ee;--task-bg-correct:#e8f5e9;--task-bg-wrong:#ffebee;--progress-bg:#ffe0cc;--shadow-color:rgba(255,110,127,.3);--shadow-light:rgba(255,110,127,.15);--btn-secondary-bg:#fff0e5;--btn-secondary-bg-hover:#ffe0cc;--routine-border:#ff6e7f;--task-border:#ff9a56;--neon-glow:rgba(255,110,127,.6);--progress-text-color:#ff6e7f;--cash-color:#f97316;--cash-bg:#fff7ed;--electronic-color:#0ea5e9;--electronic-bg:#f0f9ff;--expense-bg:#ff6e7f;--total-balance-bg:rgba(255,110,127,.12);--total-balance-border:#ff6e7f}
-[data-theme="ocean"]{--bg-gradient-start:#2193b0;--bg-gradient-end:#6dd5ed;--bg-primary:linear-gradient(135deg,#2193b0 0%,#6dd5ed 100%);--card-bg:rgba(240,250,255,.95);--card-bg-alt:rgba(230,245,255,.9);--text-primary:#1a3a4a;--text-secondary:#3a5a6a;--text-muted:#5a7a8a;--input-bg:#f0faff;--input-border:#b8e0f0;--task-bg:#f0faff;--task-bg-correct:#e0f7e9;--task-bg-wrong:#ffe5e8;--progress-bg:#cce8f5;--shadow-color:rgba(33,147,176,.3);--shadow-light:rgba(33,147,176,.15);--btn-secondary-bg:#e0f5ff;--btn-secondary-bg-hover:#cce8f5;--routine-border:#2193b0;--task-border:#6dd5ed;--neon-glow:rgba(33,147,176,.6);--progress-text-color:#2193b0;--cash-color:#10b981;--cash-bg:#ecfdf5;--electronic-color:#0ea5e9;--electronic-bg:#f0f9ff;--expense-bg:#2193b0;--total-balance-bg:rgba(33,147,176,.12);--total-balance-border:#2193b0}
-[data-theme="sakura"]{--bg-gradient-start:#ff9a9e;--bg-gradient-end:#fad0c4;--bg-primary:linear-gradient(135deg,#ff9a9e 0%,#fecfef 50%,#fad0c4 100%);--card-bg:rgba(255,248,250,.95);--card-bg-alt:rgba(255,240,245,.9);--text-primary:#4a2c3a;--text-secondary:#6a4c5a;--text-muted:#8a6a7a;--input-bg:#fff8fa;--input-border:#ffc8d8;--task-bg:#fff8fa;--task-bg-correct:#e8f5e9;--task-bg-wrong:#ffebee;--progress-bg:#ffd8e4;--shadow-color:rgba(255,154,158,.3);--shadow-light:rgba(255,154,158,.15);--btn-secondary-bg:#fff0f5;--btn-secondary-bg-hover:#ffe0ea;--routine-border:#ff9a9e;--task-border:#fecfef;--neon-glow:rgba(255,154,158,.6);--progress-text-color:#ff9a9e;--cash-color:#f43f5e;--cash-bg:#fff1f2;--electronic-color:#a855f7;--electronic-bg:#faf5ff;--expense-bg:#ff9a9e;--total-balance-bg:rgba(255,154,158,.12);--total-balance-border:#ff9a9e}
-[data-theme="forest"]{--bg-gradient-start:#134e5e;--bg-gradient-end:#71b280;--bg-primary:linear-gradient(135deg,#134e5e 0%,#71b280 100%);--card-bg:rgba(245,252,248,.95);--card-bg-alt:rgba(235,248,240,.9);--text-primary:#1a3a2a;--text-secondary:#3a5a4a;--text-muted:#5a7a6a;--input-bg:#f5fcf8;--input-border:#b8d8c8;--task-bg:#f5fcf8;--task-bg-correct:#d4edda;--task-bg-wrong:#ffe5e8;--progress-bg:#c8e0d4;--shadow-color:rgba(19,78,94,.3);--shadow-light:rgba(19,78,94,.15);--btn-secondary-bg:#e5f5ec;--btn-secondary-bg-hover:#d0e8dc;--routine-border:#134e5e;--task-border:#71b280;--neon-glow:rgba(113,178,128,.6);--progress-text-color:#134e5e;--cash-color:#22c55e;--cash-bg:#f0fdf4;--electronic-color:#14b8a6;--electronic-bg:#f0fdfa;--expense-bg:#134e5e;--total-balance-bg:rgba(19,78,94,.12);--total-balance-border:#134e5e}
-[data-theme="barbie"]{--bg-gradient-start:#d81b60;--bg-gradient-end:#f48fb1;--bg-primary:linear-gradient(135deg,#d81b60 0%,#f48fb1 100%);--card-bg:rgba(255,240,245,.95);--card-bg-alt:rgba(252,228,236,.9);--text-primary:#880e4f;--text-secondary:#ad1457;--text-muted:#c2185b;--text-white:#fff;--input-bg:#fff0f5;--input-border:#f8bbd0;--task-bg:#fce4ec;--task-bg-correct:#dcfce7;--task-bg-wrong:#ffe4e6;--progress-bg:#f8bbd0;--shadow-color:rgba(216,27,96,.25);--shadow-light:rgba(216,27,96,.1);--btn-secondary-bg:#fce4ec;--btn-secondary-bg-hover:#f8bbd0;--delete-btn-bg:#e91e63;--delete-btn-bg-hover:#c2185b;--correct-btn-bg:#16a34a;--correct-btn-bg-hover:#15803d;--wrong-btn-bg:#e11d48;--wrong-btn-bg-hover:#be123c;--edit-btn-bg:#d81b60;--edit-btn-bg-hover:#be185d;--undo-btn-bg:#9d174d;--undo-btn-bg-hover:#831843;--snackbar-bg:#880e4f;--routine-border:#d81b60;--task-border:#f48fb1;--empty-state-opacity:.6;--drag-handle-color:#f48fb1;--neon-glow:rgba(244,143,177,.6);--progress-text-color:#d81b60;--report-excellent:#d81b60;--report-good:#f48fb1;--report-average:#f9a8d4;--report-weak:#880e4f;--pct-excellent:#d81b60;--pct-good:#f48fb1;--pct-average:#f9a8d4;--pct-weak:#880e4f;--cash-color:#ec4899;--cash-bg:#fdf2f8;--electronic-color:#be185d;--electronic-bg:#fdf2f8;--expense-bg:#d81b60;--total-balance-bg:rgba(216,27,96,.12);--total-balance-border:#d81b60}
+body{font-family:'Segoe UI','Tahoma','Arial',sans-serif;min-height:100vh;overflow-x:hidden;background:var(--bg-primary);position:relative;transition:background .5s ease;color:var(--text-primary);-webkit-tap-highlight-color:transparent;touch-action:manipulation;padding-top:env(safe-area-inset-top,40px)}
+:root{--bg-gradient-start:#667eea;--bg-gradient-end:#764ba2;--bg-primary:linear-gradient(135deg,var(--bg-gradient-start) 0%,var(--bg-gradient-end) 100%);--card-bg:rgba(255,255,255,.95);--card-bg-alt:rgba(255,255,255,.85);--text-primary:#333;--text-secondary:#555;--text-muted:#777;--text-white:#fff;--input-bg:#fff;--input-border:#e0e0e0;--task-bg:#f8f9fa;--task-bg-correct:#d4edda;--task-bg-wrong:#f8d7da;--progress-bg:#e0e0e0;--shadow-color:rgba(0,0,0,.3);--shadow-light:rgba(0,0,0,.1);--btn-secondary-bg:#f0f0f0;--btn-secondary-bg-hover:#e0e0e0;--delete-btn-bg:#ff4757;--correct-btn-bg:#28a745;--correct-btn-bg-hover:#218838;--wrong-btn-bg:#dc3545;--undo-btn-bg:#6c757d;--snackbar-bg:#333;--routine-border:#667eea;--task-border:#764ba2;--empty-state-opacity:.5;--drag-handle-color:#aaa;--neon-glow:rgba(102,126,234,.6);--progress-text-color:#667eea;--report-excellent:#28a745;--report-good:#17a2b8;--report-average:#ffc107;--report-weak:#dc3545;--pct-excellent:#28a745;--pct-good:#17a2b8;--pct-average:#ffc107;--pct-weak:#dc3545;--cash-color:#28a745;--cash-bg:#d4edda;--electronic-color:#17a2b8;--electronic-bg:#d1ecf1;--expense-bg:#28a745;--total-balance-bg:rgba(102,126,234,.1);--total-balance-border:#667eea}
+[data-theme="dark"]{--bg-gradient-start:#1a1a2e;--bg-gradient-end:#16213e;--bg-primary:linear-gradient(135deg,#1a1a2e 0%,#16213e 100%);--card-bg:rgba(30,30,50,.95);--card-bg-alt:rgba(40,40,70,.9);--text-primary:#f0f0f0;--text-secondary:#ccc;--text-muted:#aaa;--text-white:#fff;--input-bg:#2a2a4a;--input-border:#444;--task-bg:#252545;--task-bg-correct:#1e5631;--task-bg-wrong:#5c1e2a;--progress-bg:#3a3a5a;--shadow-color:rgba(0,0,0,.5);--shadow-light:rgba(0,0,0,.2);--btn-secondary-bg:#3a3a5a;--btn-secondary-bg-hover:#4a4a6a;--delete-btn-bg:#dc3545;--correct-btn-bg:#2ecc71;--correct-btn-bg-hover:#27ae60;--wrong-btn-bg:#e74c3c;--undo-btn-bg:#6c757d;--snackbar-bg:#444;--routine-border:#8892ff;--task-border:#a894ff;--empty-state-opacity:.3;--drag-handle-color:#666;--neon-glow:rgba(136,146,255,.7);--progress-text-color:#8892ff;--report-excellent:#2ecc71;--report-good:#20c997;--report-average:#f39c12;--report-weak:#e74c3c;--pct-excellent:#2ecc71;--pct-good:#20c997;--pct-average:#f39c12;--pct-weak:#e74c3c;--cash-color:#2ecc71;--cash-bg:rgba(46,204,113,.15);--electronic-color:#3498db;--electronic-bg:rgba(52,152,219,.15);--expense-bg:#8892ff;--total-balance-bg:rgba(136,146,255,.15);--total-balance-border:#8892ff}
+[data-theme="sunset"]{--bg-gradient-start:#ff6e7f;--bg-gradient-end:#bfe9ff;--bg-primary:linear-gradient(135deg,#ff9a56 0%,#ff6e7f 50%,#bfe9ff 100%);--card-bg:rgba(255,250,245,.95);--text-primary:#3d2c2c;--text-secondary:#5a3c3c;--text-muted:#8a6060;--input-bg:#fffaf5;--input-border:#ffd4b8;--task-bg:#fff5ee;--task-bg-correct:#e8f5e9;--task-bg-wrong:#ffebee;--progress-bg:#ffe0cc;--shadow-color:rgba(255,110,127,.3);--btn-secondary-bg:#fff0e5;--btn-secondary-bg-hover:#ffe0cc;--routine-border:#ff6e7f;--task-border:#ff9a56;--neon-glow:rgba(255,110,127,.6);--progress-text-color:#ff6e7f;--cash-color:#f97316;--cash-bg:#fff7ed;--electronic-color:#0ea5e9;--electronic-bg:#f0f9ff;--expense-bg:#ff6e7f;--total-balance-bg:rgba(255,110,127,.12);--total-balance-border:#ff6e7f}
+[data-theme="ocean"]{--bg-gradient-start:#2193b0;--bg-gradient-end:#6dd5ed;--bg-primary:linear-gradient(135deg,#2193b0 0%,#6dd5ed 100%);--card-bg:rgba(240,250,255,.95);--text-primary:#1a3a4a;--text-secondary:#3a5a6a;--text-muted:#5a7a8a;--input-bg:#f0faff;--input-border:#b8e0f0;--task-bg:#f0faff;--task-bg-correct:#e0f7e9;--task-bg-wrong:#ffe5e8;--progress-bg:#cce8f5;--shadow-color:rgba(33,147,176,.3);--btn-secondary-bg:#e0f5ff;--btn-secondary-bg-hover:#cce8f5;--routine-border:#2193b0;--task-border:#6dd5ed;--neon-glow:rgba(33,147,176,.6);--progress-text-color:#2193b0;--cash-color:#10b981;--cash-bg:#ecfdf5;--electronic-color:#0ea5e9;--electronic-bg:#f0f9ff;--expense-bg:#2193b0;--total-balance-bg:rgba(33,147,176,.12);--total-balance-border:#2193b0}
+[data-theme="sakura"]{--bg-gradient-start:#ff9a9e;--bg-gradient-end:#fad0c4;--bg-primary:linear-gradient(135deg,#ff9a9e 0%,#fecfef 50%,#fad0c4 100%);--card-bg:rgba(255,248,250,.95);--text-primary:#4a2c3a;--text-secondary:#6a4c5a;--text-muted:#8a6a7a;--input-bg:#fff8fa;--input-border:#ffc8d8;--task-bg:#fff8fa;--task-bg-correct:#e8f5e9;--task-bg-wrong:#ffebee;--progress-bg:#ffd8e4;--shadow-color:rgba(255,154,158,.3);--btn-secondary-bg:#fff0f5;--btn-secondary-bg-hover:#ffe0ea;--routine-border:#ff9a9e;--task-border:#fecfef;--neon-glow:rgba(255,154,158,.6);--progress-text-color:#ff9a9e;--cash-color:#f43f5e;--cash-bg:#fff1f2;--electronic-color:#a855f7;--electronic-bg:#faf5ff;--expense-bg:#ff9a9e;--total-balance-bg:rgba(255,154,158,.12);--total-balance-border:#ff9a9e}
+[data-theme="forest"]{--bg-gradient-start:#134e5e;--bg-gradient-end:#71b280;--bg-primary:linear-gradient(135deg,#134e5e 0%,#71b280 100%);--card-bg:rgba(245,252,248,.95);--text-primary:#1a3a2a;--text-secondary:#3a5a4a;--text-muted:#5a7a6a;--input-bg:#f5fcf8;--input-border:#b8d8c8;--task-bg:#f5fcf8;--task-bg-correct:#d4edda;--task-bg-wrong:#ffe5e8;--progress-bg:#c8e0d4;--shadow-color:rgba(19,78,94,.3);--btn-secondary-bg:#e5f5ec;--btn-secondary-bg-hover:#d0e8dc;--routine-border:#134e5e;--task-border:#71b280;--neon-glow:rgba(113,178,128,.6);--progress-text-color:#134e5e;--cash-color:#22c55e;--cash-bg:#f0fdf4;--electronic-color:#14b8a6;--electronic-bg:#f0fdfa;--expense-bg:#134e5e;--total-balance-bg:rgba(19,78,94,.12);--total-balance-border:#134e5e}
+[data-theme="barbie"]{--bg-gradient-start:#d81b60;--bg-gradient-end:#f48fb1;--bg-primary:linear-gradient(135deg,#d81b60 0%,#f48fb1 100%);--card-bg:rgba(255,240,245,.95);--text-primary:#880e4f;--text-secondary:#ad1457;--text-muted:#c2185b;--text-white:#fff;--input-bg:#fff0f5;--input-border:#f8bbd0;--task-bg:#fce4ec;--task-bg-correct:#dcfce7;--task-bg-wrong:#ffe4e6;--progress-bg:#f8bbd0;--shadow-color:rgba(216,27,96,.25);--btn-secondary-bg:#fce4ec;--btn-secondary-bg-hover:#f8bbd0;--delete-btn-bg:#e91e63;--correct-btn-bg:#16a34a;--correct-btn-bg-hover:#15803d;--wrong-btn-bg:#e11d48;--undo-btn-bg:#9d174d;--snackbar-bg:#880e4f;--routine-border:#d81b60;--task-border:#f48fb1;--empty-state-opacity:.6;--drag-handle-color:#f48fb1;--neon-glow:rgba(244,143,177,.6);--progress-text-color:#d81b60;--report-excellent:#d81b60;--report-good:#f48fb1;--report-average:#f9a8d4;--report-weak:#880e4f;--pct-excellent:#d81b60;--pct-good:#f48fb1;--pct-average:#f9a8d4;--pct-weak:#880e4f;--cash-color:#ec4899;--cash-bg:#fdf2f8;--electronic-color:#be185d;--electronic-bg:#fdf2f8;--expense-bg:#d81b60;--total-balance-bg:rgba(216,27,96,.12);--total-balance-border:#d81b60}
 *{margin:0;padding:0;box-sizing:border-box}
 .bg-animation{position:fixed;width:100%;height:100%;top:0;left:0;z-index:0;overflow:hidden;pointer-events:none}
 .floating-icon{position:absolute;font-size:3rem;opacity:.1;animation:float 15s infinite ease-in-out;filter:drop-shadow(0 0 10px rgba(255,255,255,.3));transition:opacity .4s ease;user-select:none}
@@ -369,10 +370,10 @@ body{font-family:'Segoe UI','Tahoma','Arial','Noto Sans Arabic',sans-serif;min-h
 <div class="bg-animation">
 <div class="floating-icon physics-1">⚛️</div><div class="floating-icon physics-2">🔭</div>
 <div class="floating-icon chemistry-1">⚗️</div><div class="floating-icon chemistry-2">🧪</div>
-<div class="floating-icon biology-1"></div><div class="floating-icon biology-2">🔬</div>
+<div class="floating-icon biology-1">🧬</div><div class="floating-icon biology-2">🔬</div>
 <div class="floating-icon arabic-1">📖</div><div class="floating-icon arabic-2">✒️</div>
 <div class="floating-icon english-1">🔤</div><div class="floating-icon english-2">📚</div>
-<div class="floating-icon french-1">🇫</div><div class="floating-icon french-2">🥐</div>
+<div class="floating-icon french-1"></div><div class="floating-icon french-2">🥐</div>
 </div>
 <div class="waves"><div class="wave"></div><div class="wave"></div></div>
 <div class="container">
@@ -408,7 +409,7 @@ body{font-family:'Segoe UI','Tahoma','Arial','Noto Sans Arabic',sans-serif;min-h
 </div>
 <div class="timer-display">
 <div class="timer" id="timer">25:00</div>
-<div class="timer-label"> الوقت المتبقي</div>
+<div class="timer-label">⏱ الوقت المتبقي</div>
 </div>
 <div class="timer-controls">
 <button class="btn btn-primary" id="startBtn">▶️ ابدأ</button>
@@ -423,7 +424,7 @@ body{font-family:'Segoe UI','Tahoma','Arial','Noto Sans Arabic',sans-serif;min-h
 </div>
 <div class="tasks-section" id="routineSection">
 <div class="tasks-header">
-<h2> روتينك اليومي</h2>
+<h2>🔄 روتينك اليومي</h2>
 <div class="task-counter"><span id="routineCompleted">0</span> / <span id="routineTotal">0</span> منجزة</div>
 </div>
 <ul class="tasks-list" id="routineList">
@@ -438,13 +439,13 @@ body{font-family:'Segoe UI','Tahoma','Arial','Noto Sans Arabic',sans-serif;min-h
 <div class="section-divider"></div>
 <div class="tasks-section" id="taskSection">
 <div class="tasks-header">
-<h2> المهام اليومية</h2>
+<h2>📋 المهام اليومية</h2>
 <div class="task-counter"><span id="taskCompleted">0</span> / <span id="taskTotal">0</span> منجزة</div>
 </div>
 <div class="add-task-form">
 <input type="text" class="task-input" id="taskInput" placeholder="أضف مهمة جديدة...">
 <div class="category-toggle">
-<button class="category-btn active" id="btnRoutine" onclick="setCategory('routine')"> روتين</button>
+<button class="category-btn active" id="btnRoutine" onclick="setCategory('routine')">🔄 روتين</button>
 <button class="category-btn" id="btnTask" onclick="setCategory('task')">📋 مهمة</button>
 </div>
 <button class="btn btn-primary" onclick="addTask()">➕ إضافة</button>
@@ -475,7 +476,7 @@ Made by <a href="https://wa.me/201102594058" target="_blank">Ahmed Emad Farhoud<
 </div>
 <div class="snackbar" id="expenseUndoSnackbar">
 <span>🗑️ تم حذف العملية</span>
-<button onclick="undoExpenseDelete()">️ استرجاع</button>
+<button onclick="undoExpenseDelete()">↩️ استرجاع</button>
 </div>
 <div class="modal-overlay" id="expensesModal">
 <div class="modal">
@@ -505,14 +506,14 @@ Made by <a href="https://wa.me/201102594058" target="_blank">Ahmed Emad Farhoud<
 <span>إلغاء التحديد</span>
 </button>
 <button class="selection-btn delete-selected" onclick="deleteSelectedExpenses()">
-<span>️</span>
+<span>🗑️</span>
 <span>حذف المحدد</span>
 </button>
 </div>
 </div>
 <div class="wallet-grid">
 <div class="wallet-card cash-wallet" data-wallet="كاش">
-<div class="wallet-icon"></div>
+<div class="wallet-icon">💵</div>
 <div class="wallet-label">رصيد الكاش</div>
 <div class="wallet-balance" id="cashBalance">0.00 ج.م</div>
 </div>
@@ -538,8 +539,8 @@ Made by <a href="https://wa.me/201102594058" target="_blank">Ahmed Emad Farhoud<
 <input type="text" class="expense-input full-width" id="expenseDesc" placeholder="وصف العملية">
 <input type="number" class="expense-input full-width" id="expenseAmount" placeholder="المبلغ">
 <div class="op-toggle full-width">
-<button class="op-btn active spend-active" id="btnSpend" data-op="صرف">💸 صرف</button>
-<button class="op-btn" id="btnAdd" data-op="إضافة">➕ إضافة</button>
+<button class="op-btn active spend-active" id="btnSpend" data-op="صرف"> صرف</button>
+<button class="op-btn" id="btnAdd" data-op="إضافة"> إضافة</button>
 </div>
 <div class="payment-toggle full-width">
 <button class="payment-btn active cash-active" id="btnCash" data-pay="كاش">💵 كاش</button>
@@ -549,7 +550,7 @@ Made by <a href="https://wa.me/201102594058" target="_blank">Ahmed Emad Farhoud<
 </div>
 </div>
 <div class="form-title">
-<span></span>
+<span>📜</span>
 <span>سجل العمليات</span>
 <span style="margin-right:auto;font-size:.65rem;color:var(--text-muted);font-weight:400;">(اضغط مطولاً للتحديد)</span>
 </div>
@@ -565,7 +566,7 @@ Made by <a href="https://wa.me/201102594058" target="_blank">Ahmed Emad Farhoud<
 </div>
 <div class="balance-modal" id="balanceModal">
 <div class="balance-modal-content">
-<h3 id="balanceModalTitle"> تعديل رصيد الكاش</h3>
+<h3 id="balanceModalTitle">💵 تعديل رصيد الكاش</h3>
 <input type="number" class="balance-input" id="balanceInput" placeholder="أدخل الرصيد الجديد" step="0.01">
 <div class="balance-modal-actions">
 <button class="confirm-btn" id="confirmBalanceBtn">✅ حفظ</button>
@@ -596,12 +597,12 @@ Made by <a href="https://wa.me/201102594058" target="_blank">Ahmed Emad Farhoud<
 <div class="modal" id="reportContent">
 <div class="modal-header">
 <h3>📊 تقرير الأداء اليومي</h3>
-<button class="modal-close" onclick="hideReport()"></button>
+<button class="modal-close" onclick="hideReport()">✕</button>
 </div>
 <div class="routine-task-split" id="reportSplit"></div>
 <div class="combined-section" id="reportCombined"></div>
-<div class="report-section"><h4> مجالات للتحسين</h4><ul class="improvement-list" id="reportImprovements"><li>جاري تحليل البيانات...</li></ul></div>
-<div class="report-section"><h4> نصائح للتطوير</h4><ul class="improvement-list" id="reportTips"><li>استمر في المثابرة، كل خطوة تحسب لك!</li></ul></div>
+<div class="report-section"><h4>🎯 مجالات للتحسين</h4><ul class="improvement-list" id="reportImprovements"><li>جاري تحليل البيانات...</li></ul></div>
+<div class="report-section"><h4>💡 نصائح للتطوير</h4><ul class="improvement-list" id="reportTips"><li>استمر في المثابرة، كل خطوة تحسب لك!</li></ul></div>
 <div class="report-history-section">
 <h4>📚 سجل التقارير <span style="font-size:.65rem;color:var(--text-muted);font-weight:400;">(اضغط للتفاصيل)</span></h4>
 <div class="report-history-list" id="reportHistoryList">
@@ -624,26 +625,16 @@ Made by <a href="https://wa.me/201102594058" target="_blank">Ahmed Emad Farhoud<
 <button class="install-btn install-btn-secondary" onclick="closeInstallPrompt()">لاحقاً</button>
 </div>
 </div>
+
 <script>
-// PWA Service Worker
+// تسجيل Service Worker
 if('serviceWorker' in navigator){
-const swCode=`
-const CACHE_NAME='tasks-app-pwa-v2';
-self.addEventListener('install',e=>{self.skipWaiting()});
-self.addEventListener('activate',e=>{self.clients.claim()});
-self.addEventListener('fetch',e=>{
-e.respondWith(
-caches.match(e.request).then(r=>r||fetch(e.request).catch(()=>caches.match('/')))
-);
-});
-`;
-const blob=new Blob([swCode],{type:'application/javascript'});
-const swUrl=URL.createObjectURL(blob);
-navigator.serviceWorker.register(swUrl,{scope:'./'}).then(reg=>{
-console.log('✅ SW registered:',reg.scope);
-}).catch(err=>console.log('❌ SW failed:',err));
+navigator.serviceWorker.register('sw.js')
+.then(reg=>console.log('✅ SW registered:',reg.scope))
+.catch(err=>console.log('❌ SW failed:',err));
 }
 
+// PWA Install
 let deferredPrompt;
 const installPrompt=document.getElementById('installPrompt');
 const installHeaderBtn=document.getElementById('installHeaderBtn');
@@ -678,7 +669,7 @@ installPrompt.classList.remove('show');
 installHeaderBtn.style.display='none';
 });
 }else{
-alert('📱 لتثبيت التطبيق:\n\nعلى Android Chrome:\n1. اضغط على النقاط الثلاث ⋮\n2. اختر "تثبيت التطبيق" أو "إضافة إلى الشاشة الرئيسية"\n\nعلى iPhone Safari:\n1. اضغط على زر المشاركة\n2. اختر "إضافة إلى الشاشة الرئيسية"');
+alert(' لتثبيت التطبيق:\n\nعلى Android Chrome:\n1. اضغط على النقاط الثلاث ⋮\n2. اختر "تثبيت التطبيق" أو "إضافة إلى الشاشة الرئيسية"\n\nعلى iPhone Safari:\n1. اضغط على زر المشاركة\n2. اختر "إضافة إلى الشاشة الرئيسية"');
 }
 }
 
@@ -692,7 +683,7 @@ installHeaderBtn.style.display='none';
 }
 
 const themeOrder=['light','dark','sunset','ocean','sakura','forest','barbie'];
-const themeIcons={light:'☀️',dark:'',sunset:'🌅',ocean:'🌊',sakura:'🌸',forest:'🌳',barbie:'💖'};
+const themeIcons={light:'☀️',dark:'🌙',sunset:'🌅',ocean:'🌊',sakura:'',forest:'🌳',barbie:'💖'};
 const themeNames={light:'فاتح',dark:'داكن',sunset:'غروب',ocean:'محيط',sakura:'ساكورا',forest:'غابة',barbie:'باربي'};
 function setTheme(themeValue){
 const html=document.documentElement;
@@ -913,11 +904,11 @@ const realIdx=reportHistory.indexOf(report);
 const gi=getGrade(report.totalPercent);
 html+=`<div class="report-history-item" data-report-idx="${realIdx}">
 <div class="report-history-info">
-<div class="report-history-date">📅 ${report.date}</div>
+<div class="report-history-date"> ${report.date}</div>
 <div class="report-history-details">روتين: ${report.routinePercent}% · مهام: ${report.taskPercent}% · كلي: ${report.totalPercent}%</div>
 </div>
 <span class="report-history-grade" style="background:${gi.color};">${report.totalPercent}%</span>
-<button class="report-history-delete" data-delete-idx="${realIdx}"></button>
+<button class="report-history-delete" data-delete-idx="${realIdx}">✕</button>
 </div>`;
 });
 });
@@ -950,7 +941,7 @@ document.getElementById('reportDetailContent').innerHTML=`
 <div class="detail-section"><h5>🔄 روتينك - الي اتعمل (${r.routineCompleted})</h5><ul class="detail-task-list">${rComp}</ul></div>
 <div class="detail-section"><h5>🔄 روتينك - الي متعملش (${r.routineIncomplete})</h5><ul class="detail-task-list">${rInc}</ul></div>
 <div class="detail-section"><h5>📋 مهامك - الي اتعمل (${r.taskCompleted})</h5><ul class="detail-task-list">${tComp}</ul></div>
-<div class="detail-section"><h5>📋 مهامك - الي متعملش (${r.taskIncomplete})</h5><ul class="detail-task-list">${tInc}</ul></div>
+<div class="detail-section"><h5> مهامك - الي متعملش (${r.taskIncomplete})</h5><ul class="detail-task-list">${tInc}</ul></div>
 <button class="detail-back-btn" onclick="closeReportDetail()">↩️ رجوع</button>
 `;
 document.getElementById('reportDetailModal').classList.add('show');
@@ -986,15 +977,15 @@ const splitHTML=`
 ${rc>0?rt.filter(t=>t.status==='correct').map(t=>`<li class="done">${t.text}</li>`).join(''):'<li style="color:var(--text-muted);">لم يُنجز شيء</li>'}
 ${rn>0?rt.filter(t=>t.status!=='correct').map(t=>`<li class="undone">${t.text}</li>`).join(''):''}
 </ul>
-<div style="margin-top:5px;font-size:.65rem;color:var(--text-muted);">✅ ${rc} منجزة · ⏳ ${rn} غير منجزة</div>
+<div style="margin-top:5px;font-size:.65rem;color:var(--text-muted);">✅ ${rc} منجزة ·  ${rn} غير منجزة</div>
 </div>
 <div class="split-card task-card">
-<div class="split-header"><span class="split-title"> المهام اليومية</span><span class="split-percent" style="color:var(--task-border);">${gp}%</span></div>
+<div class="split-header"><span class="split-title">📋 المهام اليومية</span><span class="split-percent" style="color:var(--task-border);">${gp}%</span></div>
 <ul class="split-list">
 ${gc>0?rg.filter(t=>t.status==='correct').map(t=>`<li class="done">${t.text}</li>`).join(''):'<li style="color:var(--text-muted);">لم يُنجز شيء</li>'}
 ${gn>0?rg.filter(t=>t.status!=='correct').map(t=>`<li class="undone">${t.text}</li>`).join(''):''}
 </ul>
-<div style="margin-top:5px;font-size:.65rem;color:var(--text-muted);">✅ ${gc} منجزة ·  ${gn} غير منجزة</div>
+<div style="margin-top:5px;font-size:.65rem;color:var(--text-muted);">✅ ${gc} منجزة · ⏳ ${gn} غير منجزة</div>
 </div>
 `;
 document.getElementById('reportSplit').innerHTML=splitHTML;
@@ -1002,7 +993,7 @@ const circumference=2*Math.PI*50;
 const offset=circumference-(simpleAvg/100)*circumference;
 const pctColor=getPctColor(simpleAvg);
 const combinedHTML=`
-<div class="combined-title"> الأداء الكلي المتكامل</div>
+<div class="combined-title">📊 الأداء الكلي المتكامل</div>
 <div class="combined-visual">
 <div class="circular-progress">
 <svg viewBox="0 0 120 120">
@@ -1017,7 +1008,7 @@ const combinedHTML=`
 <div class="combined-bar-track"><div class="combined-bar-fill routine" style="width:${rp}%;background-color:var(--routine-border);"></div></div>
 </div>
 <div class="combined-bar-item">
-<div class="combined-bar-label"><span>📋 المهام</span><span style="color:var(--task-border);">${gp}%</span></div>
+<div class="combined-bar-label"><span> المهام</span><span style="color:var(--task-border);">${gp}%</span></div>
 <div class="combined-bar-track"><div class="combined-bar-fill tasks" style="width:${gp}%;background-color:var(--task-border);"></div></div>
 </div>
 </div>
@@ -1026,7 +1017,7 @@ const combinedHTML=`
 `;
 document.getElementById('reportCombined').innerHTML=combinedHTML;
 const imp=[];
-if(rn>0)imp.push(`📌 لديك ${rn} عنصر روتين لم تُنجز بعد`);
+if(rn>0)imp.push(` لديك ${rn} عنصر روتين لم تُنجز بعد`);
 if(gn>0)imp.push(`📌 لديك ${gn} مهمة يومية لم تُنجز`);
 if(tt>0&&simpleAvg<50)imp.push('💡 ابدأ بمهام صغيرة لبناء الزخم');
 if(imp.length===0&&tt>0)imp.push('✨ حافظ على هذا المستوى الرائع!');
@@ -1060,10 +1051,10 @@ const nd=`${now.getFullYear()}/${String(now.getMonth()+1).padStart(2,'0')}/${Str
 reportHistory.push({date:nd,routinePercent:rp,taskPercent:gp,totalPercent:simpleAvg,weightedPercent:tp,grade:gi.grade,totalTasks:tt,routineTotal:rtT,taskTotal:rgT,routineCompleted:rc,routineIncomplete:rn,taskCompleted:gc,taskIncomplete:gn,routineCompletedList:rt.filter(t=>t.status==='correct').map(t=>t.text),routineIncompleteList:rt.filter(t=>t.status!=='correct').map(t=>t.text),taskCompletedList:rg.filter(t=>t.status==='correct').map(t=>t.text),taskIncompleteList:rg.filter(t=>t.status!=='correct').map(t=>t.text)});
 saveReportHistory();
 const rDoneList=rt.filter(t=>t.status==='correct').map(t=>`  ✅ ${t.text}`).join('\n');
-const rUndoneList=rt.filter(t=>t.status!=='correct').map(t=>`  ⏳ ${t.text}`).join('\n');
+const rUndoneList=rt.filter(t=>t.status!=='correct').map(t=>`   ${t.text}`).join('\n');
 const tDoneList=rg.filter(t=>t.status==='correct').map(t=>`  ✅ ${t.text}`).join('\n');
 const tUndoneList=rg.filter(t=>t.status!=='correct').map(t=>`  ⏳ ${t.text}`).join('\n');
-const text=`📊 تقرير المهام اليومية\n📅 التاريخ: ${nd}\n\n═══════════════════════\n🔄 الروتين اليومي (${rp}%)\n═══════════════════════\n✅ الي اتعمل:\n${rDoneList||'  لا يوجد'}\n\n الي متعملش:\n${rUndoneList||'  لا يوجد'}\n\n═══════════════════════\n📋 المهام اليومية (${gp}%)\n═══════════════════════\n✅ الي اتعمل:\n${tDoneList||'  لا يوجد'}\n\n الي متعملش:\n${tUndoneList||'  لا يوجد'}\n\n═══════════════════════\n📊 الأداء الكلي\n═══════════════════════\n المتوسط الحسابي: ${simpleAvg}%\n⚡ المتوسط المرجح (روتين 60% + مهام 40%): ${tp}%\n🏆 التقييم: ${gi.grade}\n\n💡 نصائح:\n${gi.tips.map(t=>`  ${t}`).join('\n')}\n\n═══════════════════════\n✅ تم حفظ هذا التقرير تلقائياً\n✅ الروتين ثابت (بيبدأ يوم جديد من غير حذف)\n✅ المهام الصحيحة اتحذفت، والباقي بصفحة نظيفة\n\nMade by Ahmed Emad Farhoud 💻✨`;
+const text=`📊 تقرير المهام اليومية\n📅 التاريخ: ${nd}\n\n═══════════════════════\n🔄 الروتين اليومي (${rp}%)\n═══════════════════════\n✅ الي اتعمل:\n${rDoneList||'  لا يوجد'}\n\n⏳ الي متعملش:\n${rUndoneList||'  لا يوجد'}\n\n═══════════════════════\n📋 المهام اليومية (${gp}%)\n═══════════════════════\n✅ الي اتعمل:\n${tDoneList||'  لا يوجد'}\n\n⏳ الي متعملش:\n${tUndoneList||'  لا يوجد'}\n\n═══════════════════════\n📊 الأداء الكلي\n═══════════════════════\n🔵 المتوسط الحسابي: ${simpleAvg}%\n⚡ المتوسط المرجح (روتين 60% + مهام 40%): ${tp}%\n🏆 التقييم: ${gi.grade}\n\n💡 نصائح:\n${gi.tips.map(t=>`  ${t}`).join('\n')}\n\n═══════════════════════\n✅ تم حفظ هذا التقرير تلقائياً\n✅ الروتين ثابت (بيبدأ يوم جديد من غير حذف)\n✅ المهام الصحيحة اتحذفت، والباقي بصفحة نظيفة\n\nMade by Ahmed Emad Farhoud 💻✨`;
 const doReset=()=>{
 resetDayAfterReport();
 hideReport();
@@ -1257,7 +1248,7 @@ const modal=document.getElementById('balanceModal');
 const title=document.getElementById('balanceModalTitle');
 const input=document.getElementById('balanceInput');
 if(type==='كاش'){title.textContent='💵 تعديل رصيد الكاش';input.value=cashBalance}
-else{title.textContent='💳 تعديل رصيد الإلكتروني';input.value=electronicBalance}
+else{title.textContent=' تعديل رصيد الإلكتروني';input.value=electronicBalance}
 modal.classList.add('show');
 setTimeout(()=>input.focus(),100);
 }
@@ -1265,7 +1256,7 @@ function closeBalanceModal(){document.getElementById('balanceModal').classList.r
 function confirmBalanceChange(){
 const input=document.getElementById('balanceInput');
 const val=parseFloat(input.value);
-if(isNaN(val)||val<0){alert('️ يرجى إدخال رقم صحيح');return}
+if(isNaN(val)||val<0){alert('⚠️ يرجى إدخال رقم صحيح');return}
 if(balanceModalType==='كاش'){cashBalance=val}else{electronicBalance=val}
 saveBalances();renderExpenses();closeBalanceModal();
 }
@@ -1275,7 +1266,7 @@ const amount=parseFloat(document.getElementById('expenseAmount').value);
 if(desc===''||isNaN(amount)||amount<=0){alert('⚠️ يرجى إدخال وصف ومبلغ صحيح');return}
 if(currentOperationType==='صرف'){
 if(currentPaymentMethod==='كاش'&&amount>cashBalance){
-if(!confirm(`️ الرصيد الحالي للكاش: ${cashBalance.toFixed(2)} ج.م\nالمبلغ المطلوب: ${amount.toFixed(2)} ج.م\nسيصبح الرصيد سالباً. هل تريد المتابعة؟`)){return}
+if(!confirm(`⚠️ الرصيد الحالي للكاش: ${cashBalance.toFixed(2)} ج.م\nالمبلغ المطلوب: ${amount.toFixed(2)} ج.م\nسيصبح الرصيد سالباً. هل تريد المتابعة؟`)){return}
 }else if(currentPaymentMethod==='إلكتروني'&&amount>electronicBalance){
 if(!confirm(`⚠️ الرصيد الحالي للإلكتروني: ${electronicBalance.toFixed(2)} ج.م\nالمبلغ المطلوب: ${amount.toFixed(2)} ج.م\nسيصبح الرصيد سالباً. هل تريد المتابعة؟`)){return}
 }
@@ -1326,7 +1317,7 @@ const d=new Date(op.settledDate);
 settledDateStr=d.toLocaleDateString('ar-EG',{year:'numeric',month:'long',day:'numeric',hour:'2-digit',minute:'2-digit'});
 }
 content.innerHTML=`
-<h3> تفاصيل العملية</h3>
+<h3>📋 تفاصيل العملية</h3>
 <table class="details-table">
 <tr class="desc-row">
 <td class="detail-icon">${isAdd?'➕':'💸'}</td>
@@ -1339,7 +1330,7 @@ content.innerHTML=`
 <td class="detail-value ${isAdd?'type-add':'type-spend'}">${isAdd?'➕ إضافة':'💸 صرف'}</td>
 </tr>
 <tr>
-<td class="detail-icon">${isCash?'💵':'💳'}</td>
+<td class="detail-icon">${isCash?'💵':''}</td>
 <td class="detail-label">طريقة الدفع</td>
 <td class="detail-value ${isCash?'cash-val':'electronic-val'}">${isCash?'💵 كاش':'💳 إلكتروني'}</td>
 </tr>
@@ -1349,12 +1340,12 @@ content.innerHTML=`
 <td class="detail-value ${isAdd?'amount-add':'amount-spend'}">${isAdd?'+':'-'}${op.amount.toFixed(2)} ج.م</td>
 </tr>
 <tr>
-<td class="detail-icon">⏰</td>
+<td class="detail-icon"></td>
 <td class="detail-label">الوقت</td>
 <td class="detail-value">${op.time}</td>
 </tr>
 <tr>
-<td class="detail-icon"></td>
+<td class="detail-icon">📅</td>
 <td class="detail-label">التاريخ</td>
 <td class="detail-value">${op.date}</td>
 </tr>
@@ -1365,7 +1356,7 @@ ${op.settled?`
 <td class="detail-value type-add"><span class="settled-tag">✅ مُسددة</span></td>
 </tr>
 <tr>
-<td class="detail-icon"></td>
+<td class="detail-icon">📅</td>
 <td class="detail-label">تاريخ التسديد</td>
 <td class="detail-value">${settledDateStr||'غير محدد'}</td>
 </tr>
@@ -1449,7 +1440,7 @@ exitSelectionMode();
 renderExpenses();
 showExpenseUndoSnackbar();
 const s=document.getElementById('expenseUndoSnackbar');
-s.querySelector('span').textContent=`️ تم حذف ${deletedCount} عملية`;
+s.querySelector('span').textContent=`🗑️ تم حذف ${deletedCount} عملية`;
 }
 function toggleSettle(id,event){
 if(event)event.stopPropagation();
