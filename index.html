@@ -40,12 +40,10 @@ body{font-family:'Segoe UI','Tahoma','Arial',sans-serif;min-height:100vh;overflo
 .header h1{color:var(--text-white);font-size:1.9rem;font-weight:900;text-shadow:0 4px 15px rgba(0,0,0,.3);margin:0}
 .header p{color:rgba(255,255,255,.9);font-size:.9rem;margin:3px 0 0}
 .header-actions{display:flex;gap:8px;align-items:center;flex-wrap:nowrap;justify-content:center}
-.header-btn{background:rgba(255,255,255,.15);border:2px solid rgba(255,255,255,.3);border-radius:12px;padding:8px 16px;cursor:pointer;display:flex;align-items:center;gap:6px;color:var(--text-white);font-weight:600;font-family:inherit;transition:all .3s ease;backdrop-filter:blur(10px);font-size:.85rem;white-space:nowrap}
-.header-btn:hover{background:rgba(255,255,255,.25);transform:translateY(-2px)}
+.header-btn{background:rgba(255,255,255,.2);border:2px solid rgba(255,255,255,.4);border-radius:50px;padding:6px 14px;cursor:pointer;display:flex;align-items:center;gap:5px;color:var(--text-white);font-weight:600;font-family:inherit;transition:background .3s ease,transform .2s ease;backdrop-filter:blur(5px);font-size:.85rem;white-space:nowrap}
+.header-btn:hover{background:rgba(255,255,255,.3);transform:translateY(-2px)}
 .header-btn:active{transform:scale(.95)}
-.header-btn .icon{font-size:1.1rem}
-.install-btn-header{background:linear-gradient(135deg,#28a745 0%,#20c997 100%)!important;border:2px solid rgba(255,255,255,.5)!important;animation:pulse 2s infinite}
-@keyframes pulse{0%,100%{transform:scale(1);box-shadow:0 0 0 0 rgba(40,167,69,.7)}50%{transform:scale(1.05);box-shadow:0 0 0 10px rgba(40,167,69,0)}}
+.header-btn .icon{font-size:1.15rem}
 .timer-section{background:var(--card-bg);border-radius:15px;padding:16px;margin-bottom:16px;box-shadow:0 10px 40px var(--shadow-color);backdrop-filter:blur(10px);animation:fadeInUp 1s ease;transition:background .4s ease,box-shadow .4s ease}
 .timer-display{text-align:center;margin-bottom:12px}
 .timer{font-size:2.5rem;font-weight:900;color:var(--bg-gradient-start);text-shadow:0 2px 10px rgba(102,126,234,.3);font-family:'Courier New',monospace;letter-spacing:3px;transition:color .4s ease}
@@ -356,18 +354,18 @@ body{font-family:'Segoe UI','Tahoma','Arial',sans-serif;min-height:100vh;overflo
 @media (max-width:600px){.selection-mode-actions{width:100%;justify-content:center}.selection-btn{padding:6px 10px;font-size:.68rem}}
 
 /* رسالة التثبيت البسيطة */
-.install-toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--card-bg);padding:12px 16px;border-radius:16px;box-shadow:0 8px 32px rgba(0,0,0,.2);z-index:5000;display:none;align-items:center;gap:12px;max-width:92%;min-width:280px;backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.1);animation:toastSlideUp .4s ease}
+.install-toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--card-bg);padding:12px 16px;border-radius:50px;box-shadow:0 8px 32px rgba(0,0,0,.2);z-index:5000;display:none;align-items:center;gap:10px;max-width:92%;backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.15);animation:toastSlideUp .4s ease}
 .install-toast.show{display:flex}
 @keyframes toastSlideUp{from{transform:translateX(-50%) translateY(100px);opacity:0}to{transform:translateX(-50%) translateY(0);opacity:1}}
-.install-toast-icon{font-size:1.5rem;flex-shrink:0}
+.install-toast-icon{font-size:1.3rem;flex-shrink:0}
 .install-toast-content{flex:1;min-width:0}
-.install-toast-title{font-weight:700;color:var(--text-primary);font-size:.85rem;margin-bottom:2px}
-.install-toast-desc{font-size:.7rem;color:var(--text-secondary);line-height:1.3}
-.install-toast-btn{background:var(--bg-gradient-start);color:#fff;border:none;padding:8px 14px;border-radius:10px;font-weight:700;cursor:pointer;font-family:inherit;font-size:.75rem;white-space:nowrap;transition:all .2s ease}
+.install-toast-title{font-weight:700;color:var(--text-primary);font-size:.8rem;margin-bottom:1px}
+.install-toast-desc{font-size:.7rem;color:var(--text-secondary);line-height:1.2}
+.install-toast-btn{background:var(--bg-gradient-start);color:#fff;border:none;padding:8px 16px;border-radius:50px;font-weight:700;cursor:pointer;font-family:inherit;font-size:.75rem;white-space:nowrap;transition:all .2s ease}
 .install-toast-btn:hover{transform:scale(1.05)}
 .install-toast-btn:active{transform:scale(.95)}
-.install-toast-close{position:absolute;top:-8px;right:-8px;width:22px;height:22px;border-radius:50%;background:var(--delete-btn-bg);color:#fff;border:2px solid var(--card-bg);cursor:pointer;font-size:.7rem;display:flex;align-items:center;justify-content:center;transition:all .2s ease}
-.install-toast-close:hover{transform:scale(1.1)}
+.install-toast-close{background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:1rem;padding:4px 8px;transition:color .2s}
+.install-toast-close:hover{color:var(--text-primary)}
 </style>
 </head>
 <body>
@@ -388,20 +386,16 @@ body{font-family:'Segoe UI','Tahoma','Arial',sans-serif;min-height:100vh;overflo
 </div>
 <div class="header-actions">
 <button class="header-btn" id="reportBtn" onclick="showReport()">
-<span class="icon">📊</span>
+<span class="icon"></span>
 <span>التقرير</span>
 </button>
 <button class="header-btn" id="expensesBtn" onclick="openExpensesSection()">
 <span class="icon">💰</span>
 <span>المصروفات</span>
 </button>
-<button class="header-btn install-btn-header" id="installHeaderBtn" onclick="installPWA()" style="display:none;">
-<span class="icon">📱</span>
-<span>تثبيت</span>
-</button>
 <button class="header-btn" id="themeSelectorBtn" onclick="cycleTheme()">
-<span class="icon" id="themeIcon">☀️</span>
-<span id="themeText">فاتح</span>
+<span class="icon" id="themeIcon">🌙</span>
+<span id="themeText">داكن</span>
 </button>
 </div>
 </div>
@@ -428,7 +422,7 @@ body{font-family:'Segoe UI','Tahoma','Arial',sans-serif;min-height:100vh;overflo
 </div>
 <div class="tasks-section" id="routineSection">
 <div class="tasks-header">
-<h2> روتينك اليومي</h2>
+<h2>🔄 روتينك اليومي</h2>
 <div class="task-counter"><span id="routineCompleted">0</span> / <span id="routineTotal">0</span> منجزة</div>
 </div>
 <ul class="tasks-list" id="routineList">
@@ -443,19 +437,19 @@ body{font-family:'Segoe UI','Tahoma','Arial',sans-serif;min-height:100vh;overflo
 <div class="section-divider"></div>
 <div class="tasks-section" id="taskSection">
 <div class="tasks-header">
-<h2>📋 المهام اليومية</h2>
+<h2> المهام اليومية</h2>
 <div class="task-counter"><span id="taskCompleted">0</span> / <span id="taskTotal">0</span> منجزة</div>
 </div>
 <div class="add-task-form">
 <input type="text" class="task-input" id="taskInput" placeholder="أضف مهمة جديدة...">
 <div class="category-toggle">
-<button class="category-btn active" id="btnRoutine" onclick="setCategory('routine')">🔄 روتين</button>
-<button class="category-btn" id="btnTask" onclick="setCategory('task')"> مهمة</button>
+<button class="category-btn active" id="btnRoutine" onclick="setCategory('routine')"> روتين</button>
+<button class="category-btn" id="btnTask" onclick="setCategory('task')">📋 مهمة</button>
 </div>
-<button class="btn btn-primary" onclick="addTask()"> إضافة</button>
+<button class="btn btn-primary" onclick="addTask()">➕ إضافة</button>
 </div>
 <ul class="tasks-list" id="taskList">
-<div class="empty-state"><div class="empty-state-icon"></div><p>لا توجد مهام بعد. أضف مهمتك الأولى!</p></div>
+<div class="empty-state"><div class="empty-state-icon">📝</div><p>لا توجد مهام بعد. أضف مهمتك الأولى!</p></div>
 </ul>
 <div style="margin-top:6px;display:flex;justify-content:space-between;align-items:center;">
 <span style="font-size:.65rem;color:var(--text-secondary);">نسبة إنجاز المهام</span>
@@ -475,7 +469,7 @@ Made by <a href="https://wa.me/201102594058" target="_blank">Ahmed Emad Farhoud<
 </div>
 </div>
 <div class="snackbar" id="undoSnackbar">
-<span>🗑️ تم الحذف</span>
+<span>️ تم الحذف</span>
 <button onclick="undoDelete()">↩️ تراجع</button>
 </div>
 <div class="snackbar" id="expenseUndoSnackbar">
@@ -554,7 +548,7 @@ Made by <a href="https://wa.me/201102594058" target="_blank">Ahmed Emad Farhoud<
 </div>
 </div>
 <div class="form-title">
-<span>📜</span>
+<span></span>
 <span>سجل العمليات</span>
 <span style="margin-right:auto;font-size:.65rem;color:var(--text-muted);font-weight:400;">(اضغط مطولاً للتحديد)</span>
 </div>
@@ -600,7 +594,7 @@ Made by <a href="https://wa.me/201102594058" target="_blank">Ahmed Emad Farhoud<
 <div class="modal-overlay" id="reportModal">
 <div class="modal" id="reportContent">
 <div class="modal-header">
-<h3> تقرير الأداء اليومي</h3>
+<h3>📊 تقرير الأداء اليومي</h3>
 <button class="modal-close" onclick="hideReport()">✕</button>
 </div>
 <div class="routine-task-split" id="reportSplit"></div>
@@ -608,26 +602,26 @@ Made by <a href="https://wa.me/201102594058" target="_blank">Ahmed Emad Farhoud<
 <div class="report-section"><h4>🎯 مجالات للتحسين</h4><ul class="improvement-list" id="reportImprovements"><li>جاري تحليل البيانات...</li></ul></div>
 <div class="report-section"><h4>💡 نصائح للتطوير</h4><ul class="improvement-list" id="reportTips"><li>استمر في المثابرة، كل خطوة تحسب لك!</li></ul></div>
 <div class="report-history-section">
-<h4>📚 سجل التقارير <span style="font-size:.65rem;color:var(--text-muted);font-weight:400;">(اضغط للتفاصيل)</span></h4>
+<h4> سجل التقارير <span style="font-size:.65rem;color:var(--text-muted);font-weight:400;">(اضغط للتفاصيل)</span></h4>
 <div class="report-history-list" id="reportHistoryList">
 <div class="report-history-empty">لا توجد تقارير محفوظة بعد</div>
 </div>
-<button class="clear-all-history" id="clearAllHistoryBtn" onclick="clearAllHistory()" style="display:none;">️ حذف كل السجل</button>
+<button class="clear-all-history" id="clearAllHistoryBtn" onclick="clearAllHistory()" style="display:none;">🗑️ حذف كل السجل</button>
 </div>
-<button class="export-btn" id="exportBtn" onclick="exportReport()">📋 نسخ التقرير وبدء يوم جديد</button>
+<button class="export-btn" id="exportBtn" onclick="exportReport()"> نسخ التقرير وبدء يوم جديد</button>
 <div class="report-date" id="reportDate"></div>
 </div>
 </div>
 
 <!-- رسالة التثبيت البسيطة -->
 <div class="install-toast" id="installToast">
-<button class="install-toast-close" onclick="closeInstallToast()">✕</button>
 <div class="install-toast-icon">📱</div>
 <div class="install-toast-content">
 <div class="install-toast-title">ثبّت التطبيق</div>
-<div class="install-toast-desc">اضغط لتثبيته على الشاشة الرئيسية</div>
+<div class="install-toast-desc">على الشاشة الرئيسية</div>
 </div>
 <button class="install-toast-btn" onclick="installPWA()">تثبيت</button>
+<button class="install-toast-close" onclick="closeInstallToast()"></button>
 </div>
 
 <script>
@@ -641,12 +635,10 @@ navigator.serviceWorker.register('sw.js')
 // PWA Install
 let deferredPrompt;
 const installToast=document.getElementById('installToast');
-const installHeaderBtn=document.getElementById('installHeaderBtn');
 
 window.addEventListener('beforeinstallprompt',e=>{
 e.preventDefault();
 deferredPrompt=e;
-installHeaderBtn.style.display='flex';
 setTimeout(()=>{
 if(localStorage.getItem('installPromptDismissed')!=='true'){
 installToast.classList.add('show');
@@ -661,7 +653,6 @@ installToast.classList.remove('show');
 
 window.addEventListener('appinstalled',()=>{
 installToast.classList.remove('show');
-installHeaderBtn.style.display='none';
 localStorage.setItem('appInstalled','true');
 });
 
@@ -674,7 +665,6 @@ console.log('✅ User accepted');
 }
 deferredPrompt=null;
 installToast.classList.remove('show');
-installHeaderBtn.style.display='none';
 });
 }else{
 alert('📱 لتثبيت التطبيق:\n\nعلى Android Chrome:\n1. اضغط على النقاط الثلاث ⋮\n2. اختر "تثبيت التطبيق"\n\nعلى iPhone Safari:\n1. اضغط على زر المشاركة\n2. اختر "إضافة إلى الشاشة الرئيسية"');
@@ -687,11 +677,11 @@ localStorage.setItem('installPromptDismissed','true');
 }
 
 if(localStorage.getItem('appInstalled')==='true'){
-installHeaderBtn.style.display='none';
+// مخفي لو التطبيق متثبت بالفعل
 }
 
 const themeOrder=['light','dark','sunset','ocean','sakura','forest','barbie'];
-const themeIcons={light:'☀️',dark:'',sunset:'🌅',ocean:'🌊',sakura:'🌸',forest:'🌳',barbie:'💖'};
+const themeIcons={light:'☀️',dark:'🌙',sunset:'🌅',ocean:'🌊',sakura:'🌸',forest:'',barbie:'💖'};
 const themeNames={light:'فاتح',dark:'داكن',sunset:'غروب',ocean:'محيط',sakura:'ساكورا',forest:'غابة',barbie:'باربي'};
 function setTheme(themeValue){
 const html=document.documentElement;
@@ -875,7 +865,7 @@ if(pct>=40)return'var(--pct-average)';
 return'var(--pct-weak)';
 }
 function getGrade(pct){
-if(pct>=90)return{grade:'ممتاز 🌟',class:'grade-excellent',color:'#28a745',tips:['أنت نموذج يُحتذى به!','استمر في هذا المستوى الرائع','شارك خبراتك مع الآخرين']};
+if(pct>=90)return{grade:'ممتاز ',class:'grade-excellent',color:'#28a745',tips:['أنت نموذج يُحتذى به!','استمر في هذا المستوى الرائع','شارك خبراتك مع الآخرين']};
 if(pct>=75)return{grade:'جيد جداً 👍',class:'grade-good',color:'#17a2b8',tips:['أداؤك رائع، حاول الوصول للممتاز','ركز على المهام المتبقية','حافظ على هذا الزخم']};
 if(pct>=50)return{grade:'جيد 👌',class:'grade-average',color:'#ffc107',tips:['أنت على الطريق الصحيح','حاول زيادة تركيزك على الروتين','حدد أولوياتك بشكل أفضل']};
 return{grade:'يحتاج تحسين 💪',class:'grade-weak',color:'#dc3545',tips:['لا تيأس، كل بداية صعبة','ابدأ بمهام صغيرة وسهلة','خصص وقتاً محدداً لكل مهمة']};
@@ -949,7 +939,7 @@ document.getElementById('reportDetailContent').innerHTML=`
 <div class="detail-section"><h5>🔄 روتينك - الي اتعمل (${r.routineCompleted})</h5><ul class="detail-task-list">${rComp}</ul></div>
 <div class="detail-section"><h5>🔄 روتينك - الي متعملش (${r.routineIncomplete})</h5><ul class="detail-task-list">${rInc}</ul></div>
 <div class="detail-section"><h5>📋 مهامك - الي اتعمل (${r.taskCompleted})</h5><ul class="detail-task-list">${tComp}</ul></div>
-<div class="detail-section"><h5>📋 مهامك - الي متعملش (${r.taskIncomplete})</h5><ul class="detail-task-list">${tInc}</ul></div>
+<div class="detail-section"><h5> مهامك - الي متعملش (${r.taskIncomplete})</h5><ul class="detail-task-list">${tInc}</ul></div>
 <button class="detail-back-btn" onclick="closeReportDetail()">↩️ رجوع</button>
 `;
 document.getElementById('reportDetailModal').classList.add('show');
@@ -985,7 +975,7 @@ const splitHTML=`
 ${rc>0?rt.filter(t=>t.status==='correct').map(t=>`<li class="done">${t.text}</li>`).join(''):'<li style="color:var(--text-muted);">لم يُنجز شيء</li>'}
 ${rn>0?rt.filter(t=>t.status!=='correct').map(t=>`<li class="undone">${t.text}</li>`).join(''):''}
 </ul>
-<div style="margin-top:5px;font-size:.65rem;color:var(--text-muted);">✅ ${rc} منجزة · ⏳ ${rn} غير منجزة</div>
+<div style="margin-top:5px;font-size:.65rem;color:var(--text-muted);">✅ ${rc} منجزة ·  ${rn} غير منجزة</div>
 </div>
 <div class="split-card task-card">
 <div class="split-header"><span class="split-title">📋 المهام اليومية</span><span class="split-percent" style="color:var(--task-border);">${gp}%</span></div>
@@ -1026,10 +1016,10 @@ const combinedHTML=`
 document.getElementById('reportCombined').innerHTML=combinedHTML;
 const imp=[];
 if(rn>0)imp.push(`📌 لديك ${rn} عنصر روتين لم تُنجز بعد`);
-if(gn>0)imp.push(` لديك ${gn} مهمة يومية لم تُنجز`);
+if(gn>0)imp.push(`📌 لديك ${gn} مهمة يومية لم تُنجز`);
 if(tt>0&&simpleAvg<50)imp.push('💡 ابدأ بمهام صغيرة لبناء الزخم');
 if(imp.length===0&&tt>0)imp.push('✨ حافظ على هذا المستوى الرائع!');
-if(tt===0)imp.push('🚀 أضف مهامك الأولى وابدأ رحلة الإنجاز');
+if(tt===0)imp.push(' أضف مهامك الأولى وابدأ رحلة الإنجاز');
 document.getElementById('reportImprovements').innerHTML=imp.map(i=>`<li>${i}</li>`).join('');
 document.getElementById('reportTips').innerHTML=gi.tips.map(t=>`<li>${t}</li>`).join('');
 const now=new Date();
@@ -1061,8 +1051,8 @@ saveReportHistory();
 const rDoneList=rt.filter(t=>t.status==='correct').map(t=>`  ✅ ${t.text}`).join('\n');
 const rUndoneList=rt.filter(t=>t.status!=='correct').map(t=>`  ⏳ ${t.text}`).join('\n');
 const tDoneList=rg.filter(t=>t.status==='correct').map(t=>`  ✅ ${t.text}`).join('\n');
-const tUndoneList=rg.filter(t=>t.status!=='correct').map(t=>`  ⏳ ${t.text}`).join('\n');
-const text=`📊 تقرير المهام اليومية\n📅 التاريخ: ${nd}\n\n═══════════════════════\n🔄 الروتين اليومي (${rp}%)\n═══════════════════════\n✅ الي اتعمل:\n${rDoneList||'  لا يوجد'}\n\n⏳ الي متعملش:\n${rUndoneList||'  لا يوجد'}\n\n═══════════════════════\n📋 المهام اليومية (${gp}%)\n═══════════════════════\n✅ الي اتعمل:\n${tDoneList||'  لا يوجد'}\n\n⏳ الي متعملش:\n${tUndoneList||'  لا يوجد'}\n\n═══════════════════════\n📊 الأداء الكلي\n═══════════════════════\n🔵 المتوسط الحسابي: ${simpleAvg}%\n⚡ المتوسط المرجح (روتين 60% + مهام 40%): ${tp}%\n🏆 التقييم: ${gi.grade}\n\n💡 نصائح:\n${gi.tips.map(t=>`  ${t}`).join('\n')}\n\n═══════════════════════\n✅ تم حفظ هذا التقرير تلقائياً\n✅ الروتين ثابت (بيبدأ يوم جديد من غير حذف)\n✅ المهام الصحيحة اتحذفت، والباقي بصفحة نظيفة\n\nMade by Ahmed Emad Farhoud 💻✨`;
+const tUndoneList=rg.filter(t=>t.status!=='correct').map(t=>`   ${t.text}`).join('\n');
+const text=`📊 تقرير المهام اليومية\n📅 التاريخ: ${nd}\n\n═══════════════════════\n🔄 الروتين اليومي (${rp}%)\n═══════════════════════\n✅ الي اتعمل:\n${rDoneList||'  لا يوجد'}\n\n الي متعملش:\n${rUndoneList||'  لا يوجد'}\n\n═══════════════════════\n المهام اليومية (${gp}%)\n═══════════════════════\n✅ الي اتعمل:\n${tDoneList||'  لا يوجد'}\n\n⏳ الي متعملش:\n${tUndoneList||'  لا يوجد'}\n\n═══════════════════════\n📊 الأداء الكلي\n═══════════════════════\n🔵 المتوسط الحسابي: ${simpleAvg}%\n⚡ المتوسط المرجح (روتين 60% + مهام 40%): ${tp}%\n🏆 التقييم: ${gi.grade}\n\n💡 نصائح:\n${gi.tips.map(t=>`  ${t}`).join('\n')}\n\n═══════════════════════\n✅ تم حفظ هذا التقرير تلقائياً\n✅ الروتين ثابت (بيبدأ يوم جديد من غير حذف)\n✅ المهام الصحيحة اتحذفت، والباقي بصفحة نظيفة\n\nMade by Ahmed Emad Farhoud 💻✨`;
 const doReset=()=>{
 resetDayAfterReport();
 hideReport();
@@ -1094,18 +1084,18 @@ list.innerHTML=`<div class="empty-state"><div class="empty-state-icon">${ei}</di
 list.innerHTML=ct.map(task=>{
 if(editingTaskId===task.id){
 return`<li class="task-item ${task.category==='task'?'task-type':''} editing" data-id="${task.id}">
-<span class="drag-handle">⋮</span>
+<span class="drag-handle"></span>
 <div class="task-content"><textarea class="task-edit-input" data-edit-id="${task.id}" onkeydown="handleEditKeydown(event,${task.id})">${task.text}</textarea></div>
-<div class="task-actions"><button class="action-btn cancel-btn" data-cancel-id="${task.id}">✕</button></div>
+<div class="task-actions"><button class="action-btn cancel-btn" data-cancel-id="${task.id}"></button></div>
 </li>`;
 }
 return`<li class="task-item ${task.status==='correct'?'correct':''} ${task.status==='wrong'?'wrong':''} ${task.category==='task'?'task-type':''}" data-id="${task.id}" title="${task.text}" ondblclick="startEdit(${task.id},event)">
-<span class="drag-handle">⋮</span>
+<span class="drag-handle"></span>
 <div class="task-content"><div class="task-text">${task.text}</div></div>
 <div class="task-actions">
 <button class="action-btn correct-btn" data-correct-id="${task.id}" title="صحيح">✓</button>
 <button class="action-btn wrong-btn" data-wrong-id="${task.id}" title="خطأ">✗</button>
-<button class="action-btn delete-btn" data-delete-id="${task.id}" title="حذف">🗑️</button>
+<button class="action-btn delete-btn" data-delete-id="${task.id}" title="حذف">️</button>
 </div>
 </li>`;
 }).join('');
@@ -1120,7 +1110,7 @@ document.getElementById(pctid).textContent=p+'%';
 }
 function renderAllTasks(){
 renderTasksByCategory('routine','routineList','routineCompleted','routineTotal','routineProgressBar','routineProgressPercent','لا توجد روتينيات بعد. أضف روتينك الأول!','🔄');
-renderTasksByCategory('task','taskList','taskCompleted','taskTotal','taskProgressBar','taskProgressPercent','لا توجد مهام بعد. أضف مهمتك الأولى!','📝');
+renderTasksByCategory('task','taskList','taskCompleted','taskTotal','taskProgressBar','taskProgressPercent','لا توجد مهام بعد. أضف مهمتك الأولى!','');
 initMobileTap();initTouchDrag();updateAllProgressColors();
 }
 function updateAllProgressColors(){
@@ -1189,7 +1179,7 @@ document.querySelectorAll('.task-item').forEach(i=>{i.classList.remove('drag-ove
 function openExpensesSection(){
 if(expensesPin===''){
 pinAction='create';
-document.getElementById('pinModalTitle').textContent=' إنشاء رقم سري';
+document.getElementById('pinModalTitle').textContent='🔐 إنشاء رقم سري';
 document.getElementById('pinModalDesc').textContent='اختر رقم سري من 4-6 أرقام لحماية المصروفات';
 document.getElementById('pinInput').value='';
 document.getElementById('pinError').textContent='';
@@ -1198,7 +1188,7 @@ document.getElementById('pinModal').classList.add('show');
 setTimeout(()=>document.getElementById('pinInput').focus(),100);
 }else{
 pinAction='verify';
-document.getElementById('pinModalTitle').textContent=' أدخل الرقم السري';
+document.getElementById('pinModalTitle').textContent='🔐 أدخل الرقم السري';
 document.getElementById('pinModalDesc').textContent='للوصول إلى قسم المصروفات';
 document.getElementById('pinInput').value='';
 document.getElementById('pinError').textContent='';
@@ -1264,7 +1254,7 @@ function closeBalanceModal(){document.getElementById('balanceModal').classList.r
 function confirmBalanceChange(){
 const input=document.getElementById('balanceInput');
 const val=parseFloat(input.value);
-if(isNaN(val)||val<0){alert('️ يرجى إدخال رقم صحيح');return}
+if(isNaN(val)||val<0){alert('⚠️ يرجى إدخال رقم صحيح');return}
 if(balanceModalType==='كاش'){cashBalance=val}else{electronicBalance=val}
 saveBalances();renderExpenses();closeBalanceModal();
 }
