@@ -1,46 +1,51 @@
-const CACHE_NAME = 'pwa-tasks-v5';
+const CACHE_NAME = 'pwa-tasks-v6';
 const urlsToCache = [
   '/A/',
   '/A/index.html',
   '/A/manifest.json'
 ];
 
-self.addEventListener('install', event => {
+// 1. تثبيت Service Worker
+self.addEventListener('install', function(event) {
   self.skipWaiting();
   event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then(cache => cache.addAll(urlsToCache))
+    caches.open(CACHE_NAME).then(function(cache) {
+      return cache.addAll(urlsToCache);
+    })
   );
 });
 
-self.addEventListener('activate', event => {
+// 2. تفعيل Service Worker وحذف النسخ القديمة
+self.addEventListener('activate', function(event) {
   event.waitUntil(
-    caches.keys().then(cacheNames => {
+    caches.keys().then(function(cacheNames) {
       return Promise.all(
-        cacheNames.map(cacheName => {
+        cacheNames.map(function(cacheName) {
           if (cacheName !== CACHE_NAME) {
             return caches.delete(cacheName);
           }
         })
       );
-    }).then(() => self.clients.claim())
+    }).then(function() {
+      return self.clients.claim();
+    })
   );
 });
 
-self.addEventListener('fetch', event => {
+// 3. اعتراض الطلبات وتقديم النسخة المحفوظة عند انقطاع الإنترنت
+self.addEventListener('fetch', function(event) {
   event.respondWith(
-    fetch(event.request)
-      .then(response => {
-        if (response && response.status === 200 && response.type === 'basic') {
-          const responseToCache = response.clone();
-          caches.open(CACHE_NAME).then(cache => {
-            cache.put(event.request, responseToCache);
-          });
-        }
+    fetch(event.request).then(function(response) {
+      if (!response || response.status !== 200 || response.type !== 'basic') {
         return response;
-      })
-      .catch(() => {
-        return caches.match(event.request);
-      })
+      }
+      var responseToCache = response.clone();
+      caches.open(CACHE_NAME).then(function(cache) {
+        cache.put(event.request, responseToCache);
+      });
+      return response;
+    }).catch(function() {
+      return caches.match(event.request);
+    })
   );
 });
