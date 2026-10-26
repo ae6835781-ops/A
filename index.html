@@ -6,11 +6,8 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="theme-color" content="#667eea">
-<meta name="application-name" content="برنامج المهام اليومية الاحترافي">
 <title>برنامج المهام اليومية الاحترافي</title>
-<link rel="manifest" href="manifest.json">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23667eea' rx='20'/%3E%3Ctext x='50' y='68' font-size='60' text-anchor='middle'%3E📋%3C/text%3E%3C/svg%3E">
-<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23667eea' rx='20'/%3E%3Ctext x='50' y='68' font-size='60' text-anchor='middle'%3E📋%3C/text%3E%3C/svg%3E">
+<link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjoiYnJubmFtZyBhbG1oYXTigqkgYWx5d21pYSIsInNob3J0X25hbWUiOiJhbG1oYXTigqkgYWx5d21pYSIsInN0YXJ0X3VybCI6Ii8iLCJkaXNwbGF5Ijoic3RhbmRhbG9uZSIsImJhY2tncm91bmRfY29sb3IiOiIjNjY3ZWVhIiwidGhlbWVfY29sb3IiOiIjNjY3ZWVhIiwib3JpZW50YXRpb24iOiJwb3J0cmFpdCJ9">
 <style>
 body {
 font-family: 'Segoe UI', 'Tahoma', 'Arial', 'Noto Sans Arabic', sans-serif;
@@ -22,7 +19,7 @@ transition: background 0.5s ease;
 color: var(--text-primary);
 -webkit-tap-highlight-color: transparent;
 touch-action: manipulation;
-padding-top: 10px;
+padding-top: env(safe-area-inset-top, 40px);
 }
 :root {
 --bg-gradient-start: #667eea;
@@ -354,7 +351,7 @@ max-width: 900px;
 margin: 0 auto;
 padding: 12px;
 padding-bottom: 80px;
-padding-top: 10px;
+padding-top: max(40px, env(safe-area-inset-top, 40px));
 }
 .header {
 text-align: center;
@@ -769,6 +766,7 @@ flex-shrink: 0;
 .expense-log-amount.add { color: var(--correct-btn-bg); }
 .expense-log-amount.spend { color: var(--wrong-btn-bg); }
 
+/* ✨ أزرار التفاصيل والتسديد ظاهرة دائماً */
 .expense-log-info-btn,
 .settle-btn {
     width: 26px;
@@ -798,6 +796,7 @@ flex-shrink: 0;
 }
 .settle-btn:hover { transform: scale(1.15); box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3); }
 
+/* ✨ العملية المُسددة - خط شطب فقط بدون شارات */
 .expense-log-item.settled {
     opacity: 0.6;
 }
@@ -816,6 +815,7 @@ flex-shrink: 0;
     opacity: 0.5;
 }
 
+/* شارة "مُسددة" فقط في التفاصيل */
 .settled-tag {
     font-size: 0.7rem;
     background: var(--correct-btn-bg);
@@ -1033,6 +1033,10 @@ background: #8892ff;
 color: #ffffff;
 }
 
+/* ================================ */
+/* ✨ الميزات الجديدة - التحديد المتعدد */
+/* ================================ */
+
 .selection-mode-bar {
     background: linear-gradient(135deg, rgba(40, 167, 69, 0.15) 0%, rgba(40, 167, 69, 0.05) 100%);
     border: 2px solid var(--correct-btn-bg);
@@ -1186,12 +1190,12 @@ body.selection-active .expense-checkbox {
 </head>
 <body>
 <div class="bg-animation">
-<div class="floating-icon physics-1">⚛️</div><div class="floating-icon physics-2"></div>
+<div class="floating-icon physics-1">⚛️</div><div class="floating-icon physics-2">🔭</div>
 <div class="floating-icon chemistry-1">⚗️</div><div class="floating-icon chemistry-2">🧪</div>
-<div class="floating-icon biology-1"></div><div class="floating-icon biology-2">🔬</div>
+<div class="floating-icon biology-1">🧬</div><div class="floating-icon biology-2">🔬</div>
 <div class="floating-icon arabic-1">📖</div><div class="floating-icon arabic-2">✒️</div>
 <div class="floating-icon english-1">🔤</div><div class="floating-icon english-2">📚</div>
-<div class="floating-icon french-1"></div><div class="floating-icon french-2">🥐</div>
+<div class="floating-icon french-1">🇫</div><div class="floating-icon french-2">🥐</div>
 </div>
 <div class="waves">
 <div class="wave"></div>
@@ -1231,7 +1235,7 @@ body.selection-active .expense-checkbox {
 <div class="timer-controls">
 <button class="btn btn-primary" id="startBtn">▶️ ابدأ</button>
 <button class="btn btn-secondary" id="pauseBtn">⏸️ إيقاف</button>
-<button class="btn btn-secondary" id="resetBtn"> إعادة</button>
+<button class="btn btn-secondary" id="resetBtn">🔄 إعادة</button>
 </div>
 </div>
 <div class="quote-section">
@@ -1263,9 +1267,9 @@ body.selection-active .expense-checkbox {
 <input type="text" class="task-input" id="taskInput" placeholder="أضف مهمة جديدة...">
 <div class="category-toggle">
 <button class="category-btn active" id="btnRoutine" onclick="setCategory('routine')">🔄 روتين</button>
-<button class="category-btn" id="btnTask" onclick="setCategory('task')"> مهمة</button>
+<button class="category-btn" id="btnTask" onclick="setCategory('task')">📋 مهمة</button>
 </div>
-<button class="btn btn-primary" onclick="addTask()"> إضافة</button>
+<button class="btn btn-primary" onclick="addTask()">➕ إضافة</button>
 </div>
 <ul class="tasks-list" id="taskList">
 <div class="empty-state"><div class="empty-state-icon">📝</div><p>لا توجد مهام بعد. أضف مهمتك الأولى!</p></div>
@@ -1349,7 +1353,7 @@ Made by <a href="https://wa.me/201102594058" target="_blank">Ahmed Emad Farhoud<
 </div>
 
 <div style="text-align: center; font-size: 0.6rem; color: var(--text-muted); margin-bottom: 8px;">
- اضغط مطولاً على البطاقة للتعديل
+👆 اضغط مطولاً على البطاقة للتعديل
 </div>
 <div class="expense-form-wrapper">
 <div class="form-title">
@@ -1371,7 +1375,7 @@ Made by <a href="https://wa.me/201102594058" target="_blank">Ahmed Emad Farhoud<
 </div>
 </div>
 <div class="form-title">
-<span></span>
+<span>📜</span>
 <span>سجل العمليات</span>
 <span style="margin-right: auto; font-size: 0.65rem; color: var(--text-muted); font-weight: 400;">(اضغط مطولاً للتحديد)</span>
 </div>
@@ -1389,7 +1393,7 @@ Made by <a href="https://wa.me/201102594058" target="_blank">Ahmed Emad Farhoud<
 </div>
 <div class="balance-modal" id="balanceModal">
 <div class="balance-modal-content">
-<h3 id="balanceModalTitle"> تعديل رصيد الكاش</h3>
+<h3 id="balanceModalTitle">💵 تعديل رصيد الكاش</h3>
 <input type="number" class="balance-input" id="balanceInput" placeholder="أدخل الرصيد الجديد" step="0.01">
 <div class="balance-modal-actions">
 <button class="confirm-btn" id="confirmBalanceBtn">✅ حفظ</button>
@@ -1433,20 +1437,41 @@ Made by <a href="https://wa.me/201102594058" target="_blank">Ahmed Emad Farhoud<
 </div>
 <button class="clear-all-history" id="clearAllHistoryBtn" onclick="clearAllHistory()" style="display:none;">🗑️ حذف كل السجل</button>
 </div>
-<button class="export-btn" id="exportBtn" onclick="exportReport()"> نسخ التقرير وبدء يوم جديد</button>
+<button class="export-btn" id="exportBtn" onclick="exportReport()">📋 نسخ التقرير وبدء يوم جديد</button>
 <div class="report-date" id="reportDate"></div>
 </div>
 </div>
-
 <script>
 if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js')
-      .then(reg => console.log('✅ Service Worker registered'))
-      .catch(err => console.log(' Service Worker registration failed', err));
-  });
+const swCode = `
+const CACHE_NAME = 'tasks-app-v1';
+const urlsToCache = ['/'];
+self.addEventListener('install', event => {
+event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(urlsToCache)));
+self.skipWaiting();
+});
+self.addEventListener('fetch', event => {
+event.respondWith(caches.match(event.request).then(response => {
+if (response) return response;
+return fetch(event.request).catch(() => caches.match('/'));
+}));
+});
+self.addEventListener('activate', event => {
+const cacheWhitelist = [CACHE_NAME];
+event.waitUntil(caches.keys().then(cacheNames => {
+return Promise.all(cacheNames.map(cacheName => {
+if (cacheWhitelist.indexOf(cacheName) === -1) return caches.delete(cacheName);
+}));
+}));
+self.clients.claim();
+});
+`;
+const blob = new Blob([swCode], { type: 'application/javascript' });
+const swUrl = URL.createObjectURL(blob);
+window.addEventListener('load', () => {
+navigator.serviceWorker.register(swUrl).then(reg => console.log('✅ Service Worker registered')).catch(err => console.log('❌ Service Worker registration failed'));
+});
 }
-
 const themeOrder = ['light', 'dark', 'sunset', 'ocean', 'sakura', 'forest', 'barbie'];
 const themeIcons = {
 light: '☀️', dark: '🌙', sunset: '🌅',
@@ -1654,7 +1679,7 @@ return 'var(--pct-weak)';
 function getGrade(pct) {
 if (pct >= 90) return { grade: 'ممتاز 🌟', class: 'grade-excellent', color: '#28a745', tips: ['أنت نموذج يُحتذى به!', 'استمر في هذا المستوى الرائع', 'شارك خبراتك مع الآخرين'] };
 if (pct >= 75) return { grade: 'جيد جداً 👍', class: 'grade-good', color: '#17a2b8', tips: ['أداؤك رائع، حاول الوصول للممتاز', 'ركز على المهام المتبقية', 'حافظ على هذا الزخم'] };
-if (pct >= 50) return { grade: 'جيد ', class: 'grade-average', color: '#ffc107', tips: ['أنت على الطريق الصحيح', 'حاول زيادة تركيزك على الروتين', 'حدد أولوياتك بشكل أفضل'] };
+if (pct >= 50) return { grade: 'جيد 👌', class: 'grade-average', color: '#ffc107', tips: ['أنت على الطريق الصحيح', 'حاول زيادة تركيزك على الروتين', 'حدد أولوياتك بشكل أفضل'] };
 return { grade: 'يحتاج تحسين 💪', class: 'grade-weak', color: '#dc3545', tips: ['لا تيأس، كل بداية صعبة', 'ابدأ بمهام صغيرة وسهلة', 'خصص وقتاً محدداً لكل مهمة'] };
 }
 function renderReportHistory() {
@@ -1855,10 +1880,10 @@ taskIncompleteList: rg.filter(t => t.status !== 'correct').map(t => t.text)
 });
 saveReportHistory();
 const rDoneList = rt.filter(t => t.status === 'correct').map(t => `  ✅ ${t.text}`).join('\n');
-const rUndoneList = rt.filter(t => t.status !== 'correct').map(t => `   ${t.text}`).join('\n');
+const rUndoneList = rt.filter(t => t.status !== 'correct').map(t => `  ⏳ ${t.text}`).join('\n');
 const tDoneList = rg.filter(t => t.status === 'correct').map(t => `  ✅ ${t.text}`).join('\n');
 const tUndoneList = rg.filter(t => t.status !== 'correct').map(t => `  ⏳ ${t.text}`).join('\n');
-const text = `📊 تقرير المهام اليومية\n📅 التاريخ: ${nd}\n\n═══════════════════════\n🔄 الروتين اليومي (${rp}%)\n═══════════════════════\n✅ الي اتعمل:\n${rDoneList || '  لا يوجد'}\n\n الي متعملش:\n${rUndoneList || '  لا يوجد'}\n\n═══════════════════════\n المهام اليومية (${gp}%)\n═══════════════════════\n✅ الي اتعمل:\n${tDoneList || '  لا يوجد'}\n\n⏳ الي متعملش:\n${tUndoneList || '  لا يوجد'}\n\n═══════════════════════\n📊 الأداء الكلي\n═══════════════════════\n🔵 المتوسط الحسابي: ${simpleAvg}%\n⚡ المتوسط المرجح (روتين 60% + مهام 40%): ${tp}%\n التقييم: ${gi.grade}\n\n نصائح:\n${gi.tips.map(t => `  ${t}`).join('\n')}\n\n═══════════════════════\n✅ تم حفظ هذا التقرير تلقائياً\n✅ الروتين ثابت (بيبدأ يوم جديد من غير حذف)\n✅ المهام الصحيحة اتحذفت، والباقي بصفحة نظيفة\n\nMade by Ahmed Emad Farhoud 💻✨`;
+const text = `📊 تقرير المهام اليومية\n📅 التاريخ: ${nd}\n\n═══════════════════════\n🔄 الروتين اليومي (${rp}%)\n═══════════════════════\n✅ الي اتعمل:\n${rDoneList || '  لا يوجد'}\n\n⏳ الي متعملش:\n${rUndoneList || '  لا يوجد'}\n\n═══════════════════════\n📋 المهام اليومية (${gp}%)\n═══════════════════════\n✅ الي اتعمل:\n${tDoneList || '  لا يوجد'}\n\n⏳ الي متعملش:\n${tUndoneList || '  لا يوجد'}\n\n═══════════════════════\n📊 الأداء الكلي\n═══════════════════════\n🔵 المتوسط الحسابي: ${simpleAvg}%\n⚡ المتوسط المرجح (روتين 60% + مهام 40%): ${tp}%\n🏆 التقييم: ${gi.grade}\n\n💡 نصائح:\n${gi.tips.map(t => `  ${t}`).join('\n')}\n\n═══════════════════════\n✅ تم حفظ هذا التقرير تلقائياً\n✅ الروتين ثابت (بيبدأ يوم جديد من غير حذف)\n✅ المهام الصحيحة اتحذفت، والباقي بصفحة نظيفة\n\nMade by Ahmed Emad Farhoud 💻✨`;
 const doReset = () => {
 resetDayAfterReport();
 hideReport();
@@ -2031,7 +2056,7 @@ if (pin === expensesPin) {
 closePinModal();
 showExpensesModal();
 } else {
-errorEl.textContent = ' الرقم السري غير صحيح';
+errorEl.textContent = '❌ الرقم السري غير صحيح';
 input.value = '';
 input.focus();
 if (navigator.vibrate) navigator.vibrate(200);
@@ -2201,17 +2226,17 @@ content.innerHTML = `
 <h3>📋 تفاصيل العملية</h3>
 <table class="details-table">
 <tr class="desc-row">
-<td class="detail-icon">${isAdd ? '➕' : ''}</td>
+<td class="detail-icon">${isAdd ? '➕' : '💸'}</td>
 <td class="detail-label">الوصف</td>
 <td class="detail-value desc-value" colspan="1">${op.desc}</td>
 </tr>
 <tr>
-<td class="detail-icon">${isAdd ? '' : '💔'}</td>
+<td class="detail-icon">${isAdd ? '💚' : '💔'}</td>
 <td class="detail-label">النوع</td>
 <td class="detail-value ${isAdd ? 'type-add' : 'type-spend'}">${isAdd ? '➕ إضافة' : '💸 صرف'}</td>
 </tr>
 <tr>
-<td class="detail-icon">${isCash ? '' : '💳'}</td>
+<td class="detail-icon">${isCash ? '💵' : '💳'}</td>
 <td class="detail-label">طريقة الدفع</td>
 <td class="detail-value ${isCash ? 'cash-val' : 'electronic-val'}">${isCash ? '💵 كاش' : '💳 إلكتروني'}</td>
 </tr>
@@ -2617,6 +2642,7 @@ if (checkbox) {
     return;
 }
 
+/* ✨ النقر على العملية في وضع التحديد لتحديدها/إلغاء تحديدها */
 if (isSelectionMode) {
     const expenseItem = e.target.closest('.expense-log-item');
     if (expenseItem && !e.target.closest('.expense-log-info-btn') && !e.target.closest('.settle-btn') && !e.target.closest('.expense-checkbox')) {
@@ -2628,10 +2654,12 @@ if (isSelectionMode) {
     }
 }
 
+/* ✨ النقر على عملية خارج وضع التحديد - إذا كانت محددة مسبقاً، يمكن الرجوع لها */
 const expenseItem = e.target.closest('.expense-log-item');
 if (expenseItem && !e.target.closest('.expense-log-info-btn') && !e.target.closest('.settle-btn') && !e.target.closest('.expense-checkbox') && !isSelectionMode) {
     const opId = parseInt(expenseItem.dataset.opId);
     if (opId && selectedExpenseIds.includes(opId)) {
+        // إذا كانت العملية محددة مسبقاً، الدخول في وضع التحديد مع الحفاظ على التحديد السابق
         isSelectionMode = true;
         const bar = document.getElementById('selectionModeBar');
         bar.classList.add('show');
@@ -2678,8 +2706,6 @@ else { clearInterval(timerInterval); isRunning = false; document.getElementById(
 function pauseTimer() { clearInterval(timerInterval); isRunning = false; document.getElementById('startBtn').textContent = '▶️ استئناف'; }
 function resetTimer() { clearInterval(timerInterval); isRunning = false; timeLeft = modes[currentMode]; updateTimerDisplay(); document.getElementById('startBtn').textContent = '▶️ ابدأ'; }
 function newQuote() { const q = quotes[Math.floor(Math.random()*quotes.length)]; document.getElementById('quoteText').textContent = q.text; document.getElementById('quoteAuthor').textContent = `- ${q.author}`; }
-
-// ✅ 130 اقتباس (30 الأصليين + 100 جديد)
 const quotes = [
 { text: "النجاح ليس صدفة، بل هو نتيجة المثابرة والتفاني", author: "مثل عربي" },
 { text: "من جد وجد ومن زرع حصد", author: "حكمة عربية" },
@@ -2710,124 +2736,8 @@ const quotes = [
 { text: "ثق بنفسك، فأنت أقوى مما تتخيل", author: "حكمة معاصرة" },
 { text: "النجاح هو رحلة، وليس وجهة", author: "حكمة معاصرة" },
 { text: "لا يوجد فشل حقيقي إلا في التوقف عن المحاولة", author: "حكمة معاصرة" },
-{ text: "كن التغيير الذي تريد أن تراه في العالم", author: "مهاتما غاندي" },
-// 100 اقتباس جديد
-{ text: "الانضباط هو الجسر بين الأهداف والإنجاز", author: "جيم رون" },
-{ text: "لا تقيس تقدمك بما أنجزته اليوم، بل بما أنجزته مقارنة بالأمس", author: "حكمة تطويرية" },
-{ text: "الوقت هو رأس المال الحقيقي للإنسان", author: "بنجامين فرانكلين" },
-{ text: "النجاح هو مجموع جهود صغيرة تتكرر كل يوم", author: "روبرت كولير" },
-{ text: "لا تنتظر الظروف المثالية، ابدأ من حيث أنت", author: "حكمة تحفيزية" },
-{ text: "التركيز هو فن تجاهل كل ما هو غير مهم", author: "حكمة إنتاجية" },
-{ text: "لا تدع ضوضاء آراء الآخرين تغرق صوتك الداخلي", author: "ستيف جوبز" },
-{ text: "أفضل وقت لزراعة شجرة كان قبل 20 عاماً، وثاني أفضل وقت هو الآن", author: "مثل صيني" },
-{ text: "المال خادم جيد ولكنه سيد سيء", author: "فرانسيس بيكون" },
-{ text: "ادخر قبل أن تنفق، وليس بعد أن تنفق", author: "حكمة مالية" },
-{ text: "النجاح هو القدرة على الانتقال من فشل إلى آخر دون فقدان الحماس", author: "ونستون تشرشل" },
-{ text: "لا تقارن فصلك الأول بفصل شخص آخر العشرين", author: "حكمة تطويرية" },
-{ text: "العادات الصغيرة هي التي تصنع الفروق الكبيرة مع مرور الوقت", author: "جيمس كلير" },
-{ text: "أنت ما تفعله بشكل متكرر، فالتفوق ليس فعلاً بل عادة", author: "أرسطو" },
-{ text: "لا تنتظر الفرصة، بل اصنعها بجهدك ومثابرتك", author: "جورج برنارد شو" },
-{ text: "الاستثمار في المعرفة يدفع أفضل فائدة", author: "بنجامين فرانكلين" },
-{ text: "من لا يخطط لمستقبله، يخطط لفشله", author: "حكمة إدارية" },
-{ text: "القراءة هي للنفس ما هو التمرين للجسد", author: "جوزيف أديسون" },
-{ text: "لا يوجد طريق مختصر إلى أي مكان يستحق الذهاب إليه", author: "حكمة تحفيزية" },
-{ text: "الفشل هو مجرد فرصة للبدء من جديد بذكاء أكبر", author: "هنري فورد" },
-{ text: "كن ممتناً لما لديك، وستحصل على المزيد", author: "حكمة روحية" },
-{ text: "السعادة ليست شيئاً جاهزاً، بل تأتي من أفعالك أنت", author: "دالاي لاما" },
-{ text: "لا تخف من المشي ببطء، خف فقط من الوقوف في مكانك", author: "مثل صيني" },
-{ text: "أعظم مجد في الحياة ليس في عدم السقوط أبداً، بل في النهوض بعد كل سقوط", author: "كونفوشيوس" },
-{ text: "المعرفة قوة، لكن التطبيق هو ما يصنع الفرق", author: "حكمة عملية" },
-{ text: "لا تقلل من شأن العمل الصغير، فالجبال تتكون من حصى", author: "حكمة عربية" },
-{ text: "الصمت في بعض المواقف هو أقوى رد", author: "حكمة حياتية" },
-{ text: "من شب على شيء شاب عليه", author: "مثل عربي" },
-{ text: "الابتكار يميز بين القائد والتابع", author: "ستيف جوبز" },
-{ text: "لا تدع الأمس يشغل الكثير من يومك", author: "ويل روجرز" },
-{ text: "كل إنجاز عظيم كان يعتبر مستحيلاً في البداية", author: "حكمة تحفيزية" },
-{ text: "الناس الذين يجرؤون على الفشل هم من يحققون العظمة", author: "روبرت كينيدي" },
-{ text: "الذكاء العاطفي أهم من الذكاء الأكاديمي في النجاح", author: "دانيال جولمان" },
-{ text: "لا تحكم على الكتاب من غلافه", author: "مثل إنجليزي" },
-{ text: "الصحة هي التاج الذي يضعه الأصحاء ولا يراه إلا المرضى", author: "حكمة هندية" },
-{ text: "من جد في طلب شيء وجده", author: "حكمة عربية" },
-{ text: "التواضع يرفعك، والغرور يسقطك", author: "حكمة دينية" },
-{ text: "لا تترك الغضب يتحكم في قراراتك", author: "حكمة حياتية" },
-{ text: "أفضل انتقام هو النجاح الهائل", author: "فرانك سيناترا" },
-{ text: "لا يوجد شيء مستحيل، فكلمة نفسها تقول أنا ممكن", author: "أودري هيبورن" },
-{ text: "المثابرة هي أم النجاح", author: "حكمة فرنسية" },
-{ text: "لا تدع مخاوفك تمنعك من تحقيق أحلامك", author: "حكمة تحفيزية" },
-{ text: "العطاء هو سر السعادة الحقيقية", author: "حكمة روحية" },
-{ text: "من يحترم نفسه يحترمه الآخرون", author: "حكمة أخلاقية" },
-{ text: "لا تقاس الحياة بعدد الأنفاس، بل باللحظات التي تخطف أنفاسنا", author: "مايا أنجيلو" },
-{ text: "التغيير هو قانون الحياة، ومن ينظر للماضي فقط سيخسر المستقبل", author: "جون كينيدي" },
-{ text: "لا يوجد مصعد للنجاح، عليك استخدام السلالم", author: "زيج زيجلار" },
-{ text: "النجاح ليس مفتاح السعادة، بل السعادة هي مفتاح النجاح", author: "ألبير شفايتزر" },
-{ text: "من لا يعرف كيف يوفر، لا يعرف كيف يكسب", author: "حكمة مالية" },
-{ text: "الوقت هو العملة الوحيدة التي لا يمكنك استعادتها", author: "حكمة إنتاجية" },
-{ text: "لا تدع ضجيج العالم الخارجي يغطي على صوتك الداخلي", author: "ستيف جوبز" },
-{ text: "كل يوم هو فرصة جديدة لتبدأ من جديد", author: "حكمة تحفيزية" },
-{ text: "الشجاعة ليست غياب الخوف، بل القدرة على المضي قدماً رغمه", author: "نيلسون مانديلا" },
-{ text: "لا تتوقف عندما تتعب، توقف عندما تنتهي", author: "حكمة عسكرية" },
-{ text: "أنت لست ما تقوله عن نفسك، أنت ما تفعله", author: "حكمة عملية" },
-{ text: "لا يوجد طريق سهل يؤدي إلى الأماكن العالية", author: "حكمة تحفيزية" },
-{ text: "الامتنان يحول ما لدينا إلى ما يكفي", author: "ميلودي بيتي" },
-{ text: "لا تقارن بدايتك بمنتصف رحلة شخص آخر", author: "حكمة تطويرية" },
-{ text: "النجاح يتطلب وقتاً، لا تتعجل النتائج", author: "حكمة إدارية" },
-{ text: "من يزرع الورد يجني الورد، ومن يزرع الشوك يجني الشوك", author: "مثل عربي" },
-{ text: "لا تدع الفشل السابق يمنعك من المحاولة من جديد", author: "حكمة تحفيزية" },
-{ text: "العمل الجاد يتغلب على الموهبة عندما لا تعمل الموهبة بجد", author: "تيم نوتكي" },
-{ text: "لا يوجد شيء اسمه حظ، هناك فقط تحضير وفرصة", author: "حكمة عملية" },
-{ text: "كن ممتناً للأشخاص الذين يأتون إلى حياتك ويغيرونها للأفضل", author: "حكمة حياتية" },
-{ text: "لا تقلل من قوة العادة، فهي تبني الشخصيات", author: "حكمة تطويرية" },
-{ text: "النجاح هو أن تنتقل من فشل إلى فشل دون أن تفقد حماسك", author: "ونستون تشرشل" },
-{ text: "لا تدع أحداً يخبرك أنك لا تستطيع فعل شيء", author: "حكمة تحفيزية" },
-{ text: "الحياة قصيرة جداً لتقضيها في كره الآخرين", author: "حكمة روحية" },
-{ text: "لا يوجد طريق مختصر للنجاح، يجب أن تدفع الثمن", author: "حكمة إدارية" },
-{ text: "من يزرع الخير يحصد الخير، ومن يزرع الشر يحصد الشر", author: "حكمة دينية" },
-{ text: "لا تدع الظروف تحددك، بل حدد أنت الظروف", author: "حكمة تحفيزية" },
-{ text: "النجاح هو نتيجة التحضير الجيد والعمل الجاد والتعلم من الفشل", author: "كولين باول" },
-{ text: "لا يوجد شيء مستحيل لمن يؤمن بنفسه", author: "حكمة تحفيزية" },
-{ text: "كن إيجابياً، فالإيجابية تجذب الإيجابية", author: "حكمة روحية" },
-{ text: "لا تدع الخوف من الفشل يمنعك من المحاولة", author: "حكمة تحفيزية" },
-{ text: "النجاح هو أن تفعل ما تحب، وتحب ما تفعل", author: "حكمة حياتية" },
-{ text: "لا يوجد طريق سهل للنجاح، لكن الطريق يستحق الجهد", author: "حكمة تحفيزية" },
-{ text: "كن ممتناً لكل شيء في حياتك، حتى للصعوبات", author: "حكمة روحية" },
-{ text: "لا تدع الشك يقتل أحلامك، الإيمان هو المفتاح", author: "حكمة تحفيزية" },
-{ text: "النجاح هو أن تكون نسخة أفضل من نفسك كل يوم", author: "حكمة تطويرية" },
-{ text: "التعليم هو جواز السفر إلى المستقبل", author: "مالكوم إكس" },
-{ text: "الإبداع هو الذكاء وهو يستمتع", author: "ألبرت أينشتاين" },
-{ text: "الحياة إما أن تكون مغامرة جريئة أو لا شيء", author: "هيلين كيلر" },
-{ text: "الطريق إلى النجاح هو دائماً تحت الإنشاء", author: "ليلي توملين" },
-{ text: "لا يمكنك تغيير اتجاه الريح، لكن يمكنك تعديل أشرعتك", author: "حكمة يونانية" },
-{ text: "النجاح هو الحصول على ما تريد، والسعادة هي الرغبة في ما تحصل عليه", author: "ديل كارنيجي" },
-{ text: "أنت لا تتعلم المشي باتباع القواعد، تتعلم بالممارسة وبالسقوط", author: "ريتشارد برانسون" },
-{ text: "الفرص لا تحدث، أنت من تصنعها", author: "كريس جروسر" },
-{ text: "الحياة 10% ما يحدث لك و90% كيف تتفاعل معها", author: "تشارلز سويندول" },
-{ text: "النجاح ليس عن المال أو القوة، بل عن الحرية", author: "حكمة تحفيزية" },
-{ text: "إذا كنت تريد أن تحلق، عليك أن تتخلى عن كل ما يثقل كاهلك", author: "حكمة تحفيزية" },
-{ text: "لا يمكنك اكتشاف محيطات جديدة إلا إذا كان لديك الشجاعة لفقدان رؤية الشاطئ", author: "حكمة تحفيزية" },
-{ text: "النجاح هو الانتقال من فشل إلى آخر دون فقدان الحماس", author: "ونستون تشرشل" },
-{ text: "أفضل طريقة للتنبؤ بالمستقبل هي صنعه", author: "بيتر دراكر" },
-{ text: "لا تخف من التخلي عن الخير لتذهب إلى الأفضل", author: "جون روكفلر" },
-{ text: "النجاح هو أن تفعل ما يجب عليك فعله، عندما يجب عليك فعله، سواء أحببت ذلك أم لا", author: "كولين باول" },
-{ text: "الطموح هو الحلم بمحرك V8", author: "إلفيس بريسلي" },
-{ text: "النجاح لا يأتي إليك، بل تذهب إليه", author: "مارفا كولينز" },
-{ text: "لا يمكن لأحد أن يجعلك تشعر بالنقص دون موافقتك", author: "إليانور روزفلت" },
-{ text: "الحياة مثل ركوب الدراجة، للحفاظ على توازنك يجب أن تستمر في التحرك", author: "ألبرت أينشتاين" },
-{ text: "النجاح هو الاستمرار في التقدم", author: "ونستون تشرشل" },
-{ text: "إذا غيرت نظرتك للأشياء، تتغير الأشياء التي تنظر إليها", author: "واين داير" },
-{ text: "كل شيء يبدو مستحيلاً حتى يتم", author: "نيلسون مانديلا" },
-{ text: "النجاح هو أن تكون قادراً على الذهاب من فشل إلى آخر دون فقدان الحماس", author: "ونستون تشرشل" },
-{ text: "أنت أقوى مما تعتقد، وأكثر قدرة مما تتخيل", author: "حكمة تحفيزية" },
-{ text: "لا تدع الأمس يأخذ الكثير من يومك", author: "ويل روجرز" },
-{ text: "النجاح هو الحصول على ما تريد، والسعادة هي حب ما تحصل عليه", author: "حكمة تحفيزية" },
-{ text: "العمل الشاق لا يكذب", author: "حكمة تحفيزية" },
-{ text: "النجاح هو نتيجة الكمال في الأساسيات", author: "جيم رون" },
-{ text: "لا يوجد سر للنجاح، إنه نتيجة التحضير والعمل الشاق والتعلم من الفشل", author: "كولين باول" },
-{ text: "النجاح هو أن تعيش حياتك بالطريقة التي تريدها", author: "حكمة تحفيزية" },
-{ text: "كل يوم هو فرصة جديدة", author: "حكمة تحفيزية" },
-{ text: "النجاح هو أن تفعل شيئاً ذا قيمة", author: "حكمة تحفيزية" },
-{ text: "كن شجاعاً بما يكفي لعيش حياتك بحرية", author: "حكمة تحفيزية" }
+{ text: "كن التغيير الذي تريد أن تراه في العالم", author: "مهاتما غاندي" }
 ];
-
 document.addEventListener('DOMContentLoaded', () => {
 const savedTheme = localStorage.getItem('theme') || 'light';
 setTheme(savedTheme);
