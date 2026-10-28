@@ -1,6 +1,7 @@
 {
   "name": "برنامج المهام اليومية الاحترافي",
   "short_name": "برنامج المهام اليومية الاحترافي",
+  "description": "تطبيق احترافي لإدارة المهام اليومية والمصروفات والروتين",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#000000",
@@ -14,10 +15,13 @@
       "purpose": "any maskable"
     },
     {
-      "src": "icon-512.png",
-      "sizes": "512x512",
+      "src": "icon-412.png",
+      "sizes": "412x412",
       "type": "image/png",
       "purpose": "any maskable"
     }
-  ]
+  ],
+  "categories": ["productivity", "utilities"],
+  "lang": "ar",
+  "dir": "rtl"
 }
