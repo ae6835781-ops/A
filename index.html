@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
@@ -9,7 +11,6 @@
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icon-192.png">
 <style>
-/* ... (نفس الـ CSS الحالي بالكامل دون تغيير) ... */
 body {
 font-family: 'Segoe UI', 'Tahoma', 'Arial', 'Noto Sans Arabic', sans-serif;
 min-height: 100vh;
@@ -1035,7 +1036,7 @@ color: #ffffff;
 }
 
 /* ================================ */
-/* ✨ الميزات الجديدة - التحديد المتعدد */
+/*  الميزات الجديدة - التحديد المتعدد */
 /* ================================ */
 
 .selection-mode-bar {
@@ -1187,21 +1188,87 @@ body.selection-active .expense-checkbox {
         font-size: 0.68rem;
     }
 }
+
+/* ✨ رسالة التثبيت في مستطيل صغير */
+.install-prompt {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: var(--card-bg);
+    border: 2px solid var(--bg-gradient-start);
+    border-radius: 12px;
+    padding: 12px 16px;
+    box-shadow: 0 10px 40px var(--shadow-color);
+    z-index: 5000;
+    display: none;
+    align-items: center;
+    gap: 10px;
+    animation: slideUp 0.4s ease;
+    max-width: 90%;
+    width: auto;
+}
+.install-prompt.show {
+    display: flex;
+}
+.install-prompt-icon {
+    font-size: 1.5rem;
+}
+.install-prompt-text {
+    flex: 1;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+.install-prompt button {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.75rem;
+    transition: all 0.2s ease;
+}
+.install-prompt .install-btn {
+    background: var(--bg-gradient-start);
+    color: white;
+}
+.install-prompt .install-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+.install-prompt .cancel-install-btn {
+    background: var(--btn-secondary-bg);
+    color: var(--text-secondary);
+}
+.install-prompt .cancel-install-btn:hover {
+    transform: translateY(-2px);
+}
 </style>
 </head>
 <body>
 <div class="bg-animation">
 <div class="floating-icon physics-1">⚛️</div><div class="floating-icon physics-2">🔭</div>
-<div class="floating-icon chemistry-1">⚗️</div><div class="floating-icon chemistry-2">🧪</div>
-<div class="floating-icon biology-1">🧬</div><div class="floating-icon biology-2">🔬</div>
+<div class="floating-icon chemistry-1">️</div><div class="floating-icon chemistry-2">🧪</div>
+<div class="floating-icon biology-1">🧬</div><div class="floating-icon biology-2"></div>
 <div class="floating-icon arabic-1">📖</div><div class="floating-icon arabic-2">✒️</div>
 <div class="floating-icon english-1">🔤</div><div class="floating-icon english-2">📚</div>
-<div class="floating-icon french-1">🇫</div><div class="floating-icon french-2">🥐</div>
+<div class="floating-icon french-1">🇫</div><div class="floating-icon french-2"></div>
 </div>
 <div class="waves">
 <div class="wave"></div>
 <div class="wave"></div>
 </div>
+
+<!-- ✨ رسالة التثبيت -->
+<div class="install-prompt" id="installPrompt">
+    <span class="install-prompt-icon">📲</span>
+    <span class="install-prompt-text">ثبّت التطبيق للاستخدام بدون إنترنت!</span>
+    <button class="install-btn" id="installBtn">تثبيت</button>
+    <button class="cancel-install-btn" id="cancelInstallBtn">✕</button>
+</div>
+
 <div class="container">
 <div class="header">
 <div class="header-title">
@@ -1218,7 +1285,7 @@ body.selection-active .expense-checkbox {
 <span>المصروفات</span>
 </button>
 <button class="header-btn" id="themeSelectorBtn" onclick="cycleTheme()">
-<span class="icon" id="themeIcon">☀️</span>
+<span class="icon" id="themeIcon">️</span>
 <span id="themeText">فاتح</span>
 </button>
 </div>
@@ -1235,7 +1302,7 @@ body.selection-active .expense-checkbox {
 </div>
 <div class="timer-controls">
 <button class="btn btn-primary" id="startBtn">▶️ ابدأ</button>
-<button class="btn btn-secondary" id="pauseBtn">⏸️ إيقاف</button>
+<button class="btn btn-secondary" id="pauseBtn">️ إيقاف</button>
 <button class="btn btn-secondary" id="resetBtn">🔄 إعادة</button>
 </div>
 </div>
@@ -1443,6 +1510,47 @@ Made by <a href="https://wa.me/201102594058" target="_blank">Ahmed Emad Farhoud<
 </div>
 </div>
 <script>
+// ✨ تسجيل Service Worker للعمل بدون إنترنت
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js')
+      .then(registration => {
+        console.log('✅ Service Worker registered:', registration);
+      })
+      .catch(error => {
+        console.log('❌ Service Worker registration failed:', error);
+      });
+  });
+}
+
+// ✨ رسالة التثبيت PWA
+let deferredPrompt;
+const installPrompt = document.getElementById('installPrompt');
+const installBtn = document.getElementById('installBtn');
+const cancelInstallBtn = document.getElementById('cancelInstallBtn');
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  setTimeout(() => {
+    installPrompt.classList.add('show');
+  }, 2000);
+});
+
+installBtn.addEventListener('click', async () => {
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    console.log(`User response to the install prompt: ${outcome}`);
+    deferredPrompt = null;
+    installPrompt.classList.remove('show');
+  }
+});
+
+cancelInstallBtn.addEventListener('click', () => {
+  installPrompt.classList.remove('show');
+});
+
 if ('serviceWorker' in navigator) {
 const swCode = `
 const CACHE_NAME = 'tasks-app-v1';
@@ -1476,7 +1584,7 @@ navigator.serviceWorker.register(swUrl).then(reg => console.log('✅ Service Wor
 const themeOrder = ['light', 'dark', 'sunset', 'ocean', 'sakura', 'forest', 'barbie'];
 const themeIcons = {
 light: '☀️', dark: '🌙', sunset: '🌅',
-ocean: '🌊', sakura: '🌸', forest: '🌳', barbie: '💖'
+ocean: '', sakura: '🌸', forest: '🌳', barbie: '💖'
 };
 const themeNames = {
 light: 'فاتح', dark: 'داكن', sunset: 'غروب',
@@ -1831,7 +1939,7 @@ const combinedHTML = `
 <div class="combined-bar-track"><div class="combined-bar-fill routine" style="width: ${rp}%; background-color: var(--routine-border);"></div></div>
 </div>
 <div class="combined-bar-item">
-<div class="combined-bar-label"><span>📋 المهام</span><span style="color: var(--task-border);">${gp}%</span></div>
+<div class="combined-bar-label"><span> المهام</span><span style="color: var(--task-border);">${gp}%</span></div>
 <div class="combined-bar-track"><div class="combined-bar-fill tasks" style="width: ${gp}%; background-color: var(--task-border);"></div></div>
 </div>
 </div>
@@ -1883,12 +1991,12 @@ saveReportHistory();
 const rDoneList = rt.filter(t => t.status === 'correct').map(t => `  ✅ ${t.text}`).join('\n');
 const rUndoneList = rt.filter(t => t.status !== 'correct').map(t => `  ⏳ ${t.text}`).join('\n');
 const tDoneList = rg.filter(t => t.status === 'correct').map(t => `  ✅ ${t.text}`).join('\n');
-const tUndoneList = rg.filter(t => t.status !== 'correct').map(t => `  ⏳ ${t.text}`).join('\n');
-const text = `📊 تقرير المهام اليومية\n📅 التاريخ: ${nd}\n\n═══════════════════════\n🔄 الروتين اليومي (${rp}%)\n═══════════════════════\n✅ الي اتعمل:\n${rDoneList || '  لا يوجد'}\n\n⏳ الي متعملش:\n${rUndoneList || '  لا يوجد'}\n\n═══════════════════════\n📋 المهام اليومية (${gp}%)\n═══════════════════════\n✅ الي اتعمل:\n${tDoneList || '  لا يوجد'}\n\n⏳ الي متعملش:\n${tUndoneList || '  لا يوجد'}\n\n═══════════════════════\n📊 الأداء الكلي\n═══════════════════════\n🔵 المتوسط الحسابي: ${simpleAvg}%\n⚡ المتوسط المرجح (روتين 60% + مهام 40%): ${tp}%\n🏆 التقييم: ${gi.grade}\n\n💡 نصائح:\n${gi.tips.map(t => `  ${t}`).join('\n')}\n\n═══════════════════════\n✅ تم حفظ هذا التقرير تلقائياً\n✅ الروتين ثابت (بيبدأ يوم جديد من غير حذف)\n✅ المهام الصحيحة اتحذفت، والباقي بصفحة نظيفة\n\nMade by Ahmed Emad Farhoud 💻✨`;
+const tUndoneList = rg.filter(t => t.status !== 'correct').map(t => `   ${t.text}`).join('\n');
+const text = `📊 تقرير المهام اليومية\n📅 التاريخ: ${nd}\n\n═══════════════════════\n🔄 الروتين اليومي (${rp}%)\n═══════════════════════\n✅ الي اتعمل:\n${rDoneList || '  لا يوجد'}\n\n الي متعملش:\n${rUndoneList || '  لا يوجد'}\n\n═══════════════════════\n المهام اليومية (${gp}%)\n═══════════════════════\n✅ الي اتعمل:\n${tDoneList || '  لا يوجد'}\n\n⏳ الي متعملش:\n${tUndoneList || '  لا يوجد'}\n\n═══════════════════════\n الأداء الكلي\n═══════════════════════\n🔵 المتوسط الحسابي: ${simpleAvg}%\n المتوسط المرجح (روتين 60% + مهام 40%): ${tp}%\n🏆 التقييم: ${gi.grade}\n\n💡 نصائح:\n${gi.tips.map(t => `  ${t}`).join('\n')}\n\n═══════════════════════\n✅ تم حفظ هذا التقرير تلقائياً\n✅ الروتين ثابت (بيبدأ يوم جديد من غير حذف)\n✅ المهام الصحيحة اتحذفت، والباقي بصفحة نظيفة\n\nMade by Ahmed Emad Farhoud ✨`;
 const doReset = () => {
 resetDayAfterReport();
 hideReport();
-alert('✅ تم نسخ التقرير بنجاح!\n✅ تم حفظ التقرير في السجل 📚\n✅ الروتين ثابت ومبدأش من جديد 🔄\n✅ المهام الصحيحة اتحذفت، والباقي بصفحة نظيفة ✨');
+alert('✅ تم نسخ التقرير بنجاح!\n✅ تم حفظ التقرير في السجل \n✅ الروتين ثابت ومبدأش من جديد 🔄\n✅ المهام الصحيحة اتحذفت، والباقي بصفحة نظيفة ✨');
 };
 navigator.clipboard.writeText(text).then(doReset).catch(() => {
 const ta = document.createElement('textarea');
@@ -1947,8 +2055,8 @@ document.getElementById(pid).style.width = p + '%';
 document.getElementById(pctid).textContent = p + '%';
 }
 function renderAllTasks() {
-renderTasksByCategory('routine', 'routineList', 'routineCompleted', 'routineTotal', 'routineProgressBar', 'routineProgressPercent', 'لا توجد روتينيات بعد. أضف روتينك الأول!', '🔄');
-renderTasksByCategory('task', 'taskList', 'taskCompleted', 'taskTotal', 'taskProgressBar', 'taskProgressPercent', 'لا توجد مهام بعد. أضف مهمتك الأولى!', '📝');
+renderTasksByCategory('routine', 'routineList', 'routineCompleted', 'routineTotal', 'routineProgressBar', 'routineProgressPercent', 'لا توجد روتينيات بعد. أضف روتينك الأول!', '');
+renderTasksByCategory('task', 'taskList', 'taskCompleted', 'taskTotal', 'taskProgressBar', 'taskProgressPercent', 'لا توجد مهام بعد. أضف مهمتك الأولى!', '');
 initMobileTap(); initTouchDrag(); updateAllProgressColors();
 }
 function updateAllProgressColors() {
@@ -2057,7 +2165,7 @@ if (pin === expensesPin) {
 closePinModal();
 showExpensesModal();
 } else {
-errorEl.textContent = '❌ الرقم السري غير صحيح';
+errorEl.textContent = ' الرقم السري غير صحيح';
 input.value = '';
 input.focus();
 if (navigator.vibrate) navigator.vibrate(200);
@@ -2148,7 +2256,7 @@ if (!confirm(`⚠️ الرصيد الحالي للكاش: ${cashBalance.toFixed
 return;
 }
 } else if (currentPaymentMethod === 'إلكتروني' && amount > electronicBalance) {
-if (!confirm(`⚠️ الرصيد الحالي للإلكتروني: ${electronicBalance.toFixed(2)} ج.م\nالمبلغ المطلوب: ${amount.toFixed(2)} ج.م\nسيصبح الرصيد سالباً. هل تريد المتابعة؟`)) {
+if (!confirm(`️ الرصيد الحالي للإلكتروني: ${electronicBalance.toFixed(2)} ج.م\nالمبلغ المطلوب: ${amount.toFixed(2)} ج.م\nسيصبح الرصيد سالباً. هل تريد المتابعة؟`)) {
 return;
 }
 }
@@ -2237,7 +2345,7 @@ content.innerHTML = `
 <td class="detail-value ${isAdd ? 'type-add' : 'type-spend'}">${isAdd ? '➕ إضافة' : '💸 صرف'}</td>
 </tr>
 <tr>
-<td class="detail-icon">${isCash ? '💵' : '💳'}</td>
+<td class="detail-icon">${isCash ? '' : '💳'}</td>
 <td class="detail-label">طريقة الدفع</td>
 <td class="detail-value ${isCash ? 'cash-val' : 'electronic-val'}">${isCash ? '💵 كاش' : '💳 إلكتروني'}</td>
 </tr>
@@ -2252,7 +2360,7 @@ content.innerHTML = `
 <td class="detail-value">${op.time}</td>
 </tr>
 <tr>
-<td class="detail-icon">📅</td>
+<td class="detail-icon"></td>
 <td class="detail-label">التاريخ</td>
 <td class="detail-value">${op.date}</td>
 </tr>
@@ -2551,7 +2659,7 @@ html += `
     <button class="settle-btn" data-settle-id="${op.id}" title="${isSettled ? 'إلغاء التسديد' : 'تم التسديد'}">
         ${isSettled ? '✓' : '✓'}
     </button>
-    <button class="expense-log-info-btn" data-details-id="${op.id}" title="التفاصيل">ℹ️</button>
+    <button class="expense-log-info-btn" data-details-id="${op.id}" title="التفاصيل">️</button>
 </div>
 `;
 });
@@ -2708,7 +2816,7 @@ function pauseTimer() { clearInterval(timerInterval); isRunning = false; documen
 function resetTimer() { clearInterval(timerInterval); isRunning = false; timeLeft = modes[currentMode]; updateTimerDisplay(); document.getElementById('startBtn').textContent = '▶️ ابدأ'; }
 function newQuote() { const q = quotes[Math.floor(Math.random()*quotes.length)]; document.getElementById('quoteText').textContent = q.text; document.getElementById('quoteAuthor').textContent = `- ${q.author}`; }
 const quotes = [
-// الاقتباسات الأصلية (لا تحذفها):
+// الاقتباسات الأصلية (30):
 { text: "النجاح ليس صدفة، بل هو نتيجة المثابرة والتفاني", author: "مثل عربي" },
 { text: "من جد وجد ومن زرع حصد", author: "حكمة عربية" },
 { text: "العلم نور والجهل ظلام", author: "مثل عربي" },
@@ -2744,33 +2852,26 @@ const quotes = [
 { text: "أن تضيء شمعة صغيرة خير لك من أن تنفق عمرك تلعن الظلام", author: "حكمة صينية" },
 { text: "لا يحزنك إنك فشلت مادمت تحاول الوقوف على قدميك من جديد", author: "حكمة عالمية" },
 { text: "خير لك أن تسأل مرتين من أن تخطئ مرة", author: "حكمة عربية" },
-{ text: "الوقت كالسيف إن لم تقطعه قطعك", author: "مثل عربي" },
-{ text: "من جدّ وجد، ومن زرع حصد", author: "مثل عربي" },
 { text: "العقل السليم في الجسم السليم", author: "مثل لاتيني" },
 { text: "العلم في الصغر كالنقش على الحجر", author: "مثل عربي" },
 { text: "من شبّ على شيء شاب عليه", author: "مثل عربي" },
 { text: "الوقت من ذهب", author: "مثل عربي" },
-{ text: "الصبر مفتاح الفرج", author: "مثل عربي" },
-{ text: "من صبر ظفر", author: "مثل عربي" },
 { text: "في التأني السلامة، وفي العجلة الندامة", author: "مثل عربي" },
 { text: "من جدّ وجد، ومن نام فات", author: "مثل عربي" },
-{ text: "العلم نور والجهل ظلام", author: "مثل عربي" },
 { text: "اطلبوا العلم من المهد إلى اللحد", author: "حديث شريف" },
 { text: "من تعلم في صغره نفع في كبره", author: "حكمة عربية" },
 { text: "العادة طبيعة ثانية", author: "مثل عربي" },
 { text: "من عاشر قوماً أربعين يوماً، صار منهم", author: "مثل عربي" },
 { text: "الصديق وقت الضيق", author: "مثل عربي" },
 { text: "إذا تمّ العقل نقص الكلام", author: "مثل عربي" },
-{ text: "ربّ أخ لم تلده أمك", author: "مثل عربي" },
+{ text: "ربّ أخ لك لم تلده أمك", author: "مثل عربي" },
 { text: "من حفر حفرة لأخيه وقع فيها", author: "مثل عربي" },
 { text: "الجزاء من جنس العمل", author: "مثل عربي" },
 { text: "من زرع حصد", author: "مثل عربي" },
-{ text: "لا تؤجل عمل اليوم إلى الغد", author: "مثل عربي" },
 { text: "من أكل وحده اختنق", author: "مثل عربي" },
 { text: "اليد الواحدة لا تصفق", author: "مثل عربي" },
 { text: "اتّق شرّ من أحسنت إليه", author: "مثل عربي" },
 { text: "ربّ ضارة نافعة", author: "مثل عربي" },
-{ text: "رُبّ أخ لك لم تلده أمك", author: "مثل عربي" },
 { text: "إذا صحبت فلا تكذب، وإن كذبت فلا تعد", author: "مثل عربي" },
 { text: "من أحبّ شيئاً أعمى وأصمّ", author: "مثل عربي" },
 { text: "من كثرت عنده الأسباب بطلت العلل", author: "مثل عربي" },
@@ -2780,10 +2881,6 @@ const quotes = [
 { text: "من قلّ ماله قلّ حياؤه", author: "مثل عربي" },
 { text: "من لا يعمل لا يأكل", author: "مثل عربي" },
 { text: "من يزرع الشوك لا يجني العنب", author: "مثل عربي" },
-{ text: "مواعيد عرقوب", author: "مثل عربي" },
-{ text: "نم يا بطلي", author: "مثل عربي" },
-{ text: "هون على نفسك", author: "مثل عربي" },
-{ text: "يا واخد الحق بيده", author: "مثل عربي" },
 { text: "أعزّ مكان في الدنى سرج سابح", author: "المتنبي" },
 { text: "على قدر أهل العزم تأتي العزائم", author: "المتنبي" },
 { text: "ومن لم يصعد ذروة المجد لم يذق", author: "المتنبي" },
@@ -2795,12 +2892,6 @@ const quotes = [
 { text: "قم للمعلم وفّه تبجيلا", author: "أحمد شوقي" },
 { text: "إنما الأمم الأخلاق ما بقيت", author: "أحمد شوقي" },
 { text: "وطني لو شغلت بالخلد عنه", author: "أحمد شوقي" },
-{ text: "أرني الناسَ أرني الناسَ أرني", author: "بدر شاكر السياب" },
-{ text: "سأعودُ إن قدّرَ لي أن أعودا", author: "نزار قباني" },
-{ text: "أحبّك جداً وأعرفُ لماذا", author: "نزار قباني" },
-{ text: "قارئة الفنجان", author: "نزار قباني" },
-{ text: "بلقيس", author: "نزار قباني" },
-{ text: "الحبُّ لا يقتل أحداً", author: "نزار قباني" },
 { text: "تعلموا فإن العلم مفتاح", author: "حكمة عربية" },
 { text: "العلم يُكسب صاحبه قدراً", author: "حكمة عربية" },
 { text: "اطلبوا الرزق في خبايا الأرض", author: "حكمة عربية" },
@@ -2809,10 +2900,6 @@ const quotes = [
 { text: "الإبداع هو الذكاء وهو يستمتع", author: "أينشتاين" },
 { text: "لا يمكنك أن تفعل كل شيء، لكن يمكنك أن تفعل شيئاً", author: "حكمة" },
 { text: "الفرصة لا تأتي مرتين", author: "مثل عربي" },
-{ text: "من جدّ وجد، ومن نام فات", author: "مثل عربي" },
-{ text: "الوقت كالسيف إن لم تقطعه قطعك", author: "مثل عربي" },
-{ text: "من صبر ظفر", author: "مثل عربي" },
-{ text: "في التأني السلامة", author: "مثل عربي" },
 { text: "العجلة من الشيطان", author: "مثل عربي" },
 { text: "من شبّ على شيء شاب عليه", author: "مثل عربي" },
 { text: "العلم في الصغر كالنقش على الحجر", author: "مثل عربي" },
@@ -2849,7 +2936,50 @@ const quotes = [
 { text: "وما نيل المطالب بالتمني", author: "أحمد شوقي" },
 { text: "قم للمعلم وفّه تبجيلا", author: "أحمد شوقي" },
 { text: "إنما الأمم الأخلاق ما بقيت", author: "أحمد شوقي" },
-{ text: "وطني لو شغلت بالخلد عنه", author: "أحمد شوقي" }
+{ text: "وطني لو شغلت بالخلد عنه", author: "أحمد شوقي" },
+{ text: "الثقة بالنفس هي سر النجاح", author: "حكمة" },
+{ text: "الإرادة القوية تحقق المستحيل", author: "حكمة" },
+{ text: "العمل الجاد هو مفتاح النجاح", author: "حكمة" },
+{ text: "التفاؤل يمنحك القوة للاستمرار", author: "حكمة" },
+{ text: "الصبر على المضاعفات يؤدي إلى النجاح", author: "حكمة" },
+{ text: "النجاح يحتاج إلى تخطيط وجهد", author: "حكمة" },
+{ text: "كل يوم هو فرصة جديدة", author: "حكمة" },
+{ text: "لا تيأس، فالنهاية قد تكون قريبة", author: "حكمة" },
+{ text: "الإيمان بنفسك هو نصف الطريق", author: "حكمة" },
+{ text: "التعلم المستمر هو سر التقدم", author: "حكمة" },
+{ text: "النجاح ليس وجهة بل رحلة", author: "حكمة" },
+{ text: "كن إيجابياً وستجد النتائج", author: "حكمة" },
+{ text: "الوقت ثمين، لا تضيعه", author: "حكمة" },
+{ text: "الاستمرارية هي مفتاح الإنجاز", author: "حكمة" },
+{ text: "النجاح يحتاج إلى تضحية", author: "حكمة" },
+{ text: "كن صادقاً مع نفسك", author: "حكمة" },
+{ text: "التواضع يزيد من قدر الناس لك", author: "حكمة" },
+{ text: "العمل الصالح يبقى", author: "حكمة" },
+{ text: "النية الصالحة تفتح الأبواب", author: "حكمة" },
+{ text: "الدعاء يغير الأقدار", author: "حكمة" },
+{ text: "التوكل على الله هو القوة الحقيقية", author: "حكمة" },
+{ text: "الصلاة نور", author: "حكمة" },
+{ text: "القرآن شفاء", author: "حكمة" },
+{ text: "الذكر يطرد الشيطان", author: "حكمة" },
+{ text: "الصدقة تطفئ الغضب", author: "حكمة" },
+{ text: "بر الوالدين من أعظم الأعمال", author: "حكمة" },
+{ text: "صلة الرحم تزيد في العمر", author: "حكمة" },
+{ text: "حسن الخلق من أفضل الأعمال", author: "حكمة" },
+{ text: "الابتسامة صدقة", author: "حكمة" },
+{ text: "العفو عند المقدرة", author: "حكمة" },
+{ text: "الرحمة تنزل على الرحماء", author: "حكمة" },
+{ text: "التسامح قوة", author: "حكمة" },
+{ text: "العدل أساس الملك", author: "حكمة" },
+{ text: "الأمانة من علامات الإيمان", author: "حكمة" },
+{ text: "الوفاء بالعهد من صفات المؤمنين", author: "حكمة" },
+{ text: "الشكر يزيد النعم", author: "حكمة" },
+{ text: "الحمد لله على كل حال", author: "حكمة" },
+{ text: "الرضا بالقدر من الإيمان", author: "حكمة" },
+{ text: "الصبر على البلاء أجر عظيم", author: "حكمة" },
+{ text: "الدنيا دار ممر لا دار مقر", author: "حكمة" },
+{ text: "الآخرة خير وأبقى", author: "حكمة" },
+{ text: "اعمل لدنياك كأنك تعيش أبداً", author: "حكمة" },
+{ text: "واعمل لآخرتك كأنك تموت غداً", author: "حكمة" }
 ];
 document.addEventListener('DOMContentLoaded', () => {
 const savedTheme = localStorage.getItem('theme') || 'light';
@@ -2878,18 +3008,6 @@ timeLeft = modes[currentMode];
 updateTimerDisplay(); resetTimer();
 });
 });
-</script>  
-   // تسجيل Service Worker للعمل بدون إنترنت
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('sw.js')
-      .then(registration => {
-        console.log('✅ Service Worker registered:', registration);
-      })
-      .catch(error => {
-        console.log('❌ Service Worker registration failed:', error);
-      });
-  });
-} 
+</script>
 </body>
 </html>
