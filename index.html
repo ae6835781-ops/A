@@ -7,8 +7,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="theme-color" content="#667eea">
 <title>برنامج المهام اليومية الاحترافي</title>
-<link rel="manifest" href="manifest.json">
-<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjoiYnJubmFtZyBhbG1oYXTigqkgYWx5d21pYSIsInNob3J0X25hbWUiOiJhbG1oYXTigqkgYWx5d21pYSIsInN0YXJ0X3VybCI6Ii8iLCJkaXNwbGF5Ijoic3RhbmRhbG9uZSIsImJhY2tncm91bmRfY29sb3IiOiIjNjY3ZWVhIiwidGhlbWVfY29sb3IiOiIjNjY3ZWVhIiwib3JpZW50YXRpb24iOiJwb3J0cmFpdCJ9">
 <style>
 body {
 font-family: 'Segoe UI', 'Tahoma', 'Arial', 'Noto Sans Arabic', sans-serif;
@@ -1191,12 +1190,12 @@ body.selection-active .expense-checkbox {
 </head>
 <body>
 <div class="bg-animation">
-<div class="floating-icon physics-1">⚛️</div><div class="floating-icon physics-2"></div>
-<div class="floating-icon chemistry-1">⚗️</div><div class="floating-icon chemistry-2"></div>
+<div class="floating-icon physics-1">⚛️</div><div class="floating-icon physics-2">🔭</div>
+<div class="floating-icon chemistry-1">⚗️</div><div class="floating-icon chemistry-2">🧪</div>
 <div class="floating-icon biology-1">🧬</div><div class="floating-icon biology-2">🔬</div>
 <div class="floating-icon arabic-1">📖</div><div class="floating-icon arabic-2">✒️</div>
-<div class="floating-icon english-1">🔤</div><div class="floating-icon english-2"></div>
-<div class="floating-icon french-1">🇫🇷</div><div class="floating-icon french-2"></div>
+<div class="floating-icon english-1">🔤</div><div class="floating-icon english-2">📚</div>
+<div class="floating-icon french-1">🇫</div><div class="floating-icon french-2">🥐</div>
 </div>
 <div class="waves">
 <div class="wave"></div>
@@ -1273,7 +1272,7 @@ body.selection-active .expense-checkbox {
 <button class="btn btn-primary" onclick="addTask()">➕ إضافة</button>
 </div>
 <ul class="tasks-list" id="taskList">
-<div class="empty-state"><div class="empty-state-icon"></div><p>لا توجد مهام بعد. أضف مهمتك الأولى!</p></div>
+<div class="empty-state"><div class="empty-state-icon">📝</div><p>لا توجد مهام بعد. أضف مهمتك الأولى!</p></div>
 </ul>
 <div style="margin-top: 6px; display: flex; justify-content: space-between; align-items: center;">
 <span style="font-size: 0.65rem; color: var(--text-secondary);">نسبة إنجاز المهام</span>
@@ -1365,8 +1364,8 @@ Made by <a href="https://wa.me/201102594058" target="_blank">Ahmed Emad Farhoud<
 <input type="text" class="expense-input full-width" id="expenseDesc" placeholder="وصف العملية">
 <input type="number" class="expense-input full-width" id="expenseAmount" placeholder="المبلغ">
 <div class="op-toggle full-width">
-<button class="op-btn active spend-active" id="btnSpend" data-op="صرف">💸 صرف</button>
-<button class="op-btn" id="btnAdd" data-op="إضافة">➕ إضافة</button>
+<button class="op-btn active spend-active" id="btnSpend" data-op="صرف"> صرف</button>
+<button class="op-btn" id="btnAdd" data-op="إضافة"> إضافة</button>
 </div>
 <div class="payment-toggle full-width">
 <button class="payment-btn active cash-active" id="btnCash" data-pay="كاش">💵 كاش</button>
@@ -1376,7 +1375,7 @@ Made by <a href="https://wa.me/201102594058" target="_blank">Ahmed Emad Farhoud<
 </div>
 </div>
 <div class="form-title">
-<span></span>
+<span>📜</span>
 <span>سجل العمليات</span>
 <span style="margin-right: auto; font-size: 0.65rem; color: var(--text-muted); font-weight: 400;">(اضغط مطولاً للتحديد)</span>
 </div>
@@ -1425,7 +1424,7 @@ Made by <a href="https://wa.me/201102594058" target="_blank">Ahmed Emad Farhoud<
 <div class="modal" id="reportContent">
 <div class="modal-header">
 <h3>📊 تقرير الأداء اليومي</h3>
-<button class="modal-close" onclick="hideReport()"></button>
+<button class="modal-close" onclick="hideReport()">✕</button>
 </div>
 <div class="routine-task-split" id="reportSplit"></div>
 <div class="combined-section" id="reportCombined"></div>
@@ -1444,7 +1443,34 @@ Made by <a href="https://wa.me/201102594058" target="_blank">Ahmed Emad Farhoud<
 </div>
 <script>
 if ('serviceWorker' in navigator) {
-navigator.serviceWorker.register('sw.js').then(reg => console.log('✅ Service Worker registered')).catch(err => console.log('❌ Service Worker registration failed'));
+const swCode = `
+const CACHE_NAME = 'tasks-app-v1';
+const urlsToCache = ['/'];
+self.addEventListener('install', event => {
+event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(urlsToCache)));
+self.skipWaiting();
+});
+self.addEventListener('fetch', event => {
+event.respondWith(caches.match(event.request).then(response => {
+if (response) return response;
+return fetch(event.request).catch(() => caches.match('/'));
+}));
+});
+self.addEventListener('activate', event => {
+const cacheWhitelist = [CACHE_NAME];
+event.waitUntil(caches.keys().then(cacheNames => {
+return Promise.all(cacheNames.map(cacheName => {
+if (cacheWhitelist.indexOf(cacheName) === -1) return caches.delete(cacheName);
+}));
+}));
+self.clients.claim();
+});
+`;
+const blob = new Blob([swCode], { type: 'application/javascript' });
+const swUrl = URL.createObjectURL(blob);
+window.addEventListener('load', () => {
+navigator.serviceWorker.register(swUrl).then(reg => console.log('✅ Service Worker registered')).catch(err => console.log('❌ Service Worker registration failed'));
+});
 }
 const themeOrder = ['light', 'dark', 'sunset', 'ocean', 'sakura', 'forest', 'barbie'];
 const themeIcons = {
@@ -1768,7 +1794,7 @@ const simpleAvg = tt === 0 ? 0 : Math.round((tc / tt) * 100);
 const gi = getGrade(simpleAvg);
 const splitHTML = `
 <div class="split-card routine-card">
-<div class="split-header"><span class="split-title"> الروتين اليومي</span><span class="split-percent" style="color: var(--routine-border);">${rp}%</span></div>
+<div class="split-header"><span class="split-title">🔄 الروتين اليومي</span><span class="split-percent" style="color: var(--routine-border);">${rp}%</span></div>
 <ul class="split-list">
 ${rc > 0 ? rt.filter(t => t.status === 'correct').map(t => `<li class="done">${t.text}</li>`).join('') : '<li style="color:var(--text-muted);">لم يُنجز شيء</li>'}
 ${rn > 0 ? rt.filter(t => t.status !== 'correct').map(t => `<li class="undone">${t.text}</li>`).join('') : ''}
@@ -1789,7 +1815,7 @@ const circumference = 2 * Math.PI * 50;
 const offset = circumference - (simpleAvg / 100) * circumference;
 const pctColor = getPctColor(simpleAvg);
 const combinedHTML = `
-<div class="combined-title"> الأداء الكلي المتكامل</div>
+<div class="combined-title">📊 الأداء الكلي المتكامل</div>
 <div class="combined-visual">
 <div class="circular-progress">
 <svg viewBox="0 0 120 120">
@@ -1804,7 +1830,7 @@ const combinedHTML = `
 <div class="combined-bar-track"><div class="combined-bar-fill routine" style="width: ${rp}%; background-color: var(--routine-border);"></div></div>
 </div>
 <div class="combined-bar-item">
-<div class="combined-bar-label"><span> المهام</span><span style="color: var(--task-border);">${gp}%</span></div>
+<div class="combined-bar-label"><span>📋 المهام</span><span style="color: var(--task-border);">${gp}%</span></div>
 <div class="combined-bar-track"><div class="combined-bar-fill tasks" style="width: ${gp}%; background-color: var(--task-border);"></div></div>
 </div>
 </div>
@@ -1854,10 +1880,10 @@ taskIncompleteList: rg.filter(t => t.status !== 'correct').map(t => t.text)
 });
 saveReportHistory();
 const rDoneList = rt.filter(t => t.status === 'correct').map(t => `  ✅ ${t.text}`).join('\n');
-const rUndoneList = rt.filter(t => t.status !== 'correct').map(t => `   ${t.text}`).join('\n');
+const rUndoneList = rt.filter(t => t.status !== 'correct').map(t => `  ⏳ ${t.text}`).join('\n');
 const tDoneList = rg.filter(t => t.status === 'correct').map(t => `  ✅ ${t.text}`).join('\n');
 const tUndoneList = rg.filter(t => t.status !== 'correct').map(t => `  ⏳ ${t.text}`).join('\n');
-const text = `📊 تقرير المهام اليومية\n📅 التاريخ: ${nd}\n\n═══════════════════════\n🔄 الروتين اليومي (${rp}%)\n═══════════════════════\n✅ الي اتعمل:\n${rDoneList || '  لا يوجد'}\n\n⏳ الي متعملش:\n${rUndoneList || '  لا يوجد'}\n\n═══════════════════════\n📋 المهام اليومية (${gp}%)\n═══════════════════════\n✅ الي اتعمل:\n${tDoneList || '  لا يوجد'}\n\n الي متعملش:\n${tUndoneList || '  لا يوجد'}\n\n═══════════════════════\n📊 الأداء الكلي\n═══════════════════════\n🔵 المتوسط الحسابي: ${simpleAvg}%\n⚡ المتوسط المرجح (روتين 60% + مهام 40%): ${tp}%\n🏆 التقييم: ${gi.grade}\n\n💡 نصائح:\n${gi.tips.map(t => `  ${t}`).join('\n')}\n\n═══════════════════════\n✅ تم حفظ هذا التقرير تلقائياً\n✅ الروتين ثابت (بيبدأ يوم جديد من غير حذف)\n✅ المهام الصحيحة اتحذفت، والباقي بصفحة نظيفة\n\nMade by Ahmed Emad Farhoud 💻✨`;
+const text = `📊 تقرير المهام اليومية\n📅 التاريخ: ${nd}\n\n═══════════════════════\n🔄 الروتين اليومي (${rp}%)\n═══════════════════════\n✅ الي اتعمل:\n${rDoneList || '  لا يوجد'}\n\n⏳ الي متعملش:\n${rUndoneList || '  لا يوجد'}\n\n═══════════════════════\n📋 المهام اليومية (${gp}%)\n═══════════════════════\n✅ الي اتعمل:\n${tDoneList || '  لا يوجد'}\n\n⏳ الي متعملش:\n${tUndoneList || '  لا يوجد'}\n\n═══════════════════════\n📊 الأداء الكلي\n═══════════════════════\n🔵 المتوسط الحسابي: ${simpleAvg}%\n⚡ المتوسط المرجح (روتين 60% + مهام 40%): ${tp}%\n🏆 التقييم: ${gi.grade}\n\n💡 نصائح:\n${gi.tips.map(t => `  ${t}`).join('\n')}\n\n═══════════════════════\n✅ تم حفظ هذا التقرير تلقائياً\n✅ الروتين ثابت (بيبدأ يوم جديد من غير حذف)\n✅ المهام الصحيحة اتحذفت، والباقي بصفحة نظيفة\n\nMade by Ahmed Emad Farhoud 💻✨`;
 const doReset = () => {
 resetDayAfterReport();
 hideReport();
@@ -2017,7 +2043,7 @@ const input = document.getElementById('pinInput');
 const pin = input.value.trim();
 const errorEl = document.getElementById('pinError');
 if (pin.length < 4) {
-errorEl.textContent = '️ الرقم السري يجب أن يكون 4 أرقام على الأقل';
+errorEl.textContent = '⚠️ الرقم السري يجب أن يكون 4 أرقام على الأقل';
 return;
 }
 if (pinAction === 'create') {
@@ -2096,7 +2122,7 @@ function confirmBalanceChange() {
 const input = document.getElementById('balanceInput');
 const val = parseFloat(input.value);
 if (isNaN(val) || val < 0) {
-alert('️ يرجى إدخال رقم صحيح');
+alert('⚠️ يرجى إدخال رقم صحيح');
 return;
 }
 if (balanceModalType === 'كاش') {
@@ -2117,7 +2143,7 @@ return;
 }
 if (currentOperationType === 'صرف') {
 if (currentPaymentMethod === 'كاش' && amount > cashBalance) {
-if (!confirm(`️ الرصيد الحالي للكاش: ${cashBalance.toFixed(2)} ج.م\nالمبلغ المطلوب: ${amount.toFixed(2)} ج.م\nسيصبح الرصيد سالباً. هل تريد المتابعة؟`)) {
+if (!confirm(`⚠️ الرصيد الحالي للكاش: ${cashBalance.toFixed(2)} ج.م\nالمبلغ المطلوب: ${amount.toFixed(2)} ج.م\nسيصبح الرصيد سالباً. هل تريد المتابعة؟`)) {
 return;
 }
 } else if (currentPaymentMethod === 'إلكتروني' && amount > electronicBalance) {
@@ -2210,7 +2236,7 @@ content.innerHTML = `
 <td class="detail-value ${isAdd ? 'type-add' : 'type-spend'}">${isAdd ? '➕ إضافة' : '💸 صرف'}</td>
 </tr>
 <tr>
-<td class="detail-icon">${isCash ? '💵' : ''}</td>
+<td class="detail-icon">${isCash ? '💵' : '💳'}</td>
 <td class="detail-label">طريقة الدفع</td>
 <td class="detail-value ${isCash ? 'cash-val' : 'electronic-val'}">${isCash ? '💵 كاش' : '💳 إلكتروني'}</td>
 </tr>
@@ -2245,7 +2271,7 @@ ${op.settled ? `
 <div class="details-modal-actions">
 <button class="repeat-modal-btn" data-repeat-id="${op.id}">🔄 تكرار</button>
 <button class="delete-modal-btn" data-delete-op-id="${op.id}">🗑️ حذف</button>
-<button class="close-details-btn" id="closeDetailsBtn">️ إغلاق</button>
+<button class="close-details-btn" id="closeDetailsBtn">✖️ إغلاق</button>
 </div>
 `;
 document.getElementById('detailsModal').classList.add('show');
@@ -2710,245 +2736,7 @@ const quotes = [
 { text: "ثق بنفسك، فأنت أقوى مما تتخيل", author: "حكمة معاصرة" },
 { text: "النجاح هو رحلة، وليس وجهة", author: "حكمة معاصرة" },
 { text: "لا يوجد فشل حقيقي إلا في التوقف عن المحاولة", author: "حكمة معاصرة" },
-{ text: "كن التغيير الذي تريد أن تراه في العالم", author: "مهاتما غاندي" },
-{ text: "الإيجابية تبدأ من داخلك", author: "حكمة معاصرة" },
-{ text: "التفاؤل يمنحك قوة أكبر على مواجهة التحديات", author: "حكمة معاصرة" },
-{ text: "الابتسامة صدقة", author: "حديث شريف" },
-{ text: "من حسن إسلام المرء تركه ما لا يعنيه", author: "حديث شريف" },
-{ text: "خير الناس أنفعهم للناس", author: "حديث شريف" },
-{ text: "العلم بلا عمل كالشجر بلا ثمر", author: "حكمة عربية" },
-{ text: "اطلبوا العلم من المهد إلى اللحد", author: "حديث شريف" },
-{ text: "من سلك طريقاً يلتمس فيه علماً سهل الله له طريقاً إلى الجنة", author: "حديث شريف" },
-{ text: "إنما الأعمال بالنيات", author: "حديث شريف" },
-{ text: "النية الصالحة ترفع العمل الصغير إلى عظيم", author: "حكمة إسلامية" },
-{ text: "من كان يؤمن بالله واليوم الآخر فليقل خيراً أو ليصمت", author: "حديث شريف" },
-{ text: "الكلمة الطيبة صدقة", author: "حديث شريف" },
-{ text: "تبسمك في وجه أخيك لك صدقة", author: "حديث شريف" },
-{ text: "ما نقصت صدقة من مال", author: "حديث شريف" },
-{ text: "الرحمة لا تنزع إلا من شقي", author: "حديث شريف" },
-{ text: "ارحم من في الأرض يرحمك من في السماء", author: "حديث شريف" },
-{ text: "المؤمن للمؤمن كالبنيان يشد بعضه بعضاً", author: "حديث شريف" },
-{ text: "مثل المؤمنين في توادهم وتراحمهم كمثل الجسد الواحد", author: "حديث شريف" },
-{ text: "لا يؤمن أحدكم حتى يحب لأخيه ما يحب لنفسه", author: "حديث شريف" },
-{ text: "من نفس عن مؤمن كربة من كرب الدنيا نفس الله عنه كربة من كرب يوم القيامة", author: "حديث شريف" },
-{ text: "من يسر على معسر يسر الله عليه في الدنيا والآخرة", author: "حديث شريف" },
-{ text: "الدين المعاملة", author: "حديث شريف" },
-{ text: "من أحب أن يبسط له في رزقه وينسأ له في أثره فليصل رحمه", author: "حديث شريف" },
-{ text: "صلة الرحم تزيد في العمر", author: "حكمة عربية" },
-{ text: "بر الوالدين من أعظم القربات", author: "حكمة إسلامية" },
-{ text: "الوالدان باب الجنة", author: "حديث شريف" },
-{ text: "رضا الرب في رضا الوالدين", author: "حديث شريف" },
-{ text: "عقوق الوالدين من أكبر الكبائر", author: "حديث شريف" },
-{ text: "من أصبح آمناً في سربه معافى في جسده عنده قوت يومه فكأنما حيزت له الدنيا", author: "حديث شريف" },
-{ text: "الصحة تاج على رؤوس الأصحاء لا يراه إلا المرضى", author: "حكمة عربية" },
-{ text: "العقل السليم في الجسم السليم", author: "حكمة لاتينية" },
-{ text: "درهم وقاية خير من قنطار علاج", author: "مثل عربي" },
-{ text: "العقل زينة", author: "حكمة عربية" },
-{ text: "العقل غريزة ارتقت", author: "جبران خليل جبران" },
-{ text: "العقل هو كل شيء، فما تعتقد به تصبحه", author: "بوذا" },
-{ text: "افعل كل شيء بحب", author: "حكمة معاصرة" },
-{ text: "الحب هو القوة الوحيدة القادرة على تحويل العدو إلى صديق", author: "مارتن لوثر كينغ" },
-{ text: "حيثما وجدت الحب وجدت الحياة", author: "غاندي" },
-{ text: "الحب لا يعرف حدوداً", author: "حكمة معاصرة" },
-{ text: "أحبب الناس كما تحب لنفسك", author: "حكمة إسلامية" },
-{ text: "الصدق منجاة", author: "مثل عربي" },
-{ text: "الصدق طمأنينة والكذب ريبة", author: "حديث شريف" },
-{ text: "عليكم بالصدق فإنه يهدي إلى البر", author: "حديث شريف" },
-{ text: "الصدق ربيع القلب", author: "حكمة عربية" },
-{ text: "الوفاء شيم الكرام", author: "مثل عربي" },
-{ text: "من وفى وفى له", author: "حكمة عربية" },
-{ text: "العهد شرف", author: "حكمة عربية" },
-{ text: "الأمانة والإخلاص مفتاح النجاح", author: "حكمة معاصرة" },
-{ text: "كن أميناً حتى في الظلام", author: "حكمة معاصرة" },
-{ text: "الأمانة تدعو إلى الإيمان", author: "حكمة إسلامية" },
-{ text: "التواضع يرفع صاحبه", author: "حكمة عربية" },
-{ text: "من تواضع لله رفعه", author: "حديث شريف" },
-{ text: "التواضع من أخلاق الأنبياء", author: "حكمة إسلامية" },
-{ text: "الكبرياء صفة إبليس", author: "حكمة إسلامية" },
-{ text: "من تكبر على الناس ذل", author: "حكمة عربية" },
-{ text: "الشجاعة ليست عدم الخوف، بل القدرة على مواجهة الخوف", author: "نيلسون مانديلا" },
-{ text: "الشجاع من غضب رضي", author: "مثل عربي" },
-{ text: "من صبر ظفر", author: "مثل عربي" },
-{ text: "الصبر مفتاح الفرج", author: "مثل عربي" },
-{ text: "الصبر عند الصدمة الأولى", author: "حديث شريف" },
-{ text: "ما أُعطي أحد خيراً من الصبر", author: "حديث شريف" },
-{ text: "الصبر نصف الإيمان", author: "حكمة إسلامية" },
-{ text: "الرضا كنز لا يفنى", author: "حكمة عربية" },
-{ text: "من رضي بما قسمه الله أغناه", author: "حديث شريف" },
-{ text: "الرضا باب الله الأعظم", author: "حكمة إسلامية" },
-{ text: "القناعة كنز لا يفنى", author: "حكمة عربية" },
-{ text: "من قنع بما رزقه الله فهو أغنى الناس", author: "حديث شريف" },
-{ text: "القناعة مال لا ينفد", author: "حكمة عربية" },
-{ text: "الذكر يجلو الصدأ", author: "حكمة إسلامية" },
-{ text: "ألا أدلكم على خير من ذلك؟ تسبيح الله ثلاثاً وثلاثين", author: "حديث شريف" },
-{ text: "من قال سبحان الله وبحمده في يوم مائة مرة حُطت خطاياه", author: "حديث شريف" },
-{ text: "كلمتان خفيفتان على اللسان ثقيلتان في الميزان", author: "حديث شريف" },
-{ text: "الدعاء سلاح المؤمن", author: "حديث شريف" },
-{ text: "ادعوني أستجب لكم", author: "القرآن الكريم" },
-{ text: "إن الله يحب الملحين في الدعاء", author: "حديث شريف" },
-{ text: "الدعاء هو العبادة", author: "حديث شريف" },
-{ text: "من لزم الاستغفار جعل الله له من كل ضيق مخرجاً", author: "حديث شريف" },
-{ text: "استغفروا ربكم إنه كان غفاراً", author: "القرآن الكريم" },
-{ text: "الاستغفار يمحو الذنوب", author: "حكمة إسلامية" },
-{ text: "التوبة النصوح تمحو ما قبلها", author: "حكمة إسلامية" },
-{ text: "التائب من الذنب كمن لا ذنب له", author: "حديث شريف" },
-{ text: "الله أفرح بتوبة عبده من أحدكم بضالته", author: "حديث شريف" },
-{ text: "إن الله يحب التوابين ويحب المتطهرين", author: "القرآن الكريم" },
-{ text: "الوقت هو الحياة", author: "حكمة معاصرة" },
-{ text: "الوقت أغلى من الذهب", author: "حكمة عربية" },
-{ text: "اغتنم خمساً قبل خمس", author: "حديث شريف" },
-{ text: "نعمتان مغبون فيهما كثير من الناس: الفراغ والصحة", author: "حديث شريف" },
-{ text: "لا تزول قدما عبد يوم القيامة حتى يُسأل عن أربع", author: "حديث شريف" },
-{ text: "من حسن إسلام المرء تركه ما لا يعنيه", author: "حديث شريف" },
-{ text: "الكلمة الطيبة صدقة", author: "حديث شريف" },
-{ text: "تبسمك في وجه أخيك صدقة", author: "حديث شريف" },
-{ text: "ما من مسلم يغرس غرساً إلا كان ما أُكل منه له صدقة", author: "حديث شريف" },
-{ text: "الصدقة تطفئ الخطيئة", author: "حديث شريف" },
-{ text: "داووا مرضاكم بالصدقة", author: "حديث شريف" },
-{ text: "صدقة السر تطفئ غضب الرب", author: "حديث شريف" },
-{ text: "اتقوا النار ولو بشق تمرة", author: "حديث شريف" },
-{ text: "ما نقصت صدقة من مال", author: "حديث شريف" },
-{ text: "الصدقة برهان", author: "حديث شريف" },
-{ text: "كل سلامى من الناس عليه صدقة كل يوم تطلع فيه الشمس", author: "حديث شريف" },
-{ text: "في كل سلامى من ابن آدم صدقة", author: "حديث شريف" },
-{ text: "المسلم من سلم المسلمون من لسانه ويده", author: "حديث شريف" },
-{ text: "المؤمن من أمنه الناس على دمائهم وأموالهم", author: "حديث شريف" },
-{ text: "لا يدخل الجنة قتات", author: "حديث شريف" },
-{ text: "الغيبة أربى من الزنا", author: "حديث شريف" },
-{ text: "من رد عن عرض أخيه رد الله عن وجهه النار", author: "حديث شريف" },
-{ text: "من كان يؤمن بالله واليوم الآخر فلا يؤذِ جاره", author: "حديث شريف" },
-{ text: "من كان يؤمن بالله واليوم الآخر فليُكرِم ضيفه", author: "حديث شريف" },
-{ text: "من كان يؤمن بالله واليوم الآخر فليقل خيراً أو ليصمت", author: "حديث شريف" },
-{ text: "الحياء لا يأتي إلا بخير", author: "حديث شريف" },
-{ text: "الحياء من الإيمان", author: "حديث شريف" },
-{ text: "إذا لم تستح فاصنع ما شئت", author: "حديث شريف" },
-{ text: "إن لكل دين خلقاً، وخلق الإسلام الحياء", author: "حديث شريف" },
-{ text: "الحياء والإيمان قرنا جميعاً", author: "حديث شريف" },
-{ text: "ما كان الفحش في شيء إلا شانه", author: "حديث شريف" },
-{ text: "إن الله جميل يحب الجمال", author: "حديث شريف" },
-{ text: "إن الله يحب إذا عمل أحدكم عملاً أن يتقنه", author: "حديث شريف" },
-{ text: "اتق الله حيثما كنت", author: "حديث شريف" },
-{ text: "اتقِ الله في كل شيء", author: "حديث شريف" },
-{ text: "تقوى الله في السر والعلن", author: "حكمة إسلامية" },
-{ text: "من اتقى الله وقاه", author: "القرآن الكريم" },
-{ text: "ومن يتق الله يجعل له مخرجاً", author: "القرآن الكريم" },
-{ text: "ومن يتق الله يكفر عنه سيئاته", author: "القرآن الكريم" },
-{ text: "إن الله مع الذين اتقوا والذين هم محسنون", author: "القرآن الكريم" },
-{ text: "فاتقوا الله وأصلحوا ذات بينكم", author: "القرآن الكريم" },
-{ text: "واعبدوا الله ولا تشركوا به شيئاً", author: "القرآن الكريم" },
-{ text: "وقل رب زدني علماً", author: "القرآن الكريم" },
-{ text: "هل يستوي الذين يعلمون والذين لا يعلمون", author: "القرآن الكريم" },
-{ text: "يرفع الله الذين آمنوا منكم والذين أوتوا العلم درجات", author: "القرآن الكريم" },
-{ text: "وقل ربي زدني علماً", author: "القرآن الكريم" },
-{ text: "اقرأ وربك الأكرم", author: "القرآن الكريم" },
-{ text: "الذي علم بالقلم", author: "القرآن الكريم" },
-{ text: "علم الإنسان ما لم يعلم", author: "القرآن الكريم" },
-{ text: "قل هل يستوي الذين يعلمون والذين لا يعلمون", author: "القرآن الكريم" },
-{ text: "إنما يخشى الله من عباده العلماء", author: "القرآن الكريم" },
-{ text: "شهادة أن لا إله إلا الله وأن محمداً رسول الله", author: "حديث شريف" },
-{ text: "أفضل الذكر لا إله إلا الله", author: "حديث شريف" },
-{ text: "من قال لا إله إلا الله وحده لا شريك له...", author: "حديث شريف" },
-{ text: "كلمتان خفيفتان على اللسان ثقيلتان في الميزان", author: "حديث شريف" },
-{ text: "أحب الكلام إلى الله أربع", author: "حديث شريف" },
-{ text: "سبحان الله والحمد لله ولا إله إلا الله والله أكبر", author: "حديث شريف" },
-{ text: "لأن أقول سبحان الله والحمد لله ولا إله إلا الله والله أكبر أحب إليّ مما طلعت عليه الشمس", author: "حديث شريف" },
-{ text: "من سبح الله في دبر كل صلاة ثلاثاً وثلاثين...", author: "حديث شريف" },
-{ text: "من أصبح فقال: أصبحنا وأصبح الملك لله...", author: "حديث شريف" },
-{ text: "من قال حين يصبح وحين يمسي: بسم الله الذي لا يضر مع اسمه شيء...", author: "حديث شريف" },
-{ text: "من قال حين يصبح: اللهم ما أصبح بي من نعمة...", author: "حديث شريف" },
-{ text: "من قال حين يمسي: أعوذ بكلمات الله التامات...", author: "حديث شريف" },
-{ text: "من قال حين يصبح وحين يمسي: رضيت بالله رباً...", author: "حديث شريف" },
-{ text: "من قال حين يصبح وحين يمسي: حسبي الله لا إله إلا هو...", author: "حديث شريف" },
-{ text: "من قال حين يصبح وحين يمسي: اللهم إني أسألك العفو والعافية...", author: "حديث شريف" },
-{ text: "من قال حين يصبح وحين يمسي: اللهم عافني في بدني...", author: "حديث شريف" },
-{ text: "من قال حين يصبح وحين يمسي: اللهم إني أسألك علماً نافعاً...", author: "حديث شريف" },
-{ text: "من قال حين يصبح وحين يمسي: اللهم أنت ربي لا إله إلا أنت...", author: "حديث شريف" },
-{ text: "من قال حين يصبح وحين يمسي: آمنت بالله وملائكته...", author: "حديث شريف" },
-{ text: "من قال حين يصبح وحين يمسي: لا إله إلا الله وحده لا شريك له...", author: "حديث شريف" },
-{ text: "من قال حين يصبح وحين يمسي: سبحان الله وبحمده: مائة مرة", author: "حديث شريف" },
-{ text: "من قال حين يصبح وحين يمسي: أستغفر الله وأتوب إليه", author: "حديث شريف" },
-{ text: "من قال حين يصبح وحين يمسي: اللهم صلِّ على محمد وعلى آل محمد", author: "حديث شريف" },
-{ text: "من صلى عليَّ صلاة صلى الله عليه بها عشراً", author: "حديث شريف" },
-{ text: "البخيل من ذُكرت عنده فلم يُصلِّ عليَّ", author: "حديث شريف" },
-{ text: "أقربكم مني مجلساً يوم القيامة أكثركم عليَّ صلاة", author: "حديث شريف" },
-{ text: "من صلى عليَّ حين يصبح عشراً وحين يمسي عشراً أدركته شفاعتي", author: "حديث شريف" },
-{ text: "ما جلس قوم مجلساً لم يذكروا الله فيه...", author: "حديث شريف" },
-{ text: "ما اجتمع قوم في بيت من بيوت الله...", author: "حديث شريف" },
-{ text: "إن لله ملائكة سيّارين في الأرض...", author: "حديث شريف" },
-{ text: "من غدا إلى المسجد أو راح أعد الله له في الجنة نزلاً", author: "حديث شريف" },
-{ text: "من توضأ فأحسن الوضوء ثم خرج عامداً إلى المسجد...", author: "حديث شريف" },
-{ text: "من غدا إلى المسجد أو راح فهو في صلاة حتى يرجع", author: "حديث شريف" },
-{ text: "الصلوات الخمس والجمعة إلى الجمعة كفارات لما بينهن", author: "حديث شريف" },
-{ text: "من صلى الفجر في جماعة ثم قعد يذكر الله حتى تطلع الشمس...", author: "حديث شريف" },
-{ text: "من صلى البردين دخل الجنة", author: "حديث شريف" },
-{ text: "من صلى اثنتي عشرة ركعة في يوم وليلة بني له بهن بيت في الجنة", author: "حديث شريف" },
-{ text: "من حافظ على أربع ركعات قبل الظهر وأربع بعدها حرمه الله على النار", author: "حديث شريف" },
-{ text: "من صلى قبل المغرب ركعتين فله أجر عتق رقبة", author: "حديث شريف" },
-{ text: "من صلى العشاء في جماعة فكأنما قام نصف الليل", author: "حديث شريف" },
-{ text: "من صلى الصبح في جماعة فكأنما صلى الليل كله", author: "حديث شريف" },
-{ text: "من صلى الفجر في جماعة فهو في ذمة الله", author: "حديث شريف" },
-{ text: "من صلى على جنازة فله قيراط", author: "حديث شريف" },
-{ text: "من اتبع جنازة حتى يصلى عليها فله قيراط", author: "حديث شريف" },
-{ text: "من شهد الجنازة حتى يُدفن فله قيراطان", author: "حديث شريف" },
-{ text: "من عاد مريضاً أو زار أخاً له في الله ناداه منادٍ", author: "حديث شريف" },
-{ text: "من نفس عن مؤمن كربة من كرب الدنيا نفس الله عنه كربة من كرب يوم القيامة", author: "حديث شريف" },
-{ text: "من يسر على معسر يسر الله عليه في الدنيا والآخرة", author: "حديث شريف" },
-{ text: "من ستر مسلماً ستره الله في الدنيا والآخرة", author: "حديث شريف" },
-{ text: "من كان في حاجة أخيه كان الله في حاجته", author: "حديث شريف" },
-{ text: "من أدخل السرور على مؤمن فقد أدخل السرور عليَّ", author: "حديث شريف" },
-{ text: "من أحب أن يُبسط له في رزقه وينسأ له في أثره فليصل رحمه", author: "حديث شريف" },
-{ text: "من أحسن إلى من ولاه الله فقد أحسن إلى نفسه", author: "حكمة إسلامية" },
-{ text: "من أحسن الظن بالله أعطاه الله ظنه", author: "حديث شريف" },
-{ text: "من توكل على الله كفاه", author: "القرآن الكريم" },
-{ text: "ومن يتوكل على الله فهو حسبه", author: "القرآن الكريم" },
-{ text: "التوكل على الله نصف الدين", author: "حكمة إسلامية" },
-{ text: "من توكل على الله فهو حسبه", author: "حديث شريف" },
-{ text: "لو أنكم تتوكلون على الله حق توكله لرزقكم كما يرزق الطير", author: "حديث شريف" },
-{ text: "التوكل تفويض الأمر إلى الله", author: "حكمة إسلامية" },
-{ text: "من صدق الله صدقه الله", author: "حكمة إسلامية" },
-{ text: "من صدق في توكله كفاه الله", author: "حكمة إسلامية" },
-{ text: "التوكل على الله مع بذل الأسباب", author: "حكمة إسلامية" },
-{ text: "من ترك شيئاً لله عوضه الله خيراً منه", author: "حديث شريف" },
-{ text: "من ترك لله شيئاً عوضه الله خيراً منه", author: "حديث شريف" },
-{ text: "من ترك المعاصي لله عوضه الله طاعة", author: "حكمة إسلامية" },
-{ text: "من ترك شيئاً لله جعل الله له منه عوضاً", author: "حكمة إسلامية" },
-{ text: "من ترك الدنيا لله جعل الله الدنيا تحت قدميه", author: "حكمة إسلامية" },
-{ text: "من زهد في الدنيا هون الله عليه الحساب", author: "حكمة إسلامية" },
-{ text: "من أحب الدنيا هانت عليه الآخرة", author: "حكمة إسلامية" },
-{ text: "من أحب الآخرة هانت عليه الدنيا", author: "حكمة إسلامية" },
-{ text: "الدنيا سجن المؤمن وجنة الكافر", author: "حديث شريف" },
-{ text: "كن في الدنيا كأنك غريب أو عابر سبيل", author: "حديث شريف" },
-{ text: "ما لي وللدنيا، إنما أنا فيها كراكب استظل تحت شجرة ثم راح وتركها", author: "حديث شريف" },
-{ text: "الدنيا دار ممر لا دار مقر", author: "حكمة إسلامية" },
-{ text: "الدنيا دار فناء والآخرة دار بقاء", author: "حكمة إسلامية" },
-{ text: "اعمل لدنياك كأنك تعيش أبداً واعمل لآخرتك كأنك تموت غداً", author: "حديث شريف" },
-{ text: "من عمل لآخرته كفاه الله أمر دنياه", author: "حكمة إسلامية" },
-{ text: "من كانت الآخرة همه جعل الله غناه في قلبه", author: "حديث شريف" },
-{ text: "من كانت الدنيا همه فرق الله عليه أمره", author: "حديث شريف" },
-{ text: "من أصبح والدنيا أكبر همه جعل الله الفقر بين عينيه", author: "حديث شريف" },
-{ text: "من أصبح والآخرة أكبر همه جعل الله الغنى في قلبه", author: "حديث شريف" },
-{ text: "من أصبح وهمه الله وحده كفاه الله مؤنة الدنيا", author: "حكمة إسلامية" },
-{ text: "من أصبح وهمه الله وحده كفاه الله ما أهمه", author: "حكمة إسلامية" },
-{ text: "من أصبح وهمه الله وحده جعل الله الغنى في قلبه", author: "حكمة إسلامية" },
-{ text: "من أصبح وهمه الله وحده جمع له أمره", author: "حكمة إسلامية" },
-{ text: "من أصبح وهمه الله وحده كفاه الله كل شيء", author: "حكمة إسلامية" },
-{ text: "من أصبح وهمه الله وحده جعل الله الدنيا تحت قدميه", author: "حكمة إسلامية" },
-{ text: "من أصبح وهمه الله وحده رزقه الله من حيث لا يحتسب", author: "حكمة إسلامية" },
-{ text: "من أصبح وهمه الله وحده فتح الله له أبواب الرزق", author: "حكمة إسلامية" },
-{ text: "من أصبح وهمه الله وحده يسر الله له كل عسير", author: "حكمة إسلامية" },
-{ text: "من أصبح وهمه الله وحده جعل الله له من كل ضيق مخرجاً", author: "حكمة إسلامية" },
-{ text: "من أصبح وهمه الله وحده كفاه الله شر الخلق", author: "حكمة إسلامية" },
-{ text: "من أصبح وهمه الله وحده حفظه الله في الدنيا والآخرة", author: "حكمة إسلامية" },
-{ text: "من أصبح وهمه الله وحده جعل الله له نوراً في وجهه", author: "حكمة إسلامية" },
-{ text: "من أصبح وهمه الله وحده جعل الله له بركة في عمره", author: "حكمة إسلامية" },
-{ text: "من أصبح وهمه الله وحده جعل الله له بركة في رزقه", author: "حكمة إسلامية" },
-{ text: "من أصبح وهمه الله وحده جعل الله له بركة في أهله", author: "حكمة إسلامية" },
-{ text: "من أصبح وهمه الله وحده جعل الله له بركة في ولده", author: "حكمة إسلامية" },
-{ text: "من أصبح وهمه الله وحده جعل الله له بركة في صحته", author: "حكمة إسلامية" },
-{ text: "من أصبح وهمه الله وحده جعل الله له بركة في دينه", author: "حكمة إسلامية" },
-{ text: "من أصبح وهمه الله وحده جعل الله له بركة في دنياه", author: "حكمة إسلامية" },
-{ text: "من أصبح وهمه الله وحده جعل الله له بركة في آخرته", author: "حكمة إسلامية" },
-{ text: "من أصبح وهمه الله وحده جعل الله له بركة في كل شيء", author: "حكمة إسلامية" }
+{ text: "كن التغيير الذي تريد أن تراه في العالم", author: "مهاتما غاندي" }
 ];
 document.addEventListener('DOMContentLoaded', () => {
 const savedTheme = localStorage.getItem('theme') || 'light';
