@@ -566,31 +566,29 @@ window.addEventListener('beforeinstallprompt', (e) => {
   document.getElementById('installBtn').style.display = 'block';
 });
 
-function installPWA() {
-  if (deferredPrompt) {
-    deferredPrompt.prompt();
-    deferredPrompt.userChoice.then((choiceResult) => {
-      if (choiceResult.outcome === 'accepted') {
-        document.getElementById('installBtn').style.display = 'none';
-      }
-      deferredPrompt = null;
-    });
+// فحص حالة الاتصال الحقيقية عند تحميل الصفحة
+function updateConnectionStatus() {
+  const status = document.getElementById('pwaStatus');
+  const icon = document.getElementById('pwaIcon');
+  const text = document.getElementById('pwaText');
+  
+  if (navigator.onLine) {
+    status.className = 'pwa-status online';
+    icon.textContent = '🟢';
+    text.textContent = 'متصل';
+  } else {
+    status.className = 'pwa-status offline';
+    icon.textContent = '🔴';
+    text.textContent = 'أوفلاين';
   }
 }
 
-window.addEventListener('online', () => {
-  const status = document.getElementById('pwaStatus');
-  status.className = 'pwa-status online';
-  document.getElementById('pwaIcon').textContent = '🟢';
-  document.getElementById('pwaText').textContent = 'متصل';
-});
+// تشغيل الفحص عند تحميل الصفحة
+updateConnectionStatus();
 
-window.addEventListener('offline', () => {
-  const status = document.getElementById('pwaStatus');
-  status.className = 'pwa-status offline';
-  document.getElementById('pwaIcon').textContent = '🔴';
-  document.getElementById('pwaText').textContent = 'أوفلاين';
-});
+// الاستماع لتغييرات الاتصال
+window.addEventListener('online', updateConnectionStatus);
+window.addEventListener('offline', updateConnectionStatus);
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
