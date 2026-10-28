@@ -1,8 +1,11 @@
-const CACHE_NAME = 'tasks-pro-v1';
+const CACHE_NAME = 'tasks-pro-v3';
+const BASE_PATH = '/A/';
 const ASSETS_TO_CACHE = [
-  '/',
-  '/index.html',
-  '/manifest.json'
+  BASE_PATH,
+  BASE_PATH + 'index.html',
+  BASE_PATH + 'manifest.json',
+  BASE_PATH + 'icon-192.png',
+  BASE_PATH + 'icon-512.png'
 ];
 
 // 1. تثبيت خدمة العامل (Install)
@@ -35,15 +38,12 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
   event.respondWith(
     caches.match(event.request).then((response) => {
-      // إذا وجدنا الملف في الذاكرة، نعيده فوراً
       if (response) {
         return response;
       }
-      // إذا لم يوجد، نحاول جلبه من الإنترنت
       return fetch(event.request).catch(() => {
-        // إذا فشل الإنترنت، نعيد صفحة التطبيق الرئيسية كاحتياط
         if (event.request.mode === 'navigate') {
-          return caches.match('/index.html');
+          return caches.match(BASE_PATH + 'index.html');
         }
       });
     })
